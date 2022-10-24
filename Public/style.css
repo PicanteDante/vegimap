@@ -1,3 +1,14 @@
-.error-container {
-    text-align: center;
-  }
+nav {
+  background: #222;
+  padding: 0 15px;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+.logo {
+  font-size: 20px;
+  padding: 7.5px 10px 7.5px 0;
+}
