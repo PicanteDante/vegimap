@@ -1,5 +1,5 @@
 {
-    "name": "Vegimap",
+    "name": "vegimap",
     "version": "1.0.0",
     "description": "A webapp for finding edible plants around campus",
     "main": "server.js",
@@ -18,7 +18,7 @@
     },
     "homepage": "https://github.com/MEARE-oof/vegimap#readme",
     "dependencies": {
-        "express": "^4.18.1",
+        "express": "^4.18.2",
         "express-handlebars": "^6.0.6",
         "handlebars": "^4.7.7",
         "lodash": "^4.17.21"
