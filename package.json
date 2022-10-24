@@ -1,0 +1,26 @@
+{
+    "name": "Vegimap",
+    "version": "1.0.0",
+    "description": "A webapp for finding edible plants around campus",
+    "main": "server.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node server.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/MEARE-oof/vegimap"
+    },
+    "author": "CS 361 - Team 14",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/MEARE-oof/vegimap/issues"
+    },
+    "homepage": "https://github.com/MEARE-oof/vegimap#readme",
+    "dependencies": {
+        "express": "^4.18.1",
+        "express-handlebars": "^6.0.6",
+        "handlebars": "^4.7.7",
+        "lodash": "^4.17.21"
+    }
+}
