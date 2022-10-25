@@ -4,6 +4,8 @@ var express = require('express');
 var app  = express();
 var port = process.env.PORT || 6969;
 
+app.use(express.static(path.join(__dirname, 'Public')));
+
 app.get('/', function (req,res) {
     res.status(200).sendFile(path.join(__dirname, '/Public/index.html'))
 });
