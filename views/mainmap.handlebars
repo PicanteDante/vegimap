@@ -1,27 +1,22 @@
-<!--<link rel="stylesheet" href="/leaflet/leaflet.css" />-->
-<!--<script src="/leaflet/leaflet.js"></script>-->
-
-
-
 <style>
-	#map {
-		position: absolute;
-		top: 0;
-		bottom: 0;
-		left; 0;
-		right: 0;
-		
+	body {
+		margin: 0;
+		padding: 0;
 	}
 </style>
 
 <div id="map">
 	<div class="leaflet-control coordinate"></div>
 </div>
+
+
 <script>
-	var map = L.map('map').setView([0, 0], 1);
+	var map = L.map('map').setView([44.563091, -123.283511], 15);
 	
-	L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-		maxZoom: 19,
-		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-	}).addTo(map);
+	var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+	});
+	osm.addTo(map);
+	
+	
 </script>
