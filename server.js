@@ -14,7 +14,7 @@ app.use(express.static('Public'))
 app.get('/', function (req, res, next) {
 	if (req)
 	{
-		res.status(200).render('map')
+		res.status(200).render('mainmap')
 		/*res.status(200).sendFile(path.join(__dirname, '/Public/index.html'))*/
 	}
 	else
@@ -27,9 +27,7 @@ app.get('/', function (req, res, next) {
 
 
 app.get('*', function (req, res) {
-  res.status(404).render('404', {
-
-  });
+  res.status(404).render('404', {url: req.url});
 });
 
 /*
