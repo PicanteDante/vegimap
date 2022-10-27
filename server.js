@@ -14,8 +14,8 @@ app.use(express.static('Public'))
 app.get('/', function (req, res, next) {
 	if (req)
 	{
-		//res.status(200).sendFile(path.join(__dirname, '/Public/index.html'))
 		res.status(200).render('map')
+		/*res.status(200).sendFile(path.join(__dirname, '/Public/index.html'))*/
 	}
 	else
 	{
@@ -42,8 +42,5 @@ app.get('*', function (req, res) {
 */
 
 app.listen(port, function () {
-	if (err){
-		throw err
-	}
     console.log("== Server is listening on port", port);
 });
