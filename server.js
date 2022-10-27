@@ -10,6 +10,12 @@ app.engine('handlebars', exphbs.engine({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 app.use(express.static('Public'))
 
+var map = L.map('map').setView([51.505, -0.09], 13);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	maxZoom: 19,
+	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+
 
 app.get('/', function (req, res, next) {
 	if (req)
@@ -25,19 +31,11 @@ app.get('/', function (req, res, next) {
 
 
 
-
 app.get('*', function (req, res) {
   res.status(404).render('404', {url: req.url});
 });
 
-/*
-app.get('*', function (req, res) {
-    //res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
-    res.status(404).render('404', {
-      url: req.url
-    })
-  });
-*/
+
 
 app.listen(port, function () {
     console.log("== Server is listening on port", port);
