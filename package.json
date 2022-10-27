@@ -18,10 +18,12 @@
     },
     "homepage": "https://github.com/MEARE-oof/vegimap#readme",
     "dependencies": {
+        "body": "^5.1.0",
         "express": "^4.18.2",
         "express-handlebars": "^6.0.6",
         "handlebars": "^4.7.7",
         "leaflet": "^1.9.2",
-        "lodash": "^4.17.21"
+        "lodash": "^4.17.21",
+        "parser": "^0.1.4"
     }
 }
