@@ -1,0 +1,53 @@
+<main id="workspace">
+    <canvas id="animation-workspace"></canvas>
+    <script id="animation-script" src="script.js"></script>
+    <script src="index.js" charset="utf-8" defer></script>
+    <div id="add-element-menu">
+        <button type="button" id="add-element-button" onclick="addAnimation()">&plus;</button>
+        <div id="menu-options" class="menu-content">
+            <a class="animations" id="animation-1">Animation 1</a>
+            <a class="animations" id="animation-2">Animation 2</a>
+            <a class="animations" id="animation-3">Animation 3</a>
+            <a class="animations" id="animation-4">Animation 4</a>
+            <a class="animations" id="animation-5">Animation 5</a>
+        </div>
+    </div>
+    <div class="submit">
+        <button type="button" id="submit-button">Submit</button>
+    </div>
+
+    <div id="modal-backdrop" class="hidden">
+        <div id="submit-modal" class="hidden">
+            <div class="modal-dialog">
+
+                <div class="modal-header">
+                    <h3>Start An-Imation Here</h3>
+                    <button type="button" id="modal-close" class="modal-hide-button">&times;</button>
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="post-input-element">
+                        <label for="post-title-input">Title</label>
+                        <input type="text" id="post-title-input">
+                    </div>
+
+                    <div class="post-input-element">
+                        <label for="post-username-input">Username</label>
+                        <input type="text" id="post-username-input">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" id="modal-cancel" class="modal-hide-button action-button">Cancel</button>
+                    <button type="button" id="modal-accept" class="action-button">Create Post</button>
+                </div>
+                 
+            </div>
+        
+        </div>
+
+      </div>
+
+    </main>
+
