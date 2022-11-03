@@ -1,10 +1,7 @@
-/*Nav bar + fucntionality - https://webdesign.tutsplus.com/tutorials/how-to-build-a-responsive-navigation-bar-with-flexbox--cms-33535 */
+var toggle = document.querySelector(".toggle");
+var menu = document.querySelector(".menu");
+var items = document.querySelectorAll(".item"); 
 
-const toggle = document.querySelector(".toggle");
-const menu = document.querySelector(".menu");
-const items = document.querySelectorAll(".item");
-
-/* Toggle mobile menu */
 function toggleMenu() {
   if (menu.classList.contains("active")) {
     menu.classList.remove("active");
@@ -15,20 +12,6 @@ function toggleMenu() {
   }
 }
 
-/* Close Submenu From Anywhere */
-function closeSubmenu(e) {
-  if (menu.querySelector(".submenu-active")) {
-    let isClickInside = menu
-      .querySelector(".submenu-active")
-      .contains(e.target);
-
-    if (!isClickInside && menu.querySelector(".submenu-active")) {
-      menu.querySelector(".submenu-active").classList.remove("submenu-active");
-    }
-  }
-}
-
-/* Event Listeners */
 toggle.addEventListener("click", toggleMenu, false);
 for (let item of items) {
   if (item.querySelector(".submenu")) {
