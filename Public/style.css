@@ -20,7 +20,7 @@ a {
 }
 
 .logo {
-  font-size: 20px;
+  padding: 10px;
 }
 
 .item {
@@ -35,44 +35,48 @@ a {
   color: #ccc;
 }
 
-/* Mobile menu */
-@media all and (min-width: 700px) {
-  .menu {
+/* ----------------- Mobile menu -----------------*/
+.menu {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-  }
-  .menu li a {
+}
+
+.menu li a {
     display: block;
     padding: 15px 5px;
-  }
+}
 
-  .toggle {
+.menu li.subitem a {
+    padding: 15px;
+}
+
+.toggle {
     order: 1;
     font-size: 20px;
-  }
+}
 
-  .item.button {
+.item.button {
     order: 2;
-  }
+}
 
-  .item {
+.item {
     order: 3;
     width: 100%;
     text-align: center;
     display: none;
-  }
-
-  .active .item {
-    display: block;
-  }
-
-  .button.secondary { /* divider between buttons and menu links */
-    border-bottom: 1px #444 solid;
-  }
 }
 
+.active .item {
+    display: block;
+}
+
+.button.secondary { /* divider between buttons and menu links */
+    border-bottom: 1px #444 solid;
+}
+
+/* ----------------- Tablet menu -----------------*/
 @media all and (min-width: 700px) {
   .menu {
     justify-content: center;
@@ -100,8 +104,7 @@ a {
   }
 
   .button a {
-    background: #0080ff;
-    border: 1px royalblue solid;
+    background: #35bd37
   }
 
   .button.secondary {
@@ -110,7 +113,7 @@ a {
 
   .button.secondary a {
     background: transparent;
-    border: 1px #0080ff solid;
+    border: 1px #35bd37 solid;
   }
 
   .button a:hover {
@@ -118,12 +121,11 @@ a {
   }
   
   .button:not(.secondary) a:hover {
-    background: royalblue;
-    border-color: darkblue;
+    background: #119113;
   }
 }
 
-/*desktop styling*/
+/* ----------------- desktop menu -----------------*/
 @media all and (min-width: 960px) {
   .menu {
     align-items: flex-start;
@@ -151,22 +153,24 @@ a {
   }
 
   .button a {
-    background: #0080ff;
-    border: 1px royalblue solid;
+    background: #35bd37;
   }
+
   .button.secondary {
     border: 0;
   }
+
   .button.secondary a {
     background: transparent;
-    border: 1px #0080ff solid;
+    border: 1px #35bd37 solid;
   }
+
   .button a:hover {
     text-decoration: none;
   }
+
   .button:not(.secondary) a:hover {
-    background: royalblue;
-    border-color: darkblue;
+    background: #119113;
   }
 }
 
