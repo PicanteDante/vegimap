@@ -31,7 +31,7 @@ app.get('/', function (req, res, next) {
 
 
 app.get('*', function (req, res) {
-  res.status(404).render('404', {url: req.url});
+	res.status(404).render('404', {url: req.url});
 });
 
 
