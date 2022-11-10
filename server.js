@@ -28,7 +28,12 @@ app.get('/', function (req, res, next) {
 	}
 });
 
-
+/*
+app.get('/signup', function (req, res, next){
+	console.log("  -- sign up page requested")
+	res.status(200).sendFile(path.join(__dirname+'signup.html'));
+});
+*/
 
 app.get('*', function (req, res) {
   res.status(404).render('404', {url: req.url});
