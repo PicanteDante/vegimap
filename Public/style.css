@@ -195,15 +195,19 @@ a {
 }
 
 /* ----------------- sign up page -----------------*/
+
+
 * {box-sizing: border-box}
 input[type=text], input[type=password] {
    width: 100%;
-   font-size: 28px;
+   font-size: 20px;
    padding: 15px;
    margin: 5px 0 22px 0;
    display: inline-block;
-   border: none;
-   background: #f1f1f1;
+   border: 1px;
+   border-style: solid;
+   border-radius: 10px;
+   
 }
 
 label {
@@ -211,4 +215,19 @@ label {
 }
 
 
-/*----------- al;sdjflaksdjl ---------------/
+h2 {
+  text-align: center;
+}
+
+.signup-container{
+  width: 50%;
+  padding: 20px;
+  margin: auto;
+  /*
+  margin-left: auto;
+  margin-right: auto;*/
+  border: 3px;
+  border-style: solid;
+  border-radius: 10px;
+  background-color: lightgray;
+}
