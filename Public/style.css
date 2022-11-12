@@ -1,4 +1,4 @@
-/* Basic Styling */
+/* -------------- Basic Nav styling -------------- */
 * {
   box-sizing: border-box;
   padding: 0;
@@ -35,7 +35,7 @@ a {
   color: #ccc;
 }
 
-/* ----------------- Mobile menu -----------------*/
+/* ----------------- Mobile menu ----------------- */
 .menu {
     display: flex;
     flex-wrap: wrap;
@@ -192,4 +192,42 @@ a {
 	color: #fff;
 	border: 1px solid red;
 	border-radius: 0px;
+}
+
+/* ----------------- sign up page -----------------*/
+
+
+* {box-sizing: border-box}
+input[type=text], input[type=password] {
+   width: 100%;
+   font-size: 20px;
+   padding: 15px;
+   margin: 5px 0 22px 0;
+   display: inline-block;
+   border: 1px;
+   border-style: solid;
+   border-radius: 10px;
+   
+}
+
+label {
+  font-size: 15px;
+}
+
+
+h2 {
+  text-align: center;
+}
+
+.signup-container{
+  width: 50%;
+  padding: 20px;
+  margin: auto;
+  /*
+  margin-left: auto;
+  margin-right: auto;*/
+  border: 3px;
+  border-style: solid;
+  border-radius: 10px;
+  background-color: lightgray;
 }
