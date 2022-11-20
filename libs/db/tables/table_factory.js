@@ -2,27 +2,31 @@
  * Handles the creation of tables.
  */
 
-const PlantMarkers_PlantTags = require('./plant_markers_plant_tags.js');
-const PlantMarkers = require('./plant_markers.js');
-const PlantTags = require('./plant_tags.js');
-const PlantTypes = require('./plant_types.js');
-// table_factory.js
-// table.js
-// template_table.js
-const UserMarkerRatings = require('./user_marker_ratings.js');
-const Users = require('./users.js');
+const table_names = [
+    'images',
+    'plant_markers_plant_tags',
+    'plant_markers',
+    'plant_tags',
+    'plant_types',
+    'user_marker_ratings',
+    'users'
+];
+
+const tables = {};
+
+function snake_to_pascal(snake) {
+    return snake.split('_').map(word => word[0].toUpperCase() + word.slice(1)).join('');
+}
+
+table_names.forEach(table_name => {
+    tables[snake_to_pascal(table_name)] = require(`./${table_name}.js`);
+});
 
 class TableFactory {
-    static tables = [
-        'PlantMarkers_PlantTags',
-        'PlantMarkers',
-        'PlantTags',
-        'PlantTypes',
-        'UserMarkerRatings',
-        'Users'
-    ]
+    static tables = table_names.map(snake_to_pascal);
+    static created_tables = {};
     /**
-     * Create a table
+     * Create a table. If the table has already been created, return the existing table.
      * 
      * @param {String} table_name - name of the table
      * 
@@ -40,15 +44,13 @@ class TableFactory {
         if (table_name.length === 0) {
             throw new Error('Table name cannot be empty.');
         }
-        switch (table_name) {
-            case 'PlantMarkers_PlantTags':  return new PlantMarkers_PlantTags();
-            case 'PlantMarkers':            return new PlantMarkers();
-            case 'PlantTags':               return new PlantTags();
-            case 'PlantTypes':              return new PlantTypes();
-            case 'UserMarkerRatings':       return new UserMarkerRatings();
-            case 'Users':                   return new Users();
-            default:
-                throw new Error('Table does not exist.');
+        if (table_name in this.created_tables) {
+            return this.created_tables[table_name];
+        }
+        if (table_name in tables) {
+            return new tables[table_name]();
+        } else {
+            throw new Error('Table does not exist.');
         }
     }
 }

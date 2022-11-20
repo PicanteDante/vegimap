@@ -4,8 +4,9 @@
  * Columns are:
  *   plant_marker_id:         int (primary key) (auto increment)
  *   plant_type_id:           int (foreign key in PlantTypes)
- *   owner_id:                int (foreign key 'user_id' in Users)
+ *   user_id:                int (foreign key in Users)
  *   marker_post_date:        string (MM/DD/YYYY)
+ *   marker_rating:           float
  *   marker_name:             string
  *   marker_description:      string
  *   marker_image:            int (foreign key in Images)
@@ -23,7 +24,7 @@ class PlantMarkers extends Table {
             'PlantMarkers',  // table name
             [
                 'plant_type_id',
-                'owner_id',
+                'user_id',
                 'marker_post_date',
                 'marker_name',
                 'marker_description',
@@ -33,7 +34,7 @@ class PlantMarkers extends Table {
             ],  // columns, not including primary key
             [
                 { key:'plant_type_id', table:'PlantTypes', column:'plant_type_id' },
-                { key:'owner_id', table:'Users', column:'user_id' },
+                { key:'user_id', table:'Users', column:'user_id' },
                 { key:'marker_image', table:'Images', column:'image_id' }
             ]   // foreign keys (optional)
         );
