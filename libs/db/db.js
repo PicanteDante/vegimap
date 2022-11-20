@@ -17,7 +17,6 @@ class Database {
     }
 
     insert_into(table_name, data) {
-        console.log(`Inserting into ${table_name}`);
         this.tables[table_name].create_row(data);
         return this;
     }

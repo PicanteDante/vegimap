@@ -2,28 +2,20 @@
  * Handles the creation of tables.
  */
 
-const table_names = [
-    'images',
-    'plant_markers_plant_tags',
-    'plant_markers',
-    'plant_tags',
-    'plant_types',
-    'user_marker_ratings',
-    'users'
-];
+const _ = require('lodash');
 
-const tables = {};
-
-function snake_to_pascal(snake) {
-    return snake.split('_').map(word => word[0].toUpperCase() + word.slice(1)).join('');
-}
-
-table_names.forEach(table_name => {
-    tables[snake_to_pascal(table_name)] = require(`./${table_name}.js`);
-});
+const tables = {
+    'Images': require('./images.js'),
+    'PlantMarkers_PlantTags': require('./plant_markers_plant_tags.js'),
+    'PlantMarkers': require('./plant_markers.js'),
+    'PlantTags': require('./plant_tags.js'),
+    'PlantTypes': require('./plant_types.js'),
+    'UserMarkerRatings': require('./user_marker_ratings.js'),
+    'Users': require('./users.js')
+};
 
 class TableFactory {
-    static tables = table_names.map(snake_to_pascal);
+    static tables = _.keys(tables);
     static created_tables = {};
     /**
      * Create a table. If the table has already been created, return the existing table.
@@ -45,10 +37,10 @@ class TableFactory {
             throw new Error('Table name cannot be empty.');
         }
         if (table_name in this.created_tables) {
-            return this.created_tables[table_name];
         }
         if (table_name in tables) {
-            return new tables[table_name]();
+            this.created_tables[table_name] = new tables[table_name]();
+            return this.created_tables[table_name];
         } else {
             throw new Error('Table does not exist.');
         }

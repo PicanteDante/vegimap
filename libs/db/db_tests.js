@@ -89,5 +89,83 @@ console.log("deleting where pp is less than 0");
 db.delete_where_predicate('Users', user => user.plant_points < 0);
 console.log("all users");
 console.log(db.all('Users'));
+db.insert_into('PlantTypes', {
+    plant_type_name: 'tomato',
+    plant_type_desc: "it's a tomato dude"
+});
 
-// these all work. I am such a good programmer haha...
+db.insert_into('PlantMarkers', {
+    plant_type_id: db.select_where('PlantTypes', 'plant_type_name', 'tomato')[0].plant_type_id,
+    user_id: db.select_where('Users', 'name', 'Daniel')[0].user_id,
+    marker_post_date: '4/16/2022',
+    marker_name: 'Tomatos near MU',
+    marker_desc: 'this is a tomato',
+    marker_image: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+    marker_lat: 38.9517,
+    marker_long: -92.3341
+})
+.insert_into('PlantMarkers', {
+    plant_type_id: db.select_where('PlantTypes', 'plant_type_name', 'tomato')[0].plant_type_id,
+    user_id: db.select_where('Users', 'name', 'Daniel')[0].user_id,
+    marker_post_date: '4/16/2022',
+    marker_name: 'Tomatos near Library',
+    marker_desc: 'this is also a tomato',
+    marker_image: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+    marker_lat: 38.9517,
+    marker_long: -92.3331
+});
+
+db
+.insert_into('PlantTags', {
+    plant_tag_name: 'Ripe',
+    plant_tag_desc: 'This plant is bearing fruit that is ready to be harvested.'
+})
+.insert_into('PlantTags', {
+    plant_tag_name: 'Unripe',
+    plant_tag_desc: 'This plant is bearing fruit that is not yet ready to be harvested.'
+})
+.insert_into('PlantTags', {
+    plant_tag_name: 'Dangerous',
+    plant_tag_desc: 'This plant is not safe to eat.'
+})
+.insert_into('PlantTags', {
+    plant_tag_name: 'Harvested',
+    plant_tag_desc: 'This plant has been fully harvested for the season.'
+});
+
+db.insert_into('PlantMarkers_PlantTags', {
+    plant_marker_id: db.select_where('PlantMarkers', 'plant_type_id', db.select_where('PlantTypes', 'plant_type_name', 'tomato')[0].plant_type_id)[0].plant_marker_id,
+    plant_tag_id: db.select_where('PlantTags', 'plant_tag_name', 'Ripe')[0].plant_tag_id
+});
+
+db.insert_into('PlantMarkers_PlantTags', {
+    plant_marker_id: 1,
+    plant_tag_id: db.select_where('PlantTags', 'plant_tag_name', 'Harvested')[0].plant_tag_id
+});
+
+db.insert_into('UserMarkerRatings', {
+    user_id: db.select_where('Users', 'name', 'joseph')[0].user_id,
+    plant_marker_id: db.select_where('PlantMarkers', 'plant_type_id', db.select_where('PlantTypes', 'plant_type_name', 'tomato')[0].plant_type_id)[0].plant_marker_id,
+    user_marker_rating: 5,
+    user_marker_rating_date: '4/17/2022',
+    user_marker_rating_desc: 'This is a good tomato!'
+});
+
+console.log('The tags of all of Daniel\'s tomato markers');
+console.log(
+    db.select_where(
+        'PlantMarkers',
+        'user_id',
+        db.select_where('Users', 'name', 'Daniel')[0].user_id
+    ).map(
+        marker => db.select_where(
+            'PlantTags',
+            'plant_tag_id',
+            db.select_where(
+                'PlantMarkers_PlantTags',
+                'plant_marker_id',
+                marker.plant_marker_id
+            )[0].plant_tag_id
+        )[0].plant_tag_name
+    )
+)
