@@ -20,3 +20,24 @@ for (let item of items) {
   item.addEventListener("keypress", toggleItem, false);
 }
 document.addEventListener("click", closeSubmenu, false);
+
+/* ---------- add button */
+
+function showAddSomethingModal() {
+
+  var showSomethingModal = document.getElementById('add-something-modal');
+  var modalBackdrop = document.getElementById('modal-backdrop');
+
+  showSomethingModal.classList.remove('hidden');
+  modalBackdrop.classList.remove('hidden');
+
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  var addSomethingButton = document.getElementById('add-plant-button');
+
+  if (addSomethingButton) {
+    addSomethingButton.addEventListener('click', showAddSomethingModal);
+  }
+
+});

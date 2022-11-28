@@ -4,7 +4,6 @@
 		<meta charset="utf-8"/>
 		<title>Vegimap</title>
 		<link rel="stylesheet" href="style.css"/>
-		<script src="navscript.js"></script>
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" crossorigin="anonymous"/>
 
 		<link rel="icon" href="image0.png"/>
@@ -13,9 +12,13 @@
 
 		
 		<link rel="stylesheet" href="./leaflet/leaflet.css" />
-		<script src="leaflet/leaflet.js"></script>
-		
-		<nav>
+		<script src="leaflet/leaflet.js"></script>	
+		<script src="index.js"></script>	
+	</head>
+
+    <body>
+
+		<div id ="nav">
 			<ul class="menu">
 				<li class="logo"><a href="/">VEGIMAP</a></li>
 				<li class="item"><a href="/">Home</a></li>
@@ -26,16 +29,12 @@
 				<li class="item button secondary"><a href="/signup">Sign Up</a></li>
 				<li class="toggle"><a href="#"><i class="fas fa-bars"></i></a></li>
 			</ul>
-		</nav>
-		
-		<script src="navscript.js"></script>		
-	</head>
+		</div>
 
-    <body>
-		<button type="button" id="sell-something-button"><i class="fas fa-plus"></i></button>
+		<button type="button" id="add-plant-button"><i class="fas fa-plus"></i></button>
 
     	<div id="modal-backdrop" class="hidden"></div>
-    	<div id="sell-something-modal" class="hidden">
+    	<div id="add-something-modal" class="hidden">
       	<div class="modal-dialog">
 
         	<div class="modal-header">
@@ -45,26 +44,26 @@
 
         <div class="modal-body">
 
-          <div class="post-input-element">
-            <label for="post-text-input">Plant Location</label>
-            <input type="text" id="post-location-input"></input>
+          <div class="marker-input-element">
+            <label for="marker-text-input">Plant name</label>
+            <input type="text" id="marker-name-input"></input>
           </div>
 
-          <div class="post-input-element">
-            <label for="post-photo-input">Photo URL</label>
-            <input type="text" id="post-photo-input">
+          <div class="marker-input-element">
+            <label for="marker-photo-input">Photo URL</label>
+            <input type="text" id="marker-photo-input">
           </div>
 
-          <div class="post-input-element">
-            <label for="post-desc-input">Plant description</label>
-            <input type="text" id="post-desc-input">
+          <div class="marker-input-element">
+            <label for="marker-desc-input">Plant description</label>
+            <input type="text" id="marker-desc-input">
           </div>
 
         </div>
 
         <div class="modal-footer">
           <button type="button" id="modal-cancel" class="modal-hide-button action-button">Cancel</button>
-          <button type="button" id="modal-accept" class="action-button">Create Post</button>
+          <button type="button" id="modal-accept" class="action-button">Pick marker location</button>
         </div>
 
       </div>
