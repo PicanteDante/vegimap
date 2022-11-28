@@ -239,7 +239,7 @@ h2 {
   background-color: lightgray;
 }
 
-/* ----------------- add button -----------------*/
+/* ----------------- add button / modal -----------------*/
 .hidden {
   display: none;
 }
@@ -262,12 +262,11 @@ h2 {
 
 #add-something-modal {
   position: fixed;
-  top: 0;
-  bottom: 0;
+  top: 100px;
   left: 0;
   right: 0;
   z-index: 1010;
-  overflow: scroll;
+  
 }
 
 #modal-backdrop {
@@ -315,29 +314,21 @@ h2 {
   padding: 20px;
 }
 
-.post-input-element {
-  display: flex;
+.marker-input-element {
   align-items: center;
   font-size: 20px;
   margin: 10px 0;
 }
 
-.post-input-element > label {
+.marker-input-element > label {
   font-weight: 600;
-  flex: 1 75px;
   margin-right: 10px;
 }
 
-.post-input-element input {
-  flex: 6 200px;
+.marker-input-element input {
   padding: 8px;
   font-size: 20px;
   border: 1px solid #aaa;
-}
-
-.post-fieldset {
-  flex: 1 100%;
-  border: 1px solid #ababab;
 }
 
 .modal-footer {
@@ -349,6 +340,7 @@ h2 {
 #modal-cancel,
 #modal-accept {
   margin-right: 20px;
+  padding: 5px;
 }
 
 #modal-cancel {

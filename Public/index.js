@@ -1,6 +1,5 @@
 var toggle = document.querySelector(".toggle");
 var menu = document.querySelector(".menu");
-var items = document.querySelectorAll(".item"); 
 
 function toggleMenu() {
   if (menu.classList.contains("active")) {
@@ -13,13 +12,6 @@ function toggleMenu() {
 }
 
 toggle.addEventListener("click", toggleMenu, false);
-for (let item of items) {
-  if (item.querySelector(".submenu")) {
-    item.addEventListener("click", toggleItem, false);
-  }
-  item.addEventListener("keypress", toggleItem, false);
-}
-document.addEventListener("click", closeSubmenu, false);
 
 /* ---------- add button */
 
@@ -30,7 +22,6 @@ function showAddSomethingModal() {
 
   showSomethingModal.classList.remove('hidden');
   modalBackdrop.classList.remove('hidden');
-
 }
 
 window.addEventListener('DOMContentLoaded', function () {
@@ -39,5 +30,18 @@ window.addEventListener('DOMContentLoaded', function () {
   if (addSomethingButton) {
     addSomethingButton.addEventListener('click', showAddSomethingModal);
   }
-
 });
+
+function hideAddSomethingModal() {
+
+  var showSomethingModal = document.getElementById('add-something-modal');
+  var modalBackdrop = document.getElementById('modal-backdrop');
+
+  showSomethingModal.classList.add('hidden');
+  modalBackdrop.classList.add('hidden');
+}
+
+var modalHideButtons = document.getElementsByClassName('modal-hide-button');
+for (var i = 0; i < modalHideButtons.length; i++) {
+  modalHideButtons[i].addEventListener('click', hideAddSomethingModal);
+}

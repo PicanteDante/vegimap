@@ -13,10 +13,6 @@
 		
 		<link rel="stylesheet" href="./leaflet/leaflet.css" />
 		<script src="leaflet/leaflet.js"></script>	
-		<script src="index.js"></script>	
-	</head>
-
-    <body>
 
 		<div id ="nav">
 			<ul class="menu">
@@ -31,6 +27,7 @@
 			</ul>
 		</div>
 
+		
 		<button type="button" id="add-plant-button"><i class="fas fa-plus"></i></button>
 
     	<div id="modal-backdrop" class="hidden"></div>
@@ -46,17 +43,17 @@
 
           <div class="marker-input-element">
             <label for="marker-text-input">Plant name</label>
-            <input type="text" id="marker-name-input"></input>
+            <input type="text" id="marker-name-input" placeholder="enter plant name">
           </div>
 
           <div class="marker-input-element">
-            <label for="marker-photo-input">Photo URL</label>
-            <input type="text" id="marker-photo-input">
+            <label for="marker-photo-input">Image URL</label>
+            <input type="text" id="marker-photo-input" placeholder="enter plant image URL">
           </div>
 
           <div class="marker-input-element">
             <label for="marker-desc-input">Plant description</label>
-            <input type="text" id="marker-desc-input">
+            <input type="text" id="marker-desc-input" placeholder="enter plant description">
           </div>
 
         </div>
@@ -66,10 +63,14 @@
           <button type="button" id="modal-accept" class="action-button">Pick marker location</button>
         </div>
 
-      </div>
-    </div>
-        {{{body}}}
+      	</div>
+    	</div>
 		
+		<script src="index.js"></script>	
+	</head>
+
+    <body>
+        {{{body}}}
     </body>
 
 </html>
