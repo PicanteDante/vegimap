@@ -351,3 +351,21 @@ h2 {
 #modal-cancel:hover {
   background-color: #eee;
 }
+
+/*-------- error page --------*/
+
+.error-container {
+  font-family: "Roboto Slab", serif;
+  text-align: center;
+}
+
+.error-container h2 {
+  font-size: 128px;
+  margin-top: 50px;
+  margin-bottom: 0;
+}
+
+.error-container h3 {
+  font-size: 32px;
+  margin: 0;
+}
