@@ -4,7 +4,7 @@ var exphbs = require('express-handlebars')
 var app  = express();
 var port = process.env.PORT || 6969;
 
-//app.use(express.static(path.join(__dirname, 'Public')));
+app.use(express.static(path.join(__dirname, 'Public')));
 app.use(express.json())
 app.engine('handlebars', exphbs.engine({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
@@ -28,10 +28,11 @@ app.get('/', function (req, res, next) {
 	}
 });
 
+
 app.get('/signup', function (req, res, next){
-	console.log("  -- sign up page requested")
-	res.status(200).sendFile(path.join(__dirname+'/signup.html'));
+	res.status(200).sendFile(path.join(__dirname, '/Public/signup.html'));
 });
+
 
 app.get('*', function (req, res) {
 	res.status(404).render('404', {url: req.url});

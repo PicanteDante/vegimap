@@ -227,16 +227,25 @@ h2 {
 }
 
 .signup-container{
-  width: 50%;
+  width: 500px;
   padding: 20px;
   margin: auto;
-  /*
-  margin-left: auto;
-  margin-right: auto;*/
   border: 3px;
   border-style: solid;
-  border-radius: 10px;
+  border-radius: 5px;
   background-color: lightgray;
+}
+
+#create-acct {
+  background: #35bd37;
+  margin-left: 0px;
+  padding: 5px;
+  border-width: 1px;
+  border-radius: 3px;
+}
+
+#create-acct:hover{
+  background: #119113;
 }
 
 /* ----------------- add button / modal -----------------*/
