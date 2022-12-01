@@ -114,6 +114,7 @@ a {
   }
 
   .button.secondary {
+    display: none;
     border: 0;
   }
 

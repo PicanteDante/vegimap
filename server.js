@@ -28,10 +28,13 @@ app.get('/', function (req, res, next) {
 	}
 });
 
+app.get('/leaderboard', function (req, res) {
+	res.status(200).render('leaderboard');
+});
+
 app.get('*', function (req, res) {
 	res.status(404).render('404', {url: req.url});
 });
-
 
 app.listen(port, function () {
     console.log("== Server is listening on port", port);
