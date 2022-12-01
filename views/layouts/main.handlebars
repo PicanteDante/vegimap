@@ -16,56 +16,17 @@
 
 		<div id ="nav">
 			<ul class="menu">
-				<li class="logo"><a href="/">VEGIMAP</a></li>
-				<li class="item"><a href="/">Home</a></li>
-				<li class="item"><a href="/about">About</a></li>
-				<li class="item"><a href="/leaderboard">Leaderboard </a></li>
+				<li class="logo"><a class="nav-link" href="/">VEGIMAP</a></li>
+				<li class="item"><a class="nav-link" href="/">Home</a></li>
+				<li class="item"><a class="nav-link" href="/about">About</a></li>
+				<li class="item"><a class="nav-link" href="/leaderboard">Leaderboard </a></li>
 
-				<li class="item button"><a href="/signin.html">Sign In</a></li>
-				<li class="item button secondary"><a href="bye">Sign out</a></li>
-				<li class="toggle"><a href="#"><i class="fas fa-bars"></i></a></li>
+				<li class="item button"><a class="nav-link" href="/signin.html">Sign In</a></li>
+				<li class="item button secondary"><a class="nav-link" href="bye">Sign out</a></li>
+				<li class="toggle"><a class="nav-link" href="#"><i class="fas fa-bars"></i></a></li>
 			</ul>
 		</div>
 
-		
-		<button type="button" id="add-plant-button"><i class="fas fa-plus"></i></button>
-
-    	<div id="modal-backdrop" class="hidden"></div>
-    	<div id="add-something-modal" class="hidden">
-      	<div class="modal-dialog">
-
-        	<div class="modal-header">
-          		<h3>Add a plant marker</h3>
-          		<button type="button" id="modal-close" class="modal-hide-button">&times;</button>
-        	</div>
-
-        <div class="modal-body">
-
-          <div class="marker-input-element">
-            <label for="marker-text-input">Plant name</label>
-            <input type="text" id="marker-name-input" placeholder="enter plant name">
-          </div>
-
-          <div class="marker-input-element">
-            <label for="marker-photo-input">Image URL</label>
-            <input type="text" id="marker-photo-input" placeholder="enter plant image URL">
-          </div>
-
-          <div class="marker-input-element">
-            <label for="marker-desc-input">Plant description</label>
-            <input type="text" id="marker-desc-input" placeholder="enter plant description">
-          </div>
-
-        </div>
-
-        <div class="modal-footer">
-          <button type="button" id="modal-cancel" class="modal-hide-button action-button">Cancel</button>
-          <button type="button" id="modal-accept" class="action-button">Pick marker location</button>
-        </div>
-
-      	</div>
-    	</div>
-		
 		<script src="index.js"></script>	
 	</head>
 

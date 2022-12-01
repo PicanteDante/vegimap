@@ -9,6 +9,45 @@
 	<div class="leaflet-control coordinate"></div>
 </div>
 
+<button type="button" id="add-plant-button"><i class="fas fa-plus"></i></button>
+
+    	<div id="modal-backdrop" class="hidden"></div>
+    	<div id="add-something-modal" class="hidden">
+      	<div class="modal-dialog">
+
+        	<div class="modal-header">
+          		<h3>Add a plant marker</h3>
+          		<button type="button" id="modal-close" class="modal-hide-button">&times;</button>
+        	</div>
+
+        <div class="modal-body">
+
+          <div class="marker-input-element">
+            <label for="marker-text-input">Plant name</label>
+            <input type="text" id="marker-name-input" placeholder="enter plant name">
+          </div>
+
+          <div class="marker-input-element">
+            <label for="marker-photo-input">Image URL</label>
+            <input type="text" id="marker-photo-input" placeholder="enter plant image URL">
+          </div>
+
+          <div class="marker-input-element">
+            <label for="marker-desc-input">Plant description</label>
+            <input type="text" id="marker-desc-input" placeholder="enter plant description">
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="modal-cancel" class="modal-hide-button action-button">Cancel</button>
+          <button type="button" id="modal-accept" class="action-button">Pick marker location</button>
+        </div>
+
+      	</div>
+    </div>
+
+	<script src="addbutton.js"></script>
 
 <script>
 	var map = L.map('map').setView([44.563091, -123.283511], 15);
