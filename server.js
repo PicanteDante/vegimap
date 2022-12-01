@@ -28,12 +28,6 @@ app.get('/', function (req, res, next) {
 	}
 });
 
-
-app.get('/signup', function (req, res, next){
-	res.status(200).sendFile(path.join(__dirname, '/Public/signup.html'));
-});
-
-
 app.get('*', function (req, res) {
 	res.status(404).render('404', {url: req.url});
 });

@@ -65,26 +65,3 @@ function clearAddSomethingModalInputs() {
     inputElem.value = "";
   });
 }
-
-function signupAccept() {
-  
-  var email = document.getElementById('email').value.trim();
-  var pw = document.getElementById('pw').value.trim();
-  var pwRepeat = document.getElementById('pwRepeat').value.trim();
-
-  if (!email || !pw || !pwRepeat) {
-    alert("You must fill in all of the fields!");
-  }else{
-    if (pw != pwRepeat){
-      alert("Your passwords are not matching!");
-    }
-
-    /* ---- add new info to database ---- */
-    console.log("== sign up accepted");
-  }
-}
-
-var CreateAcctBtn = document.getElementById('create-acct');
-if (CreateAcctBtn) {
-  CreateAcctBtn.addEventListener('click', signupAccept);
-}
