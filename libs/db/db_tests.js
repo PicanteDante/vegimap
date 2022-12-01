@@ -26,6 +26,8 @@ db.insert_into('Users', {
     email: 'idk@gmail.com'
 });
 
+console.log("indexes: ", db.tables["Users"].indexes);
+
 console.log("where user pp > 0");
 console.log(db.select_where_predicate('Users', user => user.plant_points > 0));
 

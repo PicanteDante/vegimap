@@ -12,20 +12,14 @@
  *      - can create a user  
  *  - Read: yes
  *      - can get a user by id
- *  - Update: no...
- *  - Delete: no...
+ *  - Update: yes
+ *  - Delete: yes
  * 
  *  What next?
- *    - Update and delete methods
- *    - more read methods
- *         - get user by column
- *         - filter users
- *         - get related info (e.g. get user's plants)
  *    - enforce datatypes
- *    - enforce foreign key constraints
- *    - enforce unique constraints
- *    - enforce not null constraints
- *    - implement basic SQL like queries (SELECT ... FROM ... INNER JOIN ... ON ... WHERE ... GROUP BY ... ORDER BY ...)
+ *    - helper methods
+ *       - get id
+ *       - proper foreign key indexing  
  */
 
 const _ = require('lodash');
@@ -114,7 +108,8 @@ class Table {
      */
     select_where (column, value) {
         let rows = [];
-        if (this.indexes[column]) {
+        console.log("select_where", column, value);
+        if (column in this.indexes) {
             if (value in this.indexes[column]) {
                 this.indexes[column][value].forEach(key => {
                     rows.push(this.data[key]);

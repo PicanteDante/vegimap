@@ -4,7 +4,8 @@
  * Columns are:
  *   plant_marker_id:         int (primary key) (auto increment)
  *   plant_type_id:           int (foreign key in PlantTypes)
- *   user_id:                int (foreign key in Users)
+ *   user_id:                 int (foreign key in Users)
+ *   visibilty
  *   marker_post_date:        string (MM/DD/YYYY)
  *   marker_rating:           float
  *   marker_name:             string
@@ -25,6 +26,7 @@ class PlantMarkers extends Table {
             [
                 'plant_type_id',
                 'user_id',
+                'marker_visibility',
                 'marker_post_date',
                 'marker_name',
                 'marker_description',

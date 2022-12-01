@@ -33,5 +33,5 @@ class UserMarkerRatings extends Table {
         );
     }
 }
-
+te_table.js
 module.exports = UserMarkerRatings;
