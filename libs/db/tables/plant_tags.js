@@ -18,7 +18,7 @@ class PlantTags extends Table {
             [
                 'plant_tag_name',
                 'plant_tag_description'
-            ],  // columns, not including primary key
+            ],  // columns, not including primary key   
         );
     }
 }
