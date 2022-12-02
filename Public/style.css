@@ -16,7 +16,7 @@
   z-index: 1;
 }
 
-a {
+.nav-link {
   color: white;
   text-decoration: none;
 }
@@ -489,6 +489,35 @@ a.google span{
 
 #modal-cancel:hover {
   background-color: #eee;
+}
+
+/* ----------------- leaderboard -----------------*/
+.board-container{
+  margin-top: 75px;
+
+}
+
+.content{
+  display: flex;
+  text-align: center;
+  border-bottom: 2px solid;
+  vertical-align: middle;
+}
+
+#board-header{
+  text-align: center;
+}
+
+.avatar{
+  float: left;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+}
+
+.avatar img{
+  max-width: 100%;
+  max-height: 100%;
 }
 
 /*-------- error page --------*/
