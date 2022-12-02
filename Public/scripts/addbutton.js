@@ -6,10 +6,27 @@ function showAddSomethingModal() {
     var modalBackdrop = document.getElementById('modal-backdrop');
 	var inputBoxes = document.getElementsByClassName("marker-input-box");
 	
+	//	Reset the error boxes
 	for (var i = 0; i < inputBoxes.length; i++)
 	{
-		inputBoxes[i].style.backgroundColor = "";
+		inputBoxes[i].style.borderColor = "";
+		inputBoxes[i].value = "";
+		console.log("jeff");
 	}
+	
+	//	Get GPS location if possible
+	const successCallback = (position) => {
+		console.log(position);
+		var longBox = document.getElementById("marker-long-input");
+		var latBox = document.getElementById("marker-lat-input");
+		
+		longBox.value = position.coords.longitude;
+		latBox.value = position.coords.latitude;
+	}
+	const failureCallback = (error) => {
+		console.log(error);
+	}
+	navigator.geolocation.getCurrentPosition(successCallback, failureCallback);
   
     showSomethingModal.classList.remove('hidden');
     modalBackdrop.classList.remove('hidden');
@@ -80,7 +97,7 @@ function checkInput()
 	var imageBox = document.getElementById("marker-photo-input");
 	var descBox = document.getElementById("marker-desc-input");
 	var longBox = document.getElementById("marker-long-input");
-	var longBox = document.getElementById("marker-lat-input");
+	var latBox = document.getElementById("marker-lat-input");
 	
 	
 	var validInput = true;
@@ -89,14 +106,13 @@ function checkInput()
 		
 		if (inputBoxes[i].value == "")
 		{
-			inputBoxes[i].style.backgroundColor = "red";
+			inputBoxes[i].style.borderColor = "red";
 			validInput = false;
 		}
 		else
 		{
-			inputBoxes[i].style.backgroundColor = "";
+			inputBoxes[i].style.borderColor = "";
 		}
-		console.log(inputBoxes[i].style.backgroundColor);
 	}
 	
 	
