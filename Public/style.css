@@ -456,6 +456,11 @@ form{
   background-color: #eee;
 }
 
+#marker-input-box	{
+	margin-left: auto;
+	margin-right: 0;
+}
+
 /* ----------------- leaderboard -----------------*/
 .board-container{
   margin-top: 75px;

@@ -62,9 +62,8 @@ function addMarker(name, imageURL, desc, long, lat)
 
 function checkInput()
 {
-	var inputBoxes = document.getElementsByClassName("marker-input-element");
+	var inputBoxes = document.getElementsByClassName("marker-input-box");
 	
-	/*
 	var nameBox = document.getElementById("marker-name-input");
 	var imageBox = document.getElementById("marker-photo-input");
 	var descBox = document.getElementById("marker-desc-input");
@@ -72,31 +71,26 @@ function checkInput()
 	var longBox = document.getElementById("marker-lat-input");
 	
 	
-	console.log("bruh")
-	if (nameBox.value == "")
-	{
-		console.log("aaaaha")
-	}
-	else if (checkURL(imageBox.value))*/
-	
 	var validInput = true;
 	for (var i = 0; i < inputBoxes.length; i++)
 	{
-		if (inputBoxes[i].value == null)
+		
+		if (inputBoxes[i].value == "")
 		{
-			inputBoxes[i].style.background = "red";
+			inputBoxes[i].style.backgroundColor = "red";
 			validInput = false;
 		}
 		else
 		{
-			inputBoxes[i].style.background = "";
+			inputBoxes[i].style.backgroundColor = "";
 		}
+		console.log(inputBoxes[i].style.backgroundColor);
 	}
 	
 	
 	if (validInput)
 	{
-		addMarker(
+		//addMarker(
 	}
 }
 
