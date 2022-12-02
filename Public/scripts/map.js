@@ -7,6 +7,16 @@ var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 });
 osm.addTo(map);
 
+
+/*
+ *	THE THING
+ */
+function addMarker(name, imageURL, desc, long, lat)
+{
+	var marker = L.marker([parseFloat(long), parseFloat(lat)]).addTo(map);
+	console.log(marker);
+}
+
 /* ---------- add button ---------- */
 
 function showAddSomethingModal() {
@@ -79,11 +89,6 @@ function checkURL(url)
 	return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
 }
 
-function addMarker(name, imageURL, desc, long, lat)
-{
-	var marker = L.marker([long, lat]).addTo(map);
-	console.log(marker);
-}
 
 /*
 document.getElementById("fName").className = document.getElementById("fName").className + " error";  // this adds the error class
