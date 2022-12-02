@@ -497,11 +497,13 @@ a.google span{
 
 }
 
+.board-list{
+  width: 100%;
+}
+
 .content{
   display: flex;
-  text-align: center;
   border-bottom: 2px solid;
-  vertical-align: middle;
 }
 
 #board-header{
