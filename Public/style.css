@@ -415,18 +415,18 @@ form{
 }
 
 .modal-body {
-  padding: 20px;
+	padding: 20px;
 }
 
 .marker-input-element {
-  align-items: center;
-  font-size: 20px;
-  margin: 10px 0;
+	align-items: center;
+	font-size: 20px;
+	margin: 15px;
 }
 
 .marker-input-element > label {
-  font-weight: 600;
-  margin-right: 10px;
+	font-weight: 600;
+	margin-right: 10px;
 }
 
 .marker-input-element input {
@@ -456,8 +456,11 @@ form{
   background-color: #eee;
 }
 
-#marker-input-box	{
-	margin-left: auto;
+.marker-input-box	{
+	vertical-align: middle;
+	float: right;
+	justify-self: right;
+	margin-left: 0;
 	margin-right: 0;
 }
 

@@ -4,6 +4,12 @@ function showAddSomethingModal() {
 
 	var showSomethingModal = document.getElementById('add-something-modal');
     var modalBackdrop = document.getElementById('modal-backdrop');
+	var inputBoxes = document.getElementsByClassName("marker-input-box");
+	
+	for (var i = 0; i < inputBoxes.length; i++)
+	{
+		inputBoxes[i].style.backgroundColor = "";
+	}
   
     showSomethingModal.classList.remove('hidden');
     modalBackdrop.classList.remove('hidden');
@@ -59,6 +65,12 @@ function addMarker(name, imageURL, desc, long, lat)
 {
 	
 }
+
+/*
+document.getElementById("fName").className = document.getElementById("fName").className + " error";  // this adds the error class
+
+document.getElementById("fName").className = document.getElementById("fName").className.replace(" error", ""); // this removes the error class
+ */
 
 function checkInput()
 {
