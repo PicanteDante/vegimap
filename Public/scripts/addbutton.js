@@ -8,17 +8,16 @@ function showAddSomethingModal() {
     showSomethingModal.classList.remove('hidden');
     modalBackdrop.classList.remove('hidden');
 }
-  
-window.addEventListener('DOMContentLoaded', function () {
-var addSomethingButton = document.getElementById('add-plant-button');
 
-if (addSomethingButton) {
-	addSomethingButton.addEventListener('click', showAddSomethingModal);
+window.addEventListener('DOMContentLoaded', function () {
+	var addSomethingButton = document.getElementById('add-plant-button');
+
+	if (addSomethingButton) {
+		addSomethingButton.addEventListener('click', showAddSomethingModal);
 	}
 });
 
 function hideAddSomethingModal() {
-
 	var showSomethingModal = document.getElementById('add-something-modal');
 	var modalBackdrop = document.getElementById('modal-backdrop');
 
@@ -48,3 +47,27 @@ function clearAddSomethingModalInputs() {
 		inputElem.value = "";
 	});
 }
+
+
+//	Receive input and create marker
+function addMarker()
+{
+	
+}
+
+function checkInput()
+{
+	var nameBox = document.getElementById("marker-name-input");
+	var imageBox = document.getElementById("marker-photo-input");
+	var descBox = document.getElementById("marker-desc-input");
+	var longBox = document.getElementById("marker-long-input");
+	var longBox = document.getElementById("marker-lat-input");
+	
+	if (nameBox.value == "")
+	{
+		console.log("aaaaha")
+	}
+}
+
+var submitDataButton = document.getElementById("modal-accept");
+submitDataButton.addEventListener('click', checkInput);
