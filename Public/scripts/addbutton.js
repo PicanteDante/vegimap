@@ -50,22 +50,53 @@ function clearAddSomethingModalInputs() {
 
 
 //	Receive input and create marker
-function addMarker()
+function checkURL(url)
+{
+	return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
+}
+
+function addMarker(name, imageURL, desc, long, lat)
 {
 	
 }
 
 function checkInput()
 {
+	var inputBoxes = document.getElementsByClassName("marker-input-element");
+	
+	/*
 	var nameBox = document.getElementById("marker-name-input");
 	var imageBox = document.getElementById("marker-photo-input");
 	var descBox = document.getElementById("marker-desc-input");
 	var longBox = document.getElementById("marker-long-input");
 	var longBox = document.getElementById("marker-lat-input");
 	
+	
+	console.log("bruh")
 	if (nameBox.value == "")
 	{
 		console.log("aaaaha")
+	}
+	else if (checkURL(imageBox.value))*/
+	
+	var validInput = true;
+	for (var i = 0; i < inputBoxes.length; i++)
+	{
+		if (inputBoxes[i].value == null)
+		{
+			inputBoxes[i].style.background = "red";
+			validInput = false;
+		}
+		else
+		{
+			inputBoxes[i].style.background = "";
+		}
+	}
+	
+	
+	if (validInput)
+	{
+		addMarker(
 	}
 }
 

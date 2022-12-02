@@ -531,3 +531,7 @@ form{
   font-size: 32px;
   margin: 0;
 }
+/*	Intended for input fields */
+.error-input {
+  border:2px solid red;
+}
