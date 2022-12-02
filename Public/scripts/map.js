@@ -15,14 +15,6 @@ function showAddSomethingModal() {
     var modalBackdrop = document.getElementById('modal-backdrop');
 	var inputBoxes = document.getElementsByClassName("marker-input-box");
 	
-	//	Reset the error boxes
-	for (var i = 0; i < inputBoxes.length; i++)
-	{
-		inputBoxes[i].style.borderColor = "";
-		inputBoxes[i].value = "";
-		console.log("jeff");
-	}
-	
 	//	Get GPS location if possible
 	const successCallback = (position) => {
 		console.log(position);
@@ -64,20 +56,20 @@ var modalHideButtons = document.getElementsByClassName('modal-hide-button');
 		modalHideButtons[i].addEventListener('click', hideAddSomethingModal);
 	}
 
+
+/*
+ * Clear any text entered in the text inputs.
+ */
 function clearAddSomethingModalInputs() {
 
-	var postTextInputElements = [
-		document.getElementById('marker-name-input'),
-		document.getElementById('marker-photo-input'),
-		document.getElementById('marker-desc-input')
-	];
+	var inputBoxes = document.getElementsByClassName("marker-input-box");
 
-	/*
-	 * Clear any text entered in the text inputs.
-	 */
-	postTextInputElements.forEach(function (inputElem) {
-		inputElem.value = "";
-	});
+	//	Reset the error boxes
+	for (var i = 0; i < inputBoxes.length; i++)
+	{
+		inputBoxes[i].style.borderColor = "";
+		inputBoxes[i].value = "";
+	}
 }
 
 
@@ -89,7 +81,8 @@ function checkURL(url)
 
 function addMarker(name, imageURL, desc, long, lat)
 {
-	
+	var marker = L.marker([long, lat]).addTo(map);
+	console.log(marker);
 }
 
 /*
