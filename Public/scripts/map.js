@@ -1,3 +1,12 @@
+/* ---------- the map ---------- */
+
+var map = L.map('map').setView([44.563091, -123.283511], 15);
+
+var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+});
+osm.addTo(map);
+
 /* ---------- add button ---------- */
 
 function showAddSomethingModal() {
@@ -118,7 +127,7 @@ function checkInput()
 	
 	if (validInput)
 	{
-		//addMarker(
+		addMarker(nameBox.value, imageBox.value, descBox.value, longBox.value, latBox.value);
 	}
 }
 
