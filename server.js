@@ -51,6 +51,8 @@ app.get('/signin', function (req, res) {
 /*
  *	ACTIONS
  */
+
+
 app.post('/users/signup/', function (req, res) {
 	// req is a form submission
 	console.log("== Signup request ==");
@@ -81,3 +83,5 @@ app.get('*', function (req, res) {
 app.listen(port, function () {
     console.log("== Server is listening on port", port);
 });
+
+
