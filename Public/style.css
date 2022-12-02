@@ -395,7 +395,7 @@ form{
 
 .modal-header {
   position: relative;
-  padding: 10px 20px;
+  padding: 35px 35px;
 }
 
 .modal-header h3 {
@@ -419,14 +419,18 @@ form{
 }
 
 .marker-input-element {
+	flex-direction: row;
+	display: flex;
 	align-items: center;
+	justify-content: space-between;
 	font-size: 20px;
 	margin: 15px;
+	/*	height: 100px;*/
 }
 
 .marker-input-element > label {
 	font-weight: 600;
-	margin-right: 10px;
+	/*margin-right: 10px;*/
 }
 
 .marker-input-element input {
@@ -438,12 +442,12 @@ form{
 .modal-footer {
   display: flex;
   justify-content: flex-end;
-  padding: 10px 10px 20px 10px;
+  padding: 10px 20px 20px 10px;
 }
 
 #modal-cancel,
 #modal-accept {
-  margin-right: 20px;
+  margin-right: 15px;
   padding: 5px;
 }
 
@@ -456,12 +460,17 @@ form{
   background-color: #eee;
 }
 
+.marker-input-box::after	{
+	content: none;
+}
 .marker-input-box	{
-	vertical-align: middle;
-	float: right;
+	margin-left: auto;
+	flex-direction: column;
+	justify-content: space-between;
+	/*
 	justify-self: right;
 	margin-left: 0;
-	margin-right: 0;
+	margin-right: 0;*/
 }
 
 /* ----------------- leaderboard -----------------*/
