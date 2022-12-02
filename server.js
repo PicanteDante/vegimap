@@ -12,13 +12,17 @@ var db_interface = require('./libs/db/interface.js');  // abstracted access like
 var db_signup = new db_interface.Signup(db);
 
 // Middleware
-app.use(express.static(path.join(__dirname, 'Public')));
+app.use(express.static(path.join(__dirname, 'Public', 'scripts')));
 app.use(express.json())
 app.engine('handlebars', exphbs.engine({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 app.use(express.static('Public'))
 app.use(express.urlencoded({ extended: true }));
 
+
+/*
+ *	PAGES
+ */
 app.get('/', function (req, res, next) {
 	if (req)
 	{
@@ -39,6 +43,14 @@ app.get('/leaderboard', function (req, res) {
 	res.status(200).render('leaderboard');
 });
 
+app.get('/signin', function (req, res) {
+	res.status(200).render('signin');
+});
+
+
+/*
+ *	ACTIONS
+ */
 app.post('/users/signup/', function (req, res) {
 	// req is a form submission
 	console.log("== Signup request ==");
