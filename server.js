@@ -48,6 +48,10 @@ app.get('/signin', function (req, res) {
 });
 
 
+app.get('/shrek', function(req, res){
+	res.status(200).render('profile');
+});
+
 /*
  *	ACTIONS
  */
