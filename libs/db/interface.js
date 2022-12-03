@@ -8,16 +8,24 @@ class Interface {
     }
 }
 
+/**
+ * Methods for signing up and logging in
+ */
 class Signup extends Interface {
-    signup(req, res) {
+    /**
+     * Creates a new user on sign up
+     * 
+     * @param {Object} req - request object
+     * @returns {[Bool, String]} - success, error message
+     */
+    signup(req) {
         // req is a form submission
-        console.log('== Signup ==');
         if (req.body.username && req.body.password && req.body.email) {
             // make sure the username and email are unique
             if (this.db.select_where('Users', 'username', req.body.username).length > 0) {
-                res.status(400).send('Username already exists.');
+                return [false, 'Username already exists.'];
             } else if (this.db.select_where('Users', 'email', req.body.email).length > 0) {
-                res.status(400).send('Email already exists.');
+                return [false, 'Email already exists.'];
             } else {
                 this.db.insert_into('Users', {
                     name: req.body.username,
@@ -26,35 +34,59 @@ class Signup extends Interface {
                     email: req.body.email,
                     password: crypto.createHash('sha256').update(req.body.password).digest('hex')
                 });
-                console.log(JSON.stringify(this.db.select_where('Users', 'email', req.body.email)));
-                res.status(200).send('Success');
+                return [true, 'Success'];
             }
         } else {
-            res.status(400).send('Missing username, password, or email.');
+            return [false, 'Missing username, password, or email.'];
         }
     }
 
-    login(req, res) {
+    /**
+     * Logs in a user
+     * 
+     * @param {Object} req - request object
+     * @returns {(Bool, String)} - success, error message
+     */
+    login(req) {
         // req is a form submission
-        console.log('== Login ==');
         if (req.body.email && req.body.password) {
             var user = this.db.select_where('Users', 'email', req.body.email);
             if (user.length > 0) {
                 if (user[0].password == crypto.createHash('sha256').update(req.body.password).digest('hex')) {
-                    res.cookie('username', user[0].name);
-                    res.status(200).send('Success');
+                    return [true, 'Success'];
                 } else {
-                    res.status(400).send('Email or password is incorrect.');
+                    return [false, 'Email or password is incorrect.'];
                 }
             } else {
-                res.status(400).send('Email or password is incorrect.');
+                return [false, 'Email or password is incorrect.'];
             }
         } else {
-            res.status(400).send('Missing email or password.');
+            return [false, 'Missing email or password.'];
+        }
+    }
+
+    /**
+     * Checks if a username or email is already in use
+     * 
+     * @param {Object} req - request object
+     * @returns {[Bool, Bool]} - email in use, username in use
+     */
+    check(req) {
+        // req body is an object with a username and email property
+        if (req.body.username && req.body.email) {
+            return [
+                this.db.select_where('Users', 'email', req.body.email).length > 0,
+                this.db.select_where('Users', 'name', req.body.username).length > 0
+            ];
+        } else {
+            return [false, false];
         }
     }
 }
 
+/**
+ * Methods for getting user information from the database.
+ */
 class Profiles extends Interface {
     get_profile(req, res) {
         // req.body could have either a username, email, or user_id
