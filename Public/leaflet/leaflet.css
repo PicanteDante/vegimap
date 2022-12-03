@@ -330,6 +330,16 @@ svg.leaflet-image-layer.leaflet-interactive path {
 	border-bottom-right-radius: 2px;
 	}
 
+
+/* zoom box placement */
+.leaflet-top {
+	bottom: 0;
+	}
+	
+.leaflet-top .leaflet-control-zoom {
+	top:90%;
+	}
+
 /* zoom control */
 
 .leaflet-control-zoom-in,
