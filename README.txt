@@ -1,5 +1,5 @@
-////////////////////////////////
-/       This is vegimap        /
+////////////////////////////////          Introduction: 
+/       This is vegimap        /          To display edible plants near you, and help against food insecurity.
 /by Miguel Cruz, Felix Garcia, /
 /Rylan Harwood, Theodore Ja,   /
 /Bryan Nguyen, Connor Olsen,   / 
@@ -10,6 +10,12 @@
 
 
 
-Introduction: 
-To display edible plants near you, and help against food insecurity.
+User requirements:
 
+1. (INCOMPLETE) > Ability to create markers on the map (This user acceptance test needs more defaults before submission)
+2. (IN PRGRESS) > Ability to view the information of a marker after clicking on it on the map which is displayed from a left hand side menu
+3. (INCOMPLETE) > Markers on the map, can be upvoted or downvoted once (but not both) to increase or decrease the marker creator's plant points
+4. (IN PRGRESS) > Leaderboard page lists Vegimap users in order of their performance points in descending order (Might need to update to be lists the top 10 Vegimap users)
+5.
+6.
+7.
