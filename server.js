@@ -39,28 +39,74 @@ app.get('/leaderboard', function (req, res) {
 	res.status(200).render('leaderboard');
 });
 
-app.post('/users/signup/', function (req, res) {
+app.post('/users/signup', (req, res) => {
 	// req is a form submission
-	console.log("== Signup request ==");
-	console.log(JSON.stringify({
-		username: req.body.username,
-		email: req.body.email,
-		password: req.body.password
-	}));
-	db_signup.signup(req, res);
+	console.log('== POST /users/signup ==');
+	console.log(JSON.stringify(req.body));
+	let result = db_signup.signup(req);
+	console.log(result);
+	let success = result[0];
+	let message = result[1];
+	if (success) {
+		console.log('Signup successful.');
+		res.status(200).send(JSON.stringify({
+			success: true,
+			message: message
+		}));
+	} else {
+		console.log('Signup failed: ' + message);
+		res.status(400).send(JSON.stringify({
+			success: false,
+			message: message
+		}));
+	}
 });
 
-app.post('/users/login/', function (req, res) {
-	// req is a form submission
-	console.log("== Login request ==");
-	console.log(JSON.stringify({
-		email: req.body.email,
-		password: req.body.password
-	}));
-	db_signup.login(req, res);
-	//res.redirect('/');
+app.post('/users/login', (req, res) => {
+	let result = db_signup.login(req);
+	let success = result[0];
+	let message = result[1];
+	if (success) {
+		res.status(200).send(JSON.stringify({
+			success: true,
+			message: message
+		}));
+	} else {
+		res.status(400).send(JSON.stringify({
+			success: false,
+			error: message
+		}));
+	}
 });
 
+app.post('/users/signup/check', (req, res) => {
+	// req is an object with a username and email property
+	let result = db_signup.check_signup(req);
+	let email_in_use = result[0];
+	let username_in_use = result[1];
+	res.status(200).send(JSON.stringify({
+		email_in_use: email_in_use,
+		username_in_use: username_in_use
+	}));
+});
+
+app.post('/users/login/check', (req, res) => {
+	// req is an object with a username and password property
+	let result = db_signup.check_login(req);
+	let success = result[0];
+	let message = result[1];
+	if (success) {
+		res.status(200).send(JSON.stringify({
+			success: true,
+			message: message
+		}));
+	} else {
+		res.status(400).send(JSON.stringify({
+			success: false,
+			error: message
+		}));
+	}
+});
 
 app.get('*', function (req, res) {
 	res.status(404).render('404', {url: req.url});
