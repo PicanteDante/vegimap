@@ -9,7 +9,7 @@
   position: fixed;
   top: 0px;
   width: 100%;
-  background: #222;
+  background: rgba(21, 21, 21, 0.93); /* this makes it transparent*/
   font-family: sans-serif;
   top: 0px;
   left: 0px;
@@ -110,7 +110,7 @@
   }
 
   .button a {
-    background: #35bd37
+    background: #004225
   }
 
   .button.secondary {
@@ -120,7 +120,7 @@
 
   .button.secondary a {
     background: transparent;
-    border: 1px #35bd37 solid;
+    border: 1px #004225 solid;
   }
 
   .button a:hover {
@@ -128,7 +128,7 @@
   }
   
   .button:not(.secondary) a:hover {
-    background: #119113;
+    background: #004225;
   }
 }
 
@@ -160,7 +160,7 @@
   }
 
   .button a {
-    background: #35bd37;
+    background: #004225;
   }
 
   .button.secondary {
@@ -169,7 +169,7 @@
 
   .button.secondary a {
     background: transparent;
-    border: 1px #35bd37 solid;
+    border: 1px #004225 solid;
   }
 
   .button a:hover {
@@ -177,7 +177,7 @@
   }
 
   .button:not(.secondary) a:hover {
-    background: #119113;
+    background: #004225;
   }
 }
 
@@ -220,7 +220,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #119113;
+    background-color: #481f01; /* syrup brown */
     column-gap: 30px;
 }
 .form{
@@ -288,12 +288,12 @@ form{
 }
 .field button{
     color: #fff;
-    background-color: #0171d3;
+    background-color: #004225;
     transition: all 0.3s ease;
     cursor: pointer;
 }
 .field button:hover{
-    background-color: #016dcb;
+    background-color: #004225;
 }
 .form-link{
     text-align: center;
@@ -306,7 +306,7 @@ form{
     color: #232836;
 }
 .form a{
-    color: #0171d3;
+    color: #004225;
     text-decoration: none;
 }
 .form-content a:hover{
@@ -357,7 +357,7 @@ form{
   border: none;
   border-radius: 30px;
   font-size: 20px;
-  background-color: #35bd37;
+  background-color: #004225; /*add button color is british racing green  */
   color: #fff;
   cursor: pointer;
   box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.25);
@@ -526,7 +526,7 @@ form{
 
 .points{
   text-align: right;
-  color: #119113;
+  color: #004225;
   vertical-align: middle;
   padding-top: 40px;
 }
@@ -540,6 +540,7 @@ form{
   border-radius: 2px;
   margin-right: 4px;
   margin-top: 4px;
+
 }
 
 #profile-picture img{
@@ -579,7 +580,7 @@ form{
 
 #profile-points{
   text-align: justify;
-  color: #119113;
+  color: #004225;
   font-size: 50px;
 }
 
