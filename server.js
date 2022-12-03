@@ -11,7 +11,7 @@ var db = new Database();  // raw db access
 var db_interface = require('./libs/db/interface.js');  // abstracted access like db_interface.signup.signup(req, res)
 var db_signup = new db_interface.Signup(db);
 
-// Middleware
+
 app.use(express.static(path.join(__dirname, 'Public', 'scripts')));
 app.use(express.json())
 app.engine('handlebars', exphbs.engine({ defaultLayout: 'main' }))
@@ -55,23 +55,17 @@ app.get('/shrek', function(req, res){
 /*
  *	ACTIONS
  */
-
 app.post('/users/signup', (req, res) => {
 	// req is a form submission
-	console.log('== POST /users/signup ==');
-	console.log(JSON.stringify(req.body));
 	let result = db_signup.signup(req);
-	console.log(result);
 	let success = result[0];
 	let message = result[1];
 	if (success) {
-		console.log('Signup successful.');
 		res.status(200).send(JSON.stringify({
 			success: true,
 			message: message
 		}));
 	} else {
-		console.log('Signup failed: ' + message);
 		res.status(400).send(JSON.stringify({
 			success: false,
 			message: message
@@ -124,6 +118,7 @@ app.post('/users/login/check', (req, res) => {
 		}));
 	}
 });
+
 
 app.get('*', function (req, res) {
 	res.status(404).render('404', {url: req.url});
