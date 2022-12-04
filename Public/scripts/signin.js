@@ -45,8 +45,8 @@ register_form.addEventListener("submit", e => {
   .then(result => {
     if (result.valid) {
       // result.token contains user_id
-      // set token in local storage and redirect to home page
-      localStorage.setItem("user_token", result.token);
+      // set token in cookies and redirect to home page
+      document.cookie = "user_token=" + result.token;
       window.location.href = "/";
     } else {
       // display error message
@@ -69,8 +69,8 @@ login_form.addEventListener("submit", e => {
   .then(result => {
     if (result.valid) {
       // result.token contains user_id
-      // set token in local storage and redirect to home page
-      localStorage.setItem("user_token", result.token);
+      // set token in cookies and redirect to home page
+      document.cookie = "user_token=" + result.token;
       window.location.href = "/";
     } else {
       // display error message
@@ -151,12 +151,12 @@ async function validate_register_form (username, email, password, confirm_passwo
 }
 
 async function validate_login_form (email, password) {
-  let validation_notice = document.getElementById("login-validation-notice");
-
   // make sure fields are not empty
   if(email === "" || password === ""){
-    validation_notice.innerHTML = "Please fill in all the fields";
-    return false;
+    return {
+      valid:false,
+      message:"Please fill in all the fields"
+    };
   }
   
   // now send to server to check if valid

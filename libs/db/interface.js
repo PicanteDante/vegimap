@@ -74,9 +74,9 @@ class Signup extends Interface {
         if (user.length < 1) {
             return [false, 'Email or password is incorrect.'];
         }
-        
+
         if (user[0].password == crypto.createHash('sha256').update(req.body.password).digest('hex')) {
-            return [true, this.db.select_where('Users', 'name', req.body.username)[0].user_id];
+            return [true, this.db.select_where('Users', 'email', req.body.email)[0].user_id];
         } else {
             return [false, 'Email or password is incorrect.'];
         }
