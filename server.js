@@ -52,73 +52,66 @@ app.get('/shrek', function(req, res){
 	res.status(200).render('profile');
 });
 
-/*
- *	ACTIONS
+//#region API
+//#region Signup
+
+/**
+ * @api {post} /api/register Register a new user
+ * @apiName Register
+ * @apiGroup Signup
+ * 
+ * @apiParam {String} username Username
+ * @apiParam {String} email Email
+ * @apiParam {String} password Password
+ *
+ * @apiSuccess {String} message Success message
+ * @apiSuccess {String} token User token
+ * 
+ * @apiError {String} message Error message
  */
-app.post('/users/signup', (req, res) => {
-	// req is a form submission
-	let result = db_signup.signup(req);
-	let success = result[0];
-	let message = result[1];
-	if (success) {
+app.post('/api/register', (req, res) => {
+	let result = db_signup.register(req);
+	if (result[0]) {
 		res.status(200).send(JSON.stringify({
-			success: true,
-			message: message
+			message: 'Successfully registered.',
+			token: result[1]
 		}));
 	} else {
 		res.status(400).send(JSON.stringify({
-			success: false,
-			message: message
+			message: result[1]
 		}));
 	}
 });
 
-app.post('/users/login', (req, res) => {
+/**
+ * @api {post} /api/login Login
+ * @apiName Login
+ * @apiGroup Signup
+ * 
+ * @apiParam {String} email Email
+ * @apiParam {String} password Password
+ * 
+ * @apiSuccess {String} message Success message
+ * @apiSuccess {String} token User token
+ * 
+ * @apiError {String} message Error message
+ */
+app.post('/api/login', (req, res) => {
 	let result = db_signup.login(req);
-	let success = result[0];
-	let message = result[1];
-	if (success) {
+	if (result[0]) {
 		res.status(200).send(JSON.stringify({
-			success: true,
-			message: message
+			message: 'Successfully logged in.',
+			token: result[1]
 		}));
 	} else {
 		res.status(400).send(JSON.stringify({
-			success: false,
-			error: message
+			message: result[1]
 		}));
 	}
 });
+//#endregion
 
-app.post('/users/signup/check', (req, res) => {
-	// req is an object with a username and email property
-	let result = db_signup.check_signup(req);
-	let email_in_use = result[0];
-	let username_in_use = result[1];
-	res.status(200).send(JSON.stringify({
-		email_in_use: email_in_use,
-		username_in_use: username_in_use
-	}));
-});
-
-app.post('/users/login/check', (req, res) => {
-	// req is an object with a username and password property
-	let result = db_signup.check_login(req);
-	let success = result[0];
-	let message = result[1];
-	if (success) {
-		res.status(200).send(JSON.stringify({
-			success: true,
-			message: message
-		}));
-	} else {
-		res.status(400).send(JSON.stringify({
-			success: false,
-			error: message
-		}));
-	}
-});
-
+//#endregion
 
 app.get('*', function (req, res) {
 	res.status(404).render('404', {url: req.url});

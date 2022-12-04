@@ -1,3 +1,5 @@
+
+
 //https://www.codinglabweb.com/2022/06/login-signup-form-html-css-javascript.html
 const forms = document.querySelector(".forms"),
 pwShowHide = document.querySelectorAll(".eye-icon"),
@@ -17,7 +19,7 @@ pwShowHide.forEach(eyeIcon => {
         eyeIcon.classList.replace("bx-show", "bx-hide");
     })
   })
-})      
+})
 
 links.forEach(link => {
   link.addEventListener("click", e => {
@@ -26,110 +28,160 @@ links.forEach(link => {
   })
 })
 
-const signup_form = document.getElementById("signup-form");
-signup_form.addEventListener("submit", e => {
-  e.preventDefault();
-  let username = document.getElementById("signup-form-username").value;
-  let email = document.getElementById("signup-form-email").value;
-  let password = document.getElementById("signup-form-password").value;
-  let confirm_password = document.getElementById("signup-form-confirm-password").value;
+const register_form = document.getElementById("register-form");
+register_form.addEventListener("submit", e => {
+  e.preventDefault();  // prevent form from submitting
+  
+  // get form data
+  let username = document.getElementById("register-form-username").value;
+  let email = document.getElementById("register-form-email").value;
+  let password = document.getElementById("register-form-password").value;
+  let confirm_password = document.getElementById("register-form-confirm-password").value;
+  
+  let register_validation_notice = document.getElementById("register-validation-notice")
 
-  validate_signup_form(username, email, password, confirm_password)
+  // validate form data
+  validate_register_form(username, email, password, confirm_password)
   .then(result => {
-    if (result) {
-      signup_form.submit();
+    if (result.valid) {
+      // result.token contains user_id
+      // set token in local storage and redirect to home page
+      localStorage.setItem("user_token", result.token);
+      window.location.href = "/";
     } else {
-      return;
+      // display error message
+      register_validation_notice.innerHTML = result.message;
     }
   });
 });
 
 const login_form = document.getElementById("login-form");
 login_form.addEventListener("submit", e => {
-  e.preventDefault();
+  e.preventDefault();  // prevent form from submitting
+
+  // get form data
   let email = document.getElementById("login-form-email").value;
   let password = document.getElementById("login-form-password").value;
 
+  let login_validation_notice = document.getElementById("login-validation-notice")
+  // validate form data
   validate_login_form(email, password)
   .then(result => {
-    if (result) {
-      login_form.submit();
+    if (result.valid) {
+      // result.token contains user_id
+      // set token in local storage and redirect to home page
+      localStorage.setItem("user_token", result.token);
+      window.location.href = "/";
     } else {
-      return;
+      // display error message
+      login_validation_notice.innerHTML = result.message;
     }
   });
 });
-
-async function validate_login_form (email, password) {
-  let validation_notice = document.querySelector("p.form.login.validation-notice");
-
-  // make sure email and password are not empty
-  if(email === "" || password === ""){
-    validation_notice.innerHTML = "Please fill in all fields";
-    return false;
-  }
-  return true;
-}
   
-async function validate_signup_form (username, email, password, confirm_password) {
-  console.log("validate_signup_form");
-  let validation_notice = document.getElementById("signup-validation-notice");
-
+async function validate_register_form (username, email, password, confirm_password) {
   // make sure fields are not empty
   if(username === "" || email === "" || password === "" || confirm_password === ""){
-    validation_notice.innerHTML = "Please fill in all the fields";
-    return false;
+    return {
+      valid:false,
+      message:"Please fill in all the fields"
+    };
   }
 
   // make sure password and confirm password match
   if (password !== confirm_password) {
-    validation_notice.innerHTML = "Passwords do not match";
-    return false;
+    return {
+      valid:false,
+      message:"Passwords do not match"
+    };
   }
 
   // make sure password is at least 8 characters
   if (password.length < 8) {
-    validation_notice.innerHTML = "Password must be at least 8 characters";
-    return false;
+    return {
+      valid:false,
+      message:"Password must be at least 8 characters"
+    };
   }
 
   // make sure username is at least 3 characters
   if (username.length < 3) {
-    validation_notice.innerHTML = "Username must be at least 3 characters";
-    return false;
+    return {
+      valid:false,
+      message:"Username must be at least 3 characters"
+    };
   }
 
   // make sure username is at most 20 characters
   if (username.length > 20) {
-    validation_notice.innerHTML = "Username must be at most 20 characters";
-    return false;
+    return {
+      valid:false,
+      message:"Username must be at most 20 characters"
+    };
   }
 
-  // make sure email is not already in use (use post request with email to check)
-  let data = await check_email_and_username(email, username);
-  if (data.email_in_use) {
-    validation_notice.innerHTML = "Email is already in use";
-    return false;
-  }
-  if (data.username_in_use) {
-    validation_notice.innerHTML = "Username is already in use";
-    return false;
-  }
-
-  return true;
-}
-
-async function check_email_and_username (email, username) {
-  let response = await fetch("/users/signup/check", {
+  // now send to server to check if valid
+  let response = await fetch("/api/register", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      username: username,
+      email: email,
+      password: password
+    })
+  }).then(async (response) => {
+    return [response.ok, await response.json()];
+  }).then(result => {
+    if (result[0]) {
+      return {
+        valid: true,
+        token: result[1].token
+      };
+    } else {
+      return {
+        valid: false,
+        message: result[1].message
+      };
+    }
+  });
+
+  return response;
+}
+
+async function validate_login_form (email, password) {
+  let validation_notice = document.getElementById("login-validation-notice");
+
+  // make sure fields are not empty
+  if(email === "" || password === ""){
+    validation_notice.innerHTML = "Please fill in all the fields";
+    return false;
+  }
+  
+  // now send to server to check if valid
+  return await fetch("/api/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
     },
     body: JSON.stringify({
       email: email,
-      username: username
+      password: password
     })
+  }).then(async (response) => {
+    return [response.ok, await response.json()];
+  }).then(result => {
+    if (result[0]) {
+      return {
+        valid: true,
+        token: result[1].token
+      };
+    } else {
+      return {
+        valid: false,
+        message: result[1].message
+      };
+    }
   });
-  let data = await response.json();
-  return data;
 }

@@ -16,29 +16,46 @@ class Signup extends Interface {
      * Creates a new user on sign up
      * 
      * @param {Object} req - request object
-     * @returns {[Bool, String]} - success, error message
+     * @returns {[Bool, String]} - [success, user_id or message]
      */
-    signup(req) {
-        // req is a form submission
-        if (req.body.username && req.body.password && req.body.email) {
-            // make sure the username and email are unique
-            if (this.db.select_where('Users', 'username', req.body.username).length > 0) {
-                return [false, 'Username already exists.'];
-            } else if (this.db.select_where('Users', 'email', req.body.email).length > 0) {
-                return [false, 'Email already exists.'];
-            } else {
-                this.db.insert_into('Users', {
-                    name: req.body.username,
-                    plant_points: 0,
-                    date_joined: new Date().toLocaleDateString(),
-                    email: req.body.email,
-                    password: crypto.createHash('sha256').update(req.body.password).digest('hex')
-                });
-                return [true, 'Success'];
-            }
-        } else {
-            return [false, 'Missing username, password, or email.'];
+    register(req) {
+        // first check if username is between 3-20 characters
+        if (req.body.username.length < 3 || req.body.username.length > 20) {
+            return [false, "Username must be between 3-20 characters"];
         }
+        // check if username is alphanumeric including underscores
+        if (!/^[a-zA-Z0-9_]+$/.test(req.body.username)) {
+            return [false, "Username must be alphanumeric"];
+        }
+        // check if email is valid
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(req.body.email)) {
+            return [false, "Invalid email"];
+        }
+        // check if password is between 6-20 characters
+        if (req.body.password.length < 6 || req.body.password.length > 20) {
+            return [false, "Password must be between 6-20 characters"];
+        }
+        // check if email or username is already in use
+        var check = this.check_register(req);
+        if (check[0]) {
+            return [false, 'Email is already in use'];
+        } else if (check[1]) {
+            return [false, 'Username is already in use'];
+        }
+        
+        // hash password
+        var password = crypto.createHash('sha256').update(req.body.password).digest('hex');
+
+        // insert into database
+        this.db.insert_into('Users', {
+            name: req.body.username,
+            plant_points: 0,
+            date_joined: new Date().toLocaleDateString(),
+            email: req.body.email,
+            password: password
+        });
+        let user_id = this.db.select_where('Users', 'name', req.body.username)[0].user_id;
+        return [true, user_id];
     }
 
     /**
@@ -49,19 +66,19 @@ class Signup extends Interface {
      */
     login(req) {
         // req is a form submission
-        if (req.body.email && req.body.password) {
-            var user = this.db.select_where('Users', 'email', req.body.email);
-            if (user.length > 0) {
-                if (user[0].password == crypto.createHash('sha256').update(req.body.password).digest('hex')) {
-                    return [true, 'Success'];
-                } else {
-                    return [false, 'Email or password is incorrect.'];
-                }
-            } else {
-                return [false, 'Email or password is incorrect.'];
-            }
-        } else {
+        if (!req.body.email || !req.body.password) {
             return [false, 'Missing email or password.'];
+        }
+
+        var user = this.db.select_where('Users', 'email', req.body.email);
+        if (user.length < 1) {
+            return [false, 'Email or password is incorrect.'];
+        }
+        
+        if (user[0].password == crypto.createHash('sha256').update(req.body.password).digest('hex')) {
+            return [true, this.db.select_where('Users', 'name', req.body.username)[0].user_id];
+        } else {
+            return [false, 'Email or password is incorrect.'];
         }
     }
 
@@ -71,7 +88,7 @@ class Signup extends Interface {
      * @param {Object} req - request object
      * @returns {[Bool, Bool]} - email in use, username in use
      */
-    check(req) {
+    check_register(req) {
         // req body is an object with a username and email property
         if (req.body.username && req.body.email) {
             return [
@@ -80,6 +97,27 @@ class Signup extends Interface {
             ];
         } else {
             return [false, false];
+        }
+    }
+
+    /**
+     * Checks if a username and password are correct
+     * 
+     * @param {Object} req - request object
+     * @returns {Bool} - whether the username and password are correct
+     */
+    check_login(req) {
+        // req body is an object with a username and password property
+        if (req.body.username && req.body.password) {
+            var user = this.db.select_where('Users', 'name', req.body.username);
+            if (user.length > 0) {
+                if (user[0].password == crypto.createHash('sha256').update(req.body.password).digest('hex')) {
+                    return [true, 'success'];
+                }
+            }
+            return [false, 'Username or password is incorrect.'];
+        } else {
+            return [false, 'Missing username or password.'];
         }
     }
 }
