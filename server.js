@@ -47,10 +47,15 @@ app.get('/signin', function (req, res) {
 	res.status(200).render('signin');
 });
 
-
+// Currently redirects /shrek (only current profile) to /profile
 app.get('/shrek', function(req, res){
 	res.status(200).render('profile');
 });
+
+app.get('/about', function(req, res){
+	res.status(200).render('about');
+});
+
 
 //#region API
 //#region Signup

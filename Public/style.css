@@ -596,6 +596,19 @@ form{
   text-decoration: none;
 }
 
+/*-------- about page --------*/
+.about-header{
+  font-family: "Robot Slab", serif;
+  margin-top: 70px;
+  margin-left: 20px;
+}
+.about-header h2{
+  font-size: 64px;
+}
+
+.about-header h4{
+  font-size: 32px; 
+}
 
 /*-------- error page --------*/
 
