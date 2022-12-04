@@ -27,12 +27,12 @@ function showAddSomethingModal() {
 	
 	//	Get GPS location if possible
 	const successCallback = (position) => {
-		console.log(position);
-		var longBox = document.getElementById("marker-long-input");
-		var latBox = document.getElementById("marker-lat-input");
-		
-		longBox.value = position.coords.longitude;
-		latBox.value = position.coords.latitude;
+	console.log(position);
+	var longBox = document.getElementById("marker-long-input");
+	var latBox = document.getElementById("marker-lat-input");
+	
+	longBox.value = position.coords.longitude;
+	latBox.value = position.coords.latitude;
 	}
 	const failureCallback = (error) => {
 		console.log(error);
