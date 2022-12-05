@@ -42,7 +42,6 @@ app.get('/', function (req, res, next) {
 });
 
 
-// Currently doesn't load CSS
 app.get('/users/:username', function (req, res, next){
 	var username = req.params.username
 
@@ -50,7 +49,7 @@ app.get('/users/:username', function (req, res, next){
 
 	var userData = []
 	userData = [{"profileUrl": "profileUrl",
-				 "pfpUrl": "pfp",
+				 "pfpUrl": "shrek1.png",
 				 "username": "shrek",
 				 "dateJoined": "1/01/2002",
 				 "profilePoints": "69420"}]
@@ -96,29 +95,6 @@ app.get('/about', function(req, res){
 	res.status(200).render('about');
 });
 
-app.get('/:username', function(req, res){
-	//res.status(200).render('profile');
-	var userData = []
-	userData = [{"profileUrl": "shrek",
-				 "pfpUrl": "shrek1.png",
-				 "username": "shrek",
-				 "dateJoined": "1/01/2002",
-				 "profilePoints": "69420"}]
-	tempProfile = []
-	tempProfile[0] = userData
-	
-	if (userData){
-	  res.status(200).render('profile', {
-		profile: userData
-	  })
-  
-	}
-	else{
-	  next()
-	}
-
-	
-});
 //#region API
 //#region Signup
 
