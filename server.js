@@ -72,12 +72,17 @@ app.get('/signin', function (req, res) {
 	res.status(200).render('signin');
 });
 
+app.get('/leaderboard', function (req, res) {
+	res.status(200).render('leaderboard');
+});
+
+
 // Currently redirects /shrek (only current profile) to /profile
-app.get('/:username', function(req, res){
+app.get('/shrek', function(req, res){
 	//res.status(200).render('profile');
 	var userData = []
 	userData = [{"profileUrl": "shrek",
-				 "pfpUrl": "pfp",
+				 "pfpUrl": "shrek1.png",
 				 "username": "shrek",
 				 "dateJoined": "1/01/2002",
 				 "profilePoints": "69420"}]
