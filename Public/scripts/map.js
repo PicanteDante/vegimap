@@ -13,7 +13,7 @@ osm.addTo(map);
  */
 function addMarker(name, imageURL, desc, long, lat)
 {
-	var marker = L.marker([parseFloat(long), parseFloat(lat)]).addTo(map);
+	var marker = L.marker([parseFloat(lat), parseFloat(long)]).addTo(map);
 	console.log(marker);
 }
 
