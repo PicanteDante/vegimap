@@ -40,9 +40,20 @@ app.get('/', function (req, res, next) {
 	}
 });
 
-app.get('/leaderboard', function (req, res) {
-	res.status(200).render('leaderboard');
-});
+app.get('/twits/:twitNum', function (req, res, next){
+	var twitNum = req.params.twitNum
+	var actualTwit = twitData[twitNum]
+	var tempTwit = []
+	tempTwit[0] = actualTwit
+	if (twitData[twitNum]){
+	  res.status(200).render('index', {
+		twits: tempTwit
+	  })
+  
+	}
+	else{
+	  next()
+	}
 
 app.get('/signin', function (req, res) {
 	res.status(200).render('signin');
