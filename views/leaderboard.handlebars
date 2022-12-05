@@ -2,7 +2,10 @@
     <div class='board-container'>
         <h2 id="board-header"> Most Credible Users </h2>
         <div class="board-list">
-                <div class="content">
+            {{#each leaderUser}}
+                        {{> rankedUser}}
+            {{/each}}
+            <!--    <div class="content">
                     <div class="rank"> 1 </div>
                     <a class="avatar" href="#">
                         <img src="shrek1.png">
@@ -29,7 +32,7 @@
             <div class="rank"> 9 </div>
                 {{> rankedUser}}
             <div class="rank"> 10 </div>
-                {{> rankedUser}}
+                {{> rankedUser}} -->
         </div>
     </div>
 </main>

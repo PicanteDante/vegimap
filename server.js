@@ -41,12 +41,13 @@ app.get('/', function (req, res, next) {
 	}
 });
 
+
+// Currently doesn't load CSS
 app.get('/users/:username', function (req, res, next){
 	var username = req.params.username
 
-	//var actualTwit = twitData[username]
-	
 	//var userData = db_users.get_profile(username)
+
 	var userData = []
 	userData = [{"profileUrl": "profileUrl",
 				 "pfpUrl": "pfp",
@@ -54,31 +55,48 @@ app.get('/users/:username', function (req, res, next){
 				 "dateJoined": "1/01/2002",
 				 "profilePoints": "69420"}]
 
-	
+	// Unsure how necesary the if statement is
 	if (userData){
 	  res.status(200).render('profile', {
 		profile: userData
 	  });
   
 	}
-	else{
-	  next()
-	}
 
 });
 
+app.get('/leaderboard', function (req, res) {
+	
+	var userData = []
+	userData = [{"profileUrl": "shrek",
+				"pfpUrl": "shrek1.png",
+				"username": "shrek",
+				"dateJoined": "1/01/2002",
+				"profilePoints": "69420"},
+			
+				{"profileUrl": "Rafaelle",
+				"pfpUrl": "image01.png",
+				"username": "Rafaelle",
+				"dateJoined": "1/01/2002",
+				"profilePoints": "0"}]
+	if (userData){
+		res.status(200).render('leaderboard', {
+			leaderUser: userData
+		});
+	}
+});
 
 app.get('/signin', function (req, res) {
 	res.status(200).render('signin');
 });
 
-app.get('/leaderboard', function (req, res) {
-	res.status(200).render('leaderboard');
+
+
+app.get('/about', function(req, res){
+	res.status(200).render('about');
 });
 
-
-// Currently redirects /shrek (only current profile) to /profile
-app.get('/shrek', function(req, res){
+app.get('/:username', function(req, res){
 	//res.status(200).render('profile');
 	var userData = []
 	userData = [{"profileUrl": "shrek",
@@ -101,12 +119,6 @@ app.get('/shrek', function(req, res){
 
 	
 });
-
-app.get('/about', function(req, res){
-	res.status(200).render('about');
-});
-
-
 //#region API
 //#region Signup
 
