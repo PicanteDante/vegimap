@@ -128,9 +128,11 @@ function checkInput()
 	if (validInput)
 	{
 		addMarker(nameBox.value, imageBox.value, descBox.value, longBox.value, latBox.value);
+		
+		hideAddSomethingModal();
 	}
 	
-	hideAddSomethingModal();
+	
 }
 
 var submitDataButton = document.getElementById("modal-accept");
