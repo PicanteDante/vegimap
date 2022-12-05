@@ -44,22 +44,30 @@ app.get('/', function (req, res, next) {
 
 app.get('/users/:username', function (req, res, next){
 	var username = req.params.username
-
-	//var userData = db_users.get_profile(username)
-
 	var userData = []
-	userData = [{"profileUrl": "profileUrl",
-				 "pfpUrl": "shrek1.png",
-				 "username": "shrek",
-				 "dateJoined": "1/01/2002",
-				 "profilePoints": "69420"}]
-
-	// Unsure how necesary the if statement is
+	//var userData = db_users.get_profile(username)
+	if (username == "shrek"){
+		
+		userData = [{"profileUrl": "/users/shrek",
+					"pfpUrl": "shrek1.png",
+					"username": "shrek",
+					"dateJoined": "1/01/2002",
+					"profilePoints": "69420"}]
+	}
+	else if (username == "raffaele"){
+		userData = [{"profileUrl": "/users/raffaele",
+					"pfpUrl": "image01.png",
+					"username": "Rafaele",
+					"dateJoined": "1/01/2002",
+					"profilePoints": "0"}]
+	}
 	if (userData){
 	  res.status(200).render('profile', {
 		profile: userData
 	  });
-  
+	}
+	else{
+		next();
 	}
 
 });
@@ -67,15 +75,15 @@ app.get('/users/:username', function (req, res, next){
 app.get('/leaderboard', function (req, res) {
 	
 	var userData = []
-	userData = [{"profileUrl": "shrek",
+	userData = [{"profileUrl": "/users/shrek",
 				"pfpUrl": "shrek1.png",
 				"username": "shrek",
 				"dateJoined": "1/01/2002",
 				"profilePoints": "69420"},
 			
-				{"profileUrl": "Rafaelle",
+				{"profileUrl": "/users/raffaele",
 				"pfpUrl": "image01.png",
-				"username": "Rafaelle",
+				"username": "Raffaele",
 				"dateJoined": "1/01/2002",
 				"profilePoints": "0"}]
 	if (userData){
