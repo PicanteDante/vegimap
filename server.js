@@ -40,13 +40,13 @@ app.get('/', function (req, res, next) {
 	}
 });
 
-app.get('/twits/:twitNum', function (req, res, next){
-	var twitNum = req.params.twitNum
-	var actualTwit = twitData[twitNum]
+app.get('/users/:username', function (req, res, next){
+	var username = req.params.username
+	var actualTwit = [username]
 	var tempTwit = []
 	tempTwit[0] = actualTwit
 	if (twitData[twitNum]){
-	  res.status(200).render('index', {
+	  res.status(200).render('profile', {
 		twits: tempTwit
 	  })
   
@@ -54,7 +54,7 @@ app.get('/twits/:twitNum', function (req, res, next){
 	else{
 	  next()
 	}
-}
+});
 
 app.get('/signin', function (req, res) {
 	res.status(200).render('signin');
