@@ -1,0 +1,27 @@
+
+The api helps handle requests.
+Think of them as function that you call from the client to the server.
+The server then does something and returns a response to the client.
+
+In order to use the api, you need to know the endpoint of the api.
+
+also, here's a template for requests:
+fetch("/api/endpoint", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        //data
+    })
+}).then(res => {
+    if (res.ok) {
+        return res.json();
+    } else {
+        throw new Error();
+    }
+}).then(data => {
+    // do something with the data
+}).catch(err => {
+    // do something with the error
+});

@@ -7,6 +7,8 @@ const table_factory = require('./tables/table_factory.js');
 const table = require('./tables/table.js');
 
 class Database {
+    static instance = null;
+
     constructor () {
         table.db = this;
         this.tables = {};
@@ -14,6 +16,46 @@ class Database {
             console.log(`Loading table ${table_name}`);
             this.tables[table_name] = table_factory.create_table(table_name);
         });
+    }
+
+    prepopulate() {
+        // prepoulates with test data
+        // TESTING
+        // TODO: REMOVE
+        const crypto = require('crypto');
+        this.insert_into('Users', {
+            username: 'test',
+            password: crypto.createHash('sha256').update('test').digest('hex'),
+            email: 'test@test.com',
+
+        });
+
+        this.insert_into('PlantMarkers', {
+            user_id: 0,
+            marker_post_date: '01/01/2020',
+            marker_name: 'potato :)',
+            marker_description: 'this is a potato',
+            marker_image: 1,
+            marker_lat: 1.0,
+            marker_long: 1.0
+        })
+
+        this.insert_into('PlantMarkers', {
+            user_id: 0,
+            marker_post_date: '01/01/2020',
+            marker_name: 'tomato :(',
+            marker_description: 'this is a tomato',
+            marker_image: 1,
+            marker_lat: 2.0,
+            marker_long: 2.0
+        })
+    }
+
+    static get_instance() {
+        if (Database.instance === null) {
+            Database.instance = new Database();
+        }
+        return Database.instance;
     }
 
     insert_into(table_name, data) {

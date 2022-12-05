@@ -9,7 +9,6 @@
  *   plant_marker_id:               int (foreign key in PlantMarkers)
  *   user_marker_rating:            int
  *   user_marker_rating_date:       string (MM/DD/YYYY)
- *   user_marker_rating_comment:    string
  */
 
 const Table = require('./table.js');
@@ -23,8 +22,7 @@ class UserMarkerRatings extends Table {
                 'user_id',
                 'plant_marker_id',
                 'user_marker_rating',
-                'user_marker_rating_date',
-                'user_marker_rating_comment'
+                'user_marker_rating_date'
             ],  // columns
             [
                 { key:'user_id', table:'Users', column:'user_id' },
