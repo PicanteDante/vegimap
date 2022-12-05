@@ -98,6 +98,8 @@ document.getElementById("fName").className = document.getElementById("fName").cl
 
 function checkInput()
 {
+	console.log(parseFloat("balls"));
+
 	var inputBoxes = document.getElementsByClassName("marker-input-box");
 	
 	var nameBox = document.getElementById("marker-name-input");
@@ -133,3 +135,5 @@ function checkInput()
 
 var submitDataButton = document.getElementById("modal-accept");
 submitDataButton.addEventListener('click', checkInput);
+
+console.log(parseFloat("balls"));
