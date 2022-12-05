@@ -1,10 +1,12 @@
+<link rel="stylesheet" href="style.css"/>
+
 <main id="workspace">
     <div class='profile-container'>
         <h2 id="board-header"> Plant Profile </h2>
             <div class="profile-box">
                 <div class="content">
                     <!-- Following would be templatized -->
-                    <div class="top-half"></div>
+                    <!--<div class="top-half"></div>
                         <a class="avatar" id="profile-picture" href="#">
                             <img src="shrek1.png">
                         </a>        
@@ -17,8 +19,12 @@
                         <br><br><br><br>
                         <div class="points" id="profile-points">69420 pp</div>
                         <br><br><r>
-                        <a class="user-markers" href="#"> Your Markers</a>
+                        <a class="user-markers" href="#"> Your Markers</a> -->
                     <!-- END SECTION   -->
+                    {{#each profile}}
+                        {{> userProfile}}
+                    {{/each}}
+
                     </div>
                 </div>
             </div>

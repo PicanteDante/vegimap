@@ -10,6 +10,7 @@ var Database = require('./libs/db/db.js');
 var db = new Database();  // raw db access
 db.prepopulate();
 var db_interface = require('./libs/db/interface.js');  // abstracted access like db_interface.signup.signup(req, res)
+const { get } = require('lodash');
 var db_signup = new db_interface.Signup(db);
 var db_profiles = new db_interface.Profiles(db);
 var db_markers = new db_interface.Markers(db);
@@ -42,27 +43,58 @@ app.get('/', function (req, res, next) {
 
 app.get('/users/:username', function (req, res, next){
 	var username = req.params.username
-	var actualTwit = [username]
-	var tempTwit = []
-	tempTwit[0] = actualTwit
-	if (twitData[twitNum]){
+
+	//var actualTwit = twitData[username]
+	
+	//var userData = db_users.get_profile(username)
+	var userData = []
+	userData = [{"profileUrl": "profileUrl",
+				 "pfpUrl": "pfp",
+				 "username": "shrek",
+				 "dateJoined": "1/01/2002",
+				 "profilePoints": "69420"}]
+
+	
+	if (userData){
 	  res.status(200).render('profile', {
-		twits: tempTwit
-	  })
+		profile: userData
+	  });
   
 	}
 	else{
 	  next()
 	}
+
 });
+
 
 app.get('/signin', function (req, res) {
 	res.status(200).render('signin');
 });
 
 // Currently redirects /shrek (only current profile) to /profile
-app.get('/shrek', function(req, res){
-	res.status(200).render('profile');
+app.get('/:username', function(req, res){
+	//res.status(200).render('profile');
+	var userData = []
+	userData = [{"profileUrl": "shrek",
+				 "pfpUrl": "pfp",
+				 "username": "shrek",
+				 "dateJoined": "1/01/2002",
+				 "profilePoints": "69420"}]
+	tempProfile = []
+	tempProfile[0] = userData
+	
+	if (userData){
+	  res.status(200).render('profile', {
+		profile: userData
+	  })
+  
+	}
+	else{
+	  next()
+	}
+
+	
 });
 
 app.get('/about', function(req, res){
