@@ -54,6 +54,7 @@ app.get('/twits/:twitNum', function (req, res, next){
 	else{
 	  next()
 	}
+}
 
 app.get('/signin', function (req, res) {
 	res.status(200).render('signin');
