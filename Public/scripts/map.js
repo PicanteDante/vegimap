@@ -98,7 +98,6 @@ document.getElementById("fName").className = document.getElementById("fName").cl
 
 function checkInput()
 {
-	console.log(parseFloat("balls"));
 
 	var inputBoxes = document.getElementsByClassName("marker-input-box");
 	
