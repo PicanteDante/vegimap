@@ -23,9 +23,9 @@ Content-Type: application/json
 
 POST http://localhost:6969/api/markers/add HTTP/1.1
 Content-Type: application/json
+Cookie: user_id=0
 
 {
-    "token": 1,
     "name": "Apple Tree",
     "description": "A tree with apples",
     "lat": 100,
@@ -39,11 +39,7 @@ GET http://localhost:6969/api/markers/list
 ###
 
 POST http://localhost:6969/api/markers/list_own HTTP/1.1
-Content-Type: application/json
-
-{
-    "token": 1
-}
+Cookie: user_id=0
 
 ###
 
@@ -80,7 +76,7 @@ POST http://localhost:6969/api/markers/delete HTTP/1.1
 Content-Type: application/json
 
 {
-    "token": 1,
+    "token": 0,
     "plant_marker_id": 1
 }
 

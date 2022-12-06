@@ -23,12 +23,21 @@ class Database {
         // TESTING
         // TODO: REMOVE
         const crypto = require('crypto');
-        this.insert_into('Users', {
-            username: 'test',
-            password: crypto.createHash('sha256').update('test').digest('hex'),
-            email: 'test@test.com',
-
-        });
+        this.create_user(
+            'test',
+            crypto.createHash('sha256').update('test').digest('hex'),
+            'test@test.com'
+        );
+        this.create_user(
+            'test2',
+            crypto.createHash('sha256').update('test2').digest('hex'),
+            'test2@test.com'
+        );
+        this.create_user(
+            'test3',
+            crypto.createHash('sha256').update('test3').digest('hex'),
+            'test3@test.com'
+        );
 
         this.insert_into('PlantMarkers', {
             user_id: 0,
@@ -36,8 +45,8 @@ class Database {
             marker_name: 'potato :)',
             marker_description: 'this is a potato',
             marker_image: 1,
-            marker_lat: 1.0,
-            marker_long: 1.0
+            marker_lat: 44.5672487,
+            marker_long: -123.2892548
         })
 
         this.insert_into('PlantMarkers', {
@@ -46,12 +55,16 @@ class Database {
             marker_name: 'tomato :(',
             marker_description: 'this is a tomato',
             marker_image: 1,
-            marker_lat: 2.0,
-            marker_long: 2.0
+            marker_lat: 44.5677487,
+            marker_long: -123.2896548
         })
     }
 
-    //#region table stuff
+//#region table stuff
+    /** 
+    * Gets the instance of the database. If the database has not been created yet, it will create it.
+    * @return {Database} The instance of the database
+    */
     static get_instance() {
         if (Database.instance === null) {
             Database.instance = new Database();

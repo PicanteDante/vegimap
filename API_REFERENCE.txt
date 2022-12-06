@@ -26,40 +26,48 @@ fetch("/api/endpoint", {
     // do something with the error
 });
 
+
+Current endpoints and their status:
+    /api/register           GOOD
+    /api/login              GOOD
+    /api/markers/get_id     GOOD
+    /api/markers/add        NOT WORKING
+    /api/markers/list_own   GOOD
+    /api/markers/list       GOOD
+    /api/markers/get        NOT WORKING
+    /api/markers/upvote     NOT WORKING
+    /api/markers/downvote   NOT WORKING
+    /api/markers/delete     NOT WORKING
+    /api/top_users          GOOD
+
 Documentation:
-    /api/register - registers a user, and returns the id of the user
-        args:
-            username - the username of the user
-            password - the password of the user
-            email - the email of the user
-        returns:
-            message - the message of the response
-            token - the token of the user
-
-    /api/login - logs in a user, and returns the id of the user
-        args:
-            email - the username of the user
-            password - the password of the user
-        returns:
-            message - the message of the response
-            token - the token of the user
-
-    /api/markers/add - adds a marker to the database
-        args:
-            token - the token of the user
-            lat - the latitude of the marker
-            lng - the longitude of the marker
-            title - the title of the marker
-            description - the description of the marker
-        returns:
-            message - the message of the response
-            id - the id of the marker
-
-    /api/markers/list - get a list of markers
-        args:
-            token - the token of the user
-        returns:
-            message - the message of the response
-            markers - the list of markers
-        
-    /api/markers/list_own - 
+    /api/register
+        POST
+        data: {
+            username: string,
+            password: string,
+            email: string
+        }
+        response: {
+            message: string
+            user_id: int
+        }
+    /api/login
+        POST
+        data: {
+            username: string,
+            password: string
+        }
+        response: {
+            success: boolean,
+            message: string,
+            user_id: int
+        }
+    /api/markers/get_id
+        POST
+        data: {
+            username: string
+        }
+        response: {
+            user_id: int
+        }
