@@ -153,15 +153,15 @@ submitDataButton.addEventListener('click', checkInput);
 console.log(parseFloat("balls"));
 
 /* ------ plant desc ----- */
-var markersArray =
-
-
 function openPlantMarker(){
 	
 	/*
-	 *	API call for
+	 *	API call for new ID
 	 */
 	
+	/*
+	 *	create marker on map with new ID and data, and post marker data to server
+	 */
 	
 	//classList.remove('hidden');
 	//var markerID =
