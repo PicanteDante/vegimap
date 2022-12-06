@@ -95,8 +95,12 @@ app.get('/about', function(req, res){
 });
 
 app.get('/users/:username/markers', function(req, res){
+	var username = req.params.username
 	var markerData = []
-	markerData = [{"name": "Weed",
+	var temp = db_markers.list_user_markers(username)
+	console.log(temp)
+	var markerData = temp.markers
+	/*markerData = [{"name": "Weed",
 				   "longitude": 100.50,
 				   "latitude": 100.50,
 				   "description": "This is edible if you want a good time",
@@ -107,6 +111,8 @@ app.get('/users/:username/markers', function(req, res){
 				   "latitude": 200.20,
 				   "description": "Makes me want to cry",
 				   "plant-img": "shrek1.png"}]
+				   */
+	console.log(markerData)
 	if (markerData){
 		res.status(200).render('myMarkers', {
 			marker: markerData
