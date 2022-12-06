@@ -95,8 +95,9 @@ app.get('/about', function(req, res){
 });
 
 app.get('/users/:username/markers', function(req, res){
+	var username = req.params.username
 	var markerData = []
-	var temp = db_markers.list_user_markers(req)
+	var temp = db_markers.list_user_markers(username)
 	console.log(temp)
 	var markerData = temp.markers
 	/*markerData = [{"name": "Weed",
