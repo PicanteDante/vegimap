@@ -51,6 +51,7 @@ class Database {
         })
     }
 
+    //#region table stuff
     static get_instance() {
         if (Database.instance === null) {
             Database.instance = new Database();
@@ -59,8 +60,7 @@ class Database {
     }
 
     insert_into(table_name, data) {
-        this.tables[table_name].create_row(data);
-        return this;
+        return this.tables[table_name].create_row(data);
     }
 
     select_by_id(table_name, id) {
@@ -112,6 +112,23 @@ class Database {
 
     all(table_name) {
         return this.tables[table_name].get_all();
+    }
+    //#endregion
+
+    create_user(username, password_hash, email, pfp='/default_pfp.png') {
+        // creates a user and returns the user id
+        let image_id = this.insert_into('Images', {
+            image_type: 'url',
+            image_url: pfp
+        });
+        return this.insert_into('Users', {
+            username: username,
+            password: password_hash,
+            email: email,
+            plant_points: 0,
+            date_joined: new Date().toLocaleDateString(),
+            image_id: image_id
+        });
     }
 }
 

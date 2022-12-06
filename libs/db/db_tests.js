@@ -10,15 +10,15 @@ db.insert_into('Users', {
     plant_points: 0,
     date_joined: '01/01/2020',
     email: 'zamn@daniel.org'
-})
-.insert_into('Users', {
+});
+db.insert_into('Users', {
     username: 'TheLegend27',
     name: 'daniel',
     plant_points: 16,
     date_joined: '01/01/2020',
     email: 'garfield@gmail.com'
-})
-.insert_into('Users', {
+});
+db.insert_into('Users', {
     username: 'Broseph',
     name: 'joseph',
     plant_points: 5,
@@ -105,8 +105,8 @@ db.insert_into('PlantMarkers', {
     marker_image: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
     marker_lat: 38.9517,
     marker_long: -92.3341
-})
-.insert_into('PlantMarkers', {
+});
+db.insert_into('PlantMarkers', {
     plant_type_id: db.select_where('PlantTypes', 'plant_type_name', 'tomato')[0].plant_type_id,
     user_id: db.select_where('Users', 'name', 'Daniel')[0].user_id,
     marker_post_date: '4/16/2022',
@@ -117,20 +117,19 @@ db.insert_into('PlantMarkers', {
     marker_long: -92.3331
 });
 
-db
-.insert_into('PlantTags', {
+db.insert_into('PlantTags', {
     plant_tag_name: 'Ripe',
     plant_tag_desc: 'This plant is bearing fruit that is ready to be harvested.'
-})
-.insert_into('PlantTags', {
+});
+db.insert_into('PlantTags', {
     plant_tag_name: 'Unripe',
     plant_tag_desc: 'This plant is bearing fruit that is not yet ready to be harvested.'
-})
-.insert_into('PlantTags', {
+});
+db.insert_into('PlantTags', {
     plant_tag_name: 'Dangerous',
     plant_tag_desc: 'This plant is not safe to eat.'
-})
-.insert_into('PlantTags', {
+});
+db.insert_into('PlantTags', {
     plant_tag_name: 'Harvested',
     plant_tag_desc: 'This plant has been fully harvested for the season.'
 });

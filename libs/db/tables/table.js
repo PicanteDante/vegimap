@@ -61,12 +61,13 @@ class Table {
      * Create a row in the table
      * @param {Object} entries - key value pairs of the row (does not include primary key) (missing columns will be filled with null)
      * 
-     * @returns {Object} - self (for chaining)
+     * @returns {int} - primary key of the new row
      */
     create_row (entry) {
         let row = {};
-        row[this.primary_key] = this.auto_id;
+        let key = this.auto_id;
         this.auto_id++;
+        row[this.primary_key] = key;
         this.columns.forEach(column => {
             if (column in entry) {
                 row[column] = entry[column];
@@ -84,7 +85,7 @@ class Table {
         });
         this.keys.push(row[this.primary_key]);
         this.data[row[this.primary_key]] = row;
-        return this;
+        return key;
     }
 
     /**
