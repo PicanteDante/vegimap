@@ -151,7 +151,7 @@ app.post('/api/login', (req, res) => {
 	if (result.success) {
 		res.status(200).cookie('user_id', result.user_id, { maxAge: 900000, httpOnly: true }).send(JSON.stringify({
 			message: 'Successfully logged in.',
-			token: result.user_id
+			user_id: result.user_id
 		}));
 	} else {
 		res.status(400).send(JSON.stringify({
