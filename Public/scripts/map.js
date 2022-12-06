@@ -101,6 +101,7 @@ function hideAddSomethingModal() {
 	clearAddSomethingModalInputs();
 }
 
+
 var modalHideButtons = document.getElementsByClassName('modal-hide-button');
 	for (var i = 0; i < modalHideButtons.length; i++) {
 		modalHideButtons[i].addEventListener('click', hideAddSomethingModal);
@@ -139,6 +140,14 @@ if (event.target == document.getElementById('save-button')) {
 	document.getElementById('plantDesc').setAttribute("contenteditable", "false");
 }
 });
+
+
+
+window.addEventListener('click', function(event){
+	if(event.target == this.document.getElementById('upvote-button')){
+		this.document.getElementById('upvote-button').style.color = "red";
+	}
+})
 
 
 /*
