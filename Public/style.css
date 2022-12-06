@@ -652,9 +652,16 @@ form{
 
 /*--------- your markers -----------*/
 .marker-container {
-  margin: 75px 10%;
+  margin: 30px 10%;
   display: flex;
   flex-wrap: wrap;
+}
+
+.marker-page-header{
+  margin-top: 70px;
+  font-size: 64px;
+  font-weight: bold;
+  text-align: center;
 }
 
 .marker {
