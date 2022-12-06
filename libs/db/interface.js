@@ -64,17 +64,14 @@ class Signup extends Interface {
         }
         
         // hash password
-        var password = crypto.createHash('sha256').update(req.body.password).digest('hex');
+        var password_hash = crypto.createHash('sha256').update(req.body.password).digest('hex');
 
         // insert into database
-        this.db.insert_into('Users', {
-            username: req.body.username,
-            plant_points: 0,
-            date_joined: new Date().toLocaleDateString(),
-            email: req.body.email,
-            password: password
-        });
-        let user_id = this.db.select_where('Users', 'username', req.body.username)[0].user_id;
+        let user_id = this.db.create_user(
+            req.body.username,
+            password_hash,
+            req.body.email
+        );
         return {
             success: true,
             message: "success",
@@ -109,7 +106,7 @@ class Signup extends Interface {
             return {
                 success: true,
                 message: "success",
-                user_id: this.db.select_where('Users', 'email', req.body.email)[0].user_id
+                user_id: user[0].user_id
             };
         } else {
             return {
@@ -146,6 +143,7 @@ class Signup extends Interface {
  */
 class Users extends Interface {
     /**
+     * TODO: test
      * Gets a user's profile information
      * 
      * @param {String} username - the username
@@ -153,24 +151,35 @@ class Users extends Interface {
      * @returns {Object} - the user's information, or null if the user doesn't exist
      */
     get_user_profile(username) {
+        /*
+        Get's the user id from req.
+        Returns {
+            profileUrl: (url to the user's page)
+            pfpUrl: (url to the user's profile picture)
+            username: (the user's username)
+            dateJoined: (the date the user joined)
+            profilePoints: (the user's profile points)
+        }
+        */
         let user = this.db.select_where('Users', 'username', username);
         if (user.length < 1) {
             return null;
         } else {
             let pfp_url = this.db.select_where('Images', 'image_id', user[0].image_id);
             let profile_page = `/users/${user[0].username}`;
-            let user_profile = {
+            let user_profile = [{
                 username: user[0].username,
                 dateJoined: user[0].date_joined,
                 profilePoints: user[0].plant_points,
                 pfpUrl: pfp_url,
                 profileUrl: profile_page
-            }
+            }]
             return user_profile;
         }
     }
 
     /**
+     * TODO: test + use cookies
      * get all users sorted by their rating
      * 
      * @param {Object} req - request object
@@ -206,7 +215,15 @@ class Users extends Interface {
  */
 class Markers extends Interface {
 
+    get_id(req) {
+        // Reserve an id by inserting a row into the database
+        let user_id = this.db.create_marker();
+        let next_id = db.tables['PlantMarkers'].auto_id;
+	    db.tables['PlantMarkers'].auto_id++;
+        return next_id;
+    }
     /**
+     * TODO: test + use cookies
      * Adds a marker to the database
      * 
      * @param {Object} req - request object
@@ -227,7 +244,7 @@ class Markers extends Interface {
                 message: "Missing required fields"
             };
         }
-        this.db.insert_into('PlantMarkers', {
+        let plant_marker_id = this.db.insert_into('PlantMarkers', {
             user_id: req.cookies.user_id,
             latitude: req.body.lat,
             longitude: req.body.lng,
@@ -238,7 +255,7 @@ class Markers extends Interface {
         return {
             success: true,
             message: "success",
-            plant_marker_id: this.db.select_where('PlantMarkers', 'name', req.body.name)[0].plant_marker_id
+            plant_marker_id: plant_marker_id
         };
     }
 
@@ -280,6 +297,7 @@ class Markers extends Interface {
     }
 
     /**
+     * TODO: test
      * Gets a list of all markers
      * 
      * Markers is a list of objects which have all the same
@@ -322,6 +340,7 @@ class Markers extends Interface {
     }
 
     /**
+     * TODO: test + use cookies
      * Gets a list of all markers owned by a user
      * 
      * same as list() but only returns markers owned by the user
@@ -331,14 +350,26 @@ class Markers extends Interface {
      * @returns {Object} - {success: Bool, message: String, markers: Array[Object]}
      */
     list_own(req) {
-        let raw_markers = this.db.select_where('PlantMarkers', 'user_id', req.body.user_id);
+        let user_id = req.cookies['user_id'];
+        // check if user_id is not an int
+        
+        if (user_id == undefined || isNaN(user_id)) {
+            return {
+                success: false,
+                message: "Not logged in"
+            };
+        }
+        user_id = parseInt(user_id);
+        let raw_markers = this.db.select_where('PlantMarkers', 'user_id', user_id);
         let markers = raw_markers.map(raw_marker => {
             let marker = {...raw_marker};  // copy everything over
+            // Get a list of all the ratings for this marker
             marker.plant_ratings = this.db.select_where(
                 'UserMarkerRatings',
                 'plant_marker_id',
                 marker.plant_marker_id
             );
+            // Get a list of all tags associated with this marker
             marker.tags = this.db.select_where(
                 'PlantMarkers_PlantTags',
                 'plant_marker_id',

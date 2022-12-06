@@ -3,13 +3,14 @@ var express = require('express');
 var exphbs = require('express-handlebars')
 var app  = express();
 var port = process.env.PORT || 6969;
+var cookieParser = require('cookie-parser');
 
 // Database
 var Database = require('./libs/db/db.js');
-var db = new Database();  // raw db access
+var db = Database.get_instance()  // raw db access
 db.prepopulate();
 var db_interface = require('./libs/db/interface.js');  // abstracted access like db_interface.signup.signup(req, res)
-const { get } = require('lodash');
+const _ = require('lodash');
 var db_signup = new db_interface.Signup(db);
 var db_users = new db_interface.Users(db);
 var db_markers = new db_interface.Markers(db);
@@ -20,6 +21,7 @@ app.engine('handlebars', exphbs.engine({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 app.use(express.static('Public'))
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 /*
  *	PAGES
@@ -117,8 +119,6 @@ app.get('/markers', function(req, res){
 
 /**
  * @api {post} /api/register Register a new user
- * @apiName Register
- * @apiGroup Signup
  * 
  * @apiParam {String} username Username
  * @apiParam {String} email Email
@@ -132,7 +132,9 @@ app.get('/markers', function(req, res){
 app.post('/api/register', (req, res) => {
 	let result = db_signup.register(req);
 	if (result.success) {
-		res.status(200).cookie('user_id', result.user_id, { maxAge: 900000, httpOnly: true }).send(JSON.stringify({
+		res.status(200)
+		.cookie('user_id', result.user_id, { maxAge: 900000, httpOnly: true })
+		.send(JSON.stringify({
 			message: 'Successfully registered.',
 			user_id: result.user_id
 		}));
@@ -145,13 +147,11 @@ app.post('/api/register', (req, res) => {
 
 /**
  * @api {post} /api/login Login
- * @apiName Login
- * @apiGroup Signup
  * 
  * @apiParam {String} email Email
  * @apiParam {String} password Password
  * 
- * @apiSuccess {String} token User token
+ * @apiSuccess {String} user_id User id
  * 
  * @apiError {String} message Error message
  */
@@ -175,17 +175,13 @@ app.post('/api/login', (req, res) => {
  * TODO: test
  * @api {get} /api/markers/get_id Get the next marker id and send it
  * 
- * @apiSuccess {int} inext_d Next marker id (has been reserved)
+ * @apiSuccess {int} next_id Next marker id (has been reserved)
  * 
  * @apiError {String} message Error message
  */
 app.get('/api/markers/get_id', (req, res) => {
-	// the user_id is the token from cookies
-	let next_id = db.tables['PlantMarkers'].auto_id;
-	db.tables['PlantMarkers'].auto_id++;
-
 	res.status(200).send(JSON.stringify({
-		next_id: next_id
+		next_id: db_markers.get_id(req)
 	}));
 });
 
@@ -193,7 +189,7 @@ app.get('/api/markers/get_id', (req, res) => {
  * TODO: test
  * @api {post} /api/markers/add Add a marker
  * 
- * @apiParam {String} token User token
+ * @apiParam {String} plant_marker_id Plant marker id
  * @apiParam {String} name Marker name
  * @apiParam {String} description Marker description
  * @apiParam {String} lat Marker latitude
@@ -218,30 +214,6 @@ app.post('/api/markers/add', (req, res) => {
 });
 
 /**
- * TODO: test
- * @api {get} /api/markers/list Retrieve a list of all markers
- * @apiName ListMarkers
- * @apiGroup Markers
- * 
- * @apiSuccess {Array[Marker]} markers List of markers
- * 
- * @apiError {String} message Error message
- */
-app.get('/api/markers/list', (req, res) => {
-	let result = db_markers.list(req);
-	if (result.success) {
-		res.status(200).send(JSON.stringify({
-			markers: result.markers
-		}));
-	} else {
-		res.status(400).send(JSON.stringify({
-			message: result.message
-		}));
-	}
-});
-
-/**
- * TODO: test
  * @api {post} /api/markers/list_own List all markers owned by user
  * 
  * @apiName ListOwnMarkers
@@ -255,6 +227,28 @@ app.get('/api/markers/list', (req, res) => {
  */
 app.post('/api/markers/list_own', (req, res) => {
 	let result = db_markers.list_own(req);
+	if (result.success) {
+		res.status(200).send(JSON.stringify({
+			markers: result.markers
+		}));
+	} else {
+		res.status(400).send(JSON.stringify({
+			message: result.message
+		}));
+	}
+});
+
+/**
+ * @api {get} /api/markers/list Retrieve a list of all markers
+ * @apiName ListMarkers
+ * @apiGroup Markers
+ * 
+ * @apiSuccess {Array[Marker]} markers List of markers
+ * 
+ * @apiError {String} message Error message
+ */
+app.get('/api/markers/list', (req, res) => {
+	let result = db_markers.list(req);
 	if (result.success) {
 		res.status(200).send(JSON.stringify({
 			markers: result.markers
