@@ -195,6 +195,21 @@ class Users extends Interface {
         });
         // get the top 10 users
         users = users.slice(0, 10);
+        users = users.map(user => {
+            let new_user = {
+                username: user.username,
+                image_url: null,
+                plant_points: user.plant_points
+            }
+            let user_image = this.db.select_where('Images', 'image_id', user.image_id);
+            if (user_image.length > 0) {
+                new_user.image_url = user_image[0].image_data;
+            } else {
+                // default
+                new_user.image_id = '/default_pfp.png';
+            }
+            return new_user;
+        });
         return {
             success: true,
             message: 'Success',
