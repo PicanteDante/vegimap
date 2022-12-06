@@ -18,34 +18,36 @@ function addMarker(marker_name, imageURL, desc, long, lat)
 	/*
 	 *	request new ID
 	 */
-	 fetch("/api/markers/get_id", {
+	fetch("/api/markers/get_id", {
 		method: "GET"
-	  }).then( response => {
+	}).then( response => {
 		return response.json();
-	  }).then( plant_marker => {
+	}).then( plant_marker => {
 		fetch("/api/markers/add", {
-		method: "POST",
-		headers: {
-		  "Content-Type": "application/json"
-		},
-		body: JSON.stringify({
-		  plant_marker_id: plant_marker.next_id,
-		  name: marker_name,
-		  description: desc,
-		  latitude: lat,
-		  longitude: long,
-		  image: imageURL
-		})
-	  });
-	  
-	})
-	var marker = L.marker([lat, long], {
-		alt:	markerIdentifier
-	}).addTo(map);
-	markerIdentifier++;
-	markerArray.push(marker);
-	console.log(marker);
-	console.log(marker.alt);
+			method: "POST",
+			headers: {
+			"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+			plant_marker_id: plant_marker.next_id,
+			name: marker_name,
+			description: desc,
+			latitude: lat,
+			longitude: long,
+			image: imageURL
+			})
+		});
+		var marker = L.marker([lat, long], {
+			alt:	markerIdentifier
+		}).addTo(map).addEventListener("click", (evt) => {
+			openPlantMarker(evt, plant_marker.next_id);
+		});
+		markerIdentifier++;
+		markerArray.push(marker);
+	
+		console.log(marker);
+		console.log(marker.alt);
+	});
 }
 
 /* ---------- add button ---------- */
@@ -221,16 +223,7 @@ submitDataButton.addEventListener('click', checkInput);
 console.log(parseFloat("balls"));
 
 /* ------ plant desc ----- */
-function openPlantMarker(){
-	
-	/*
-	 *	API call for new ID
-	 */
-	
-	/*
-	 *	create marker on map with new ID and data, and post marker data to server
-	 */
-	
+function openPlantMarker(evt, plant_marker_id){
+	console.log("open plant marker thing")
 	//classList.remove('hidden');
-	//var markerID =
 }
