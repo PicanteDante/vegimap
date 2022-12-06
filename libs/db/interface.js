@@ -164,7 +164,7 @@ class Users extends Interface {
         if (user.length < 1) {
             return null;
         } else {
-            let pfp_url = this.db.select_where('Images', 'image_id', user[0].image_id);
+            let pfp_url = this.db.select_where('Images', 'image_id', user[0].image_id)[0].image_data;
             let profile_page = `/users/${user[0].username}`;
             let user_profile = [{
                 username: user[0].username,
@@ -245,7 +245,36 @@ class Markers extends Interface {
         }
         user_id = parseInt(user_id);
         let plant_marker_id = req.body.plant_marker_id;
-        i
+        
+        // check if plant_marker_id is reserved and belongs to the user
+        let marker = this.db.select_by_id('PlantMarkers', plant_marker_id);
+        if (marker) {
+            if (marker.user_id != user_id) {
+                return {
+                    success: false,
+                    message: "Marker reserved for someone else"
+                };
+            } else {
+                // update the marker
+                // first create a new image entry
+                let image_id = this.db.insert_into('Images', {
+                    image_type: 'url',
+                    image_data: req.body.image
+                });
+                this.db.edit_by_id('PlantMarkers', plant_marker_id, {
+                    name: req.body.name,
+                    description: req.body.description,
+                    latitude: req.body.latitude,
+                    longitude: req.body.longitude,
+                    image_id: image_id
+                });
+                return {
+                    success: true,
+                    message: "Success",
+                    plant_marker_id: plant_marker_id
+                };
+            }
+        }
 
         if (!req.body.lat || !req.body.lng || !req.body.name) {
             return {

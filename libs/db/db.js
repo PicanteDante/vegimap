@@ -26,7 +26,7 @@ class Database {
         this.create_user(
             'test',
             crypto.createHash('sha256').update('test').digest('hex'),
-            'test@test.com'
+            'test@test.com',
         );
         this.create_user(
             'test2',
@@ -132,7 +132,7 @@ class Database {
         // creates a user and returns the user id
         let image_id = this.insert_into('Images', {
             image_type: 'url',
-            image_url: pfp
+            image_data: pfp
         });
         return this.insert_into('Users', {
             username: username,
