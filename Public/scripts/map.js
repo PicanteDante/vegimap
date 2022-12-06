@@ -141,7 +141,8 @@ console.log(parseFloat("balls"));
 
 /* ------ plant desc ----- */
 
-function openPlantMaker(){
-
-	var markerID = null;
+function openPlantMarker(){
+	
+	
+	//var markerID =
 }
