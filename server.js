@@ -46,23 +46,9 @@ app.get('/', function (req, res, next) {
 app.get('/users/:username', function (req, res, next){
 	var username = req.params.username
 	var userData = []
-	//var userData = db_users.get_profile(username)
-	if (username == "shrek"){
-		
-		userData = [{"profileUrl": "/users/shrek",
-					"pfpUrl": "shrek1.png",
-					"username": "shrek",
-					"dateJoined": "1/01/2002",
-					"profilePoints": "69420"}]
-	}
-	else if (username == "raffaele"){
-		userData = [{"profileUrl": "/users/raffaele",
-					"pfpUrl": "image01.png",
-					"username": "Rafaele",
-					"dateJoined": "1/01/2002",
-					"profilePoints": "0",}]
-	}
-	if (userData != ""){
+	var userData = db_users.get_user_profile(username)
+	console.log(userData)
+	if (userData){
 		res.status(200).render('profile', {
 		profile: userData
 	  });
@@ -76,7 +62,9 @@ app.get('/users/:username', function (req, res, next){
 app.get('/leaderboard', function (req, res) {
 	
 	var userData = []
-	userData = [{"profileUrl": "/users/shrek",
+	var temp = db_users.get_top_users()
+	var userData = temp.users
+	/*userData = [{"profileUrl": "/users/shrek",
 				"pfpUrl": "shrek1.png",
 				"username": "shrek",
 				"dateJoined": "1/01/2002",
@@ -87,6 +75,8 @@ app.get('/leaderboard', function (req, res) {
 				"username": "Raffaele",
 				"dateJoined": "1/01/2002",
 				"profilePoints": "0"}]
+	*/
+	console.log(userData)
 	if (userData){
 		res.status(200).render('leaderboard', {
 			leaderUser: userData
@@ -106,19 +96,19 @@ app.get('/about', function(req, res){
 
 app.get('/markers', function(req, res){
 	var markerData = []
-	markerData = [{"profileUrl": "/users/shrek",
-				"pfpUrl": "shrek1.png",
-				"username": "shrek",
-				"dateJoined": "1/01/2002",
-				"profilePoints": "69420"},
+	markerData = [{"name": "Weed",
+				   "longitude": 100.50,
+				   "latitude": 100.50,
+				   "description": "This is edible if you want a good time",
+				   "plant-img": "weed.png"},
 			
-				{"profileUrl": "/users/raffaele",
-				"pfpUrl": "image01.png",
-				"username": "Raffaele",
-				"dateJoined": "1/01/2002",
-				"profilePoints": "0"}]
+				   {"name": "Onions",
+				   "longitude": 200.20,
+				   "latitude": 200.20,
+				   "description": "Makes me want to cry",
+				   "plant-img": "shrek1.png"}]
 	if (markerData){
-		res.status(200).render('yourMarkers', {
+		res.status(200).render('myMarkers', {
 			marker: markerData
 		});
 	}

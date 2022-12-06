@@ -649,9 +649,65 @@ form{
   font-size: 32px;
   margin: 0;
 }
+
+/*--------- your markers -----------*/
+.marker-container {
+  margin: 75px 10%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.marker {
+  flex: 0 1 28%;
+  min-width: 256px;
+  display: flex;
+  margin: 2px;
+  padding: 20px;
+  border: 1px solid #020000;
+  border-radius: 2px;
+  background-color: #fff;
+}
+
+.plant-location {
+  font-size: 10px;
+  font-weight: smaller;
+}
+
+.plant-img img{
+  width: 64px;
+  height: 64px;
+}
+
+.marker-content {
+  flex: 1 1 80%;
+  margin-left: 10px;
+}
+
+.marker-content p {
+  margin: 0;
+}
+
+.marker-content .plant-name {
+  margin-top: 8px;
+  /*text-align: right;*/
+  font-weight: bold;
+}
+
 /*	Intended for input fields */
 .error-input {
   border:2px solid red;
 }
 
+/* ------ marker popups ------ */
 
+.desc-container{
+  top: 0;
+  background-color: white;
+  width: 400px;
+  height: 100%;
+  z-index: 99;
+}
+
+.plant-title, .plant-desc {
+  font-family: "Roboto Slab", serif;
+}
