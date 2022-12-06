@@ -266,11 +266,12 @@ class Markers extends Interface {
                     image_data: req.body.image
                 });
                 this.db.edit_by_id('PlantMarkers', plant_marker_id, {
-                    name: req.body.name,
-                    description: req.body.description,
-                    latitude: req.body.latitude,
-                    longitude: req.body.longitude,
-                    image_id: image_id
+                    marker_name: req.body.name,
+                    marker_post_date: new Date().toLocaleDateString(),
+                    marker_description: req.body.description,
+                    marker_lat: req.body.latitude,
+                    marker_long: req.body.longitude,
+                    marker_image: image_id
                 });
                 return {
                     success: true,
