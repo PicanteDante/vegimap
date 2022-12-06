@@ -13,14 +13,32 @@ var markerArray = [];
 /*
  *	THE THING
  */
-function addMarker(name, imageURL, desc, long, lat)
+function addMarker(marker_name, imageURL, desc, long, lat)
 {
 	/*
 	 *	request new ID
 	 */
-	
-	
-	
+	 fetch("/api/markers/get_id", {
+		method: "GET"
+	  }).then( response => {
+		return response.json();
+	  }).then( plant_marker => {
+		fetch("/api/markers/add", {
+		method: "POST",
+		headers: {
+		  "Content-Type": "application/json"
+		},
+		body: JSON.stringify({
+		  plant_marker_id: plant_marker.next_id,
+		  name: marker_name,
+		  description: desc,
+		  latitude: lat,
+		  longitude: long,
+		  image: imageURL
+		})
+	  });
+	  
+	})
 	var marker = L.marker([parseFloat(lat), parseFloat(long)], {
 		alt:	markerIdentifier
 	}).addTo(map);
