@@ -194,7 +194,7 @@ app.get('/api/markers/get_id', (req, res) => {
  * @apiParam {String} description Marker description
  * @apiParam {String} lat Marker latitude
  * @apiParam {String} lng Marker longitude
- * @apiParam {String} image Marker image
+ * @apiParam {String} image Marker image url
  * 
  * @apiSuccess {String} message Success message
  * 

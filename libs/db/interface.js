@@ -152,7 +152,6 @@ class Users extends Interface {
      */
     get_user_profile(username) {
         /*
-        Get's the user id from req.
         Returns {
             profileUrl: (url to the user's page)
             pfpUrl: (url to the user's profile picture)
@@ -185,14 +184,6 @@ class Users extends Interface {
      * @param {Object} req - request object
      * 
      * @returns {Object} - {success: Bool, message: String, users: Array[Object]}
-     * 
-     * @example
-     *     let response = get_sorted_users(req);
-     *     if (response.success) {
-     *        // do something with response.users
-     *     } else {
-     *        // do something with response.message
-     *     }
      *
      */
      get_top_users(req) {
@@ -217,9 +208,20 @@ class Markers extends Interface {
 
     get_id(req) {
         // Reserve an id by inserting a row into the database
-        let user_id = this.db.create_marker();
-        let next_id = db.tables['PlantMarkers'].auto_id;
-	    db.tables['PlantMarkers'].auto_id++;
+        if (req.cookies.user_id == undefined) {
+            return {
+                success: false,
+                message: "Not logged in"
+            };
+        }
+        let next_id = this.db.insert_into('PlantMarkers', {
+            user_id: req.cookies.user_id,
+            name: '',
+            description: '',
+            image_id: 0,
+            latitude: 0,
+            longitude: 0
+        })
         return next_id;
     }
     /**
@@ -232,26 +234,26 @@ class Markers extends Interface {
      */
     add(req) {
         // check if user_id is not set
-        if (req.cookies.user_id == undefined) {
+        let user_id = req.cookies['user_id'];
+        // check if user_id is not an int
+        
+        if (user_id == undefined || isNaN(user_id)) {
             return {
                 success: false,
                 message: "Not logged in"
             };
         }
+        user_id = parseInt(user_id);
+        let plant_marker_id = req.body.plant_marker_id;
+        i
+
         if (!req.body.lat || !req.body.lng || !req.body.name) {
             return {
                 success: false,
                 message: "Missing required fields"
             };
         }
-        let plant_marker_id = this.db.insert_into('PlantMarkers', {
-            user_id: req.cookies.user_id,
-            latitude: req.body.lat,
-            longitude: req.body.lng,
-            name: req.body.name,
-            description: req.body.description,
-            date_added: new Date().toLocaleDateString()
-        });
+        
         return {
             success: true,
             message: "success",
@@ -339,27 +341,45 @@ class Markers extends Interface {
         };
     }
 
+    list_own(req) {
+        let user_id = req.cookies['user_id'];
+        if (user_id == undefined || isNaN(user_id)) {
+            return {
+                success: false,
+                message: "Not logged in"
+            };
+        } else {
+            let username = this.db.select_by_id('Users', user_id)
+            if (username.length == 0) {
+                return {
+                    success: false,
+                    message: "Not logged in"
+                };
+            } else {
+                return this.list_user_markers(username);
+            }
+        }
+    }
+
     /**
      * TODO: test + use cookies
      * Gets a list of all markers owned by a user
      * 
      * same as list() but only returns markers owned by the user
      * 
-     * @param {Object} req - request object
+     * @param {Object} username - the username of the user to get
      * 
      * @returns {Object} - {success: Bool, message: String, markers: Array[Object]}
      */
-    list_own(req) {
-        let user_id = req.cookies['user_id'];
-        // check if user_id is not an int
-        
-        if (user_id == undefined || isNaN(user_id)) {
+    list_user_markers(username) {
+        let user = this.db.select_where('Users', 'username', username);
+        if (user.length == 0) {
             return {
                 success: false,
-                message: "Not logged in"
+                message: "Invalid User",
+                markers: []
             };
         }
-        user_id = parseInt(user_id);
         let raw_markers = this.db.select_where('PlantMarkers', 'user_id', user_id);
         let markers = raw_markers.map(raw_marker => {
             let marker = {...raw_marker};  // copy everything over
