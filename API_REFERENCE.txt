@@ -38,6 +38,6 @@ Current endpoints and their status:
     /api/markers/upvote         GOOD (more testing needed)
     /api/markers/downvote       GOOD (more testing needed)
     /api/markers/delete         GOOD (more testing needed)
-    /api/markers/edit           NONEXISTENT
-    /api/markers/check_owner    NONEXISTENT
+    /api/markers/edit           NOT TESTED
+    /api/markers/check_owner    NOT TESTED
     /api/top_users              GOOD (more testing needed)

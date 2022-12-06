@@ -163,7 +163,6 @@ app.post('/api/login', (req, res) => {
 //#region Markers
 
 /**
- * TODO: test
  * @api {get} /api/markers/get_id Get the next marker id and send it
  * 
  * @apiSuccess {int} next_id Next marker id (has been reserved)
@@ -184,7 +183,6 @@ app.get('/api/markers/get_id', (req, res) => {
 });
 
 /**
- * TODO: test
  * @api {post} /api/markers/add Add a marker
  * 
  * @apiParam {String} plant_marker_id Plant marker id
@@ -257,7 +255,6 @@ app.get('/api/markers/list', (req, res) => {
 });
 
 /**
- * TODO: test
  * @api {post} /api/markers/get Get info on a single marker
  * @apiName GetMarker
  * @apiGroup Markers
@@ -282,7 +279,6 @@ app.post('/api/markers/get', (req, res) => {
 });
 
 /**
- * TODO: test
  * @api {post} /api/markers/upvote Upvote a marker
  * @apiName UpvoteMarker
  * @apiGroup Markers
@@ -308,7 +304,6 @@ app.post('/api/markers/upvote', (req, res) => {
 });
 
 /**
- * TODO: test
  * @api {post} /api/markers/downvote Downvote a marker
  * @apiName DownvoteMarker
  * @apiGroup Markers
@@ -334,7 +329,6 @@ app.post('/api/markers/downvote', (req, res) => {
 });
 
 /**
- * TODO: test
  * @api {post} /api/markers/delete Delete marker
  * @apiName DeleteMarker
  * @apiGroup Markers
@@ -360,10 +354,59 @@ app.post('/api/markers/delete', (req, res) => {
 	}
 });
 
+/**
+ * @api {post} /api/markers/edit Edit marker with description
+ * 
+ * @apiParam {Int} plant_marker_id The plant marker id
+ * @apiParam {String} description The new description
+ * 
+ * @apiSuccess {String} message Success message
+ * 
+ * @apiError {String} message Error message
+ */
+app.post('/api/markers/edit', (req, res) => {
+	let result = db_markers.edit(req);
+	if (result.success) {
+		res.status(200).send(JSON.stringify({
+			message: 'Successfully edited marker.',
+		}));
+	} else {
+		res.status(400).send(JSON.stringify({
+			message: result.message
+		}));
+	}
+});
+
+/**
+ * @api {post} /api/markers/check_owner check if the given user is the owner of the marker
+ * 
+ * @apiParam {Int} plant_marker_id The plant marker id
+ * @apiParam {Int} user_id The user id
+ */
+app.post('/api/markers/check_owner', (req, res) => {
+	// honestly just access the db directly
+	let plant_marker_maybe = db.select_by_id('plant_markers', req.body.plant_marker_id);
+	if (plant_marker_maybe) {
+		if (plant_marker_maybe.user_id == req.body.user_id) {
+			res.status(200).send(JSON.stringify({
+				message: 'User is owner of marker.',
+			}));
+		} else {
+			res.status(400).send(JSON.stringify({
+				message: 'User is not owner of marker.',
+			}));
+		}
+	} else {
+		res.status(400).send(JSON.stringify({
+			message: 'Marker does not exist.',
+		}));
+	}
+});
+
 //#endregion
 //#region Users
 /**
- * TODO: test
+ * TODO: Documentation
  */
 app.get('/api/top_users', (req, res) => {
 	let result = db_users.get_top_users(req);
