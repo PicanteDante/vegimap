@@ -88,8 +88,6 @@ app.get('/signin', function (req, res) {
 	res.status(200).render('signin');
 });
 
-
-
 app.get('/about', function(req, res){
 	res.status(200).render('about');
 });
