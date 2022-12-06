@@ -28,46 +28,16 @@ fetch("/api/endpoint", {
 
 
 Current endpoints and their status:
-    /api/register           GOOD
-    /api/login              GOOD
-    /api/markers/get_id     GOOD
-    /api/markers/add        GOOD
-    /api/markers/list_own   GOOD
-    /api/markers/list       GOOD
-    /api/markers/get        NOT WORKING
-    /api/markers/upvote     NOT WORKING
-    /api/markers/downvote   NOT WORKING
-    /api/markers/delete     NOT WORKING
-    /api/top_users          GOOD
-
-Documentation:
-    /api/register
-        POST
-        data: {
-            username: string,
-            password: string,
-            email: string
-        }
-        response: {
-            message: string
-            user_id: int
-        }
-    /api/login
-        POST
-        data: {
-            username: string,
-            password: string
-        }
-        response: {
-            success: boolean,
-            message: string,
-            user_id: int
-        }
-    /api/markers/get_id
-        POST
-        data: {
-            username: string
-        }
-        response: {
-            user_id: int
-        }
+    /api/register               GOOD
+    /api/login                  GOOD
+    /api/markers/get_id         GOOD (more testing needed)
+    /api/markers/add            GOOD (more testing needed)
+    /api/markers/list_own       GOOD
+    /api/markers/list           GOOD
+    /api/markers/get            GOOD (more testing needed)
+    /api/markers/upvote         GOOD (more testing needed)
+    /api/markers/downvote       GOOD (more testing needed)
+    /api/markers/delete         GOOD (more testing needed)
+    /api/markers/edit           NOT TESTED
+    /api/markers/check_owner    NOT TESTED
+    /api/top_users              GOOD (more testing needed)
