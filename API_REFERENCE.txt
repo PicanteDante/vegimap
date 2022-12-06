@@ -34,40 +34,9 @@ Current endpoints and their status:
     /api/markers/add        GOOD
     /api/markers/list_own   GOOD
     /api/markers/list       GOOD
-    /api/markers/get        NOT WORKING
-    /api/markers/upvote     NOT WORKING
-    /api/markers/downvote   NOT WORKING
+    /api/markers/get        GOOD
+    /api/markers/upvote     GOOD
+    /api/markers/downvote   GOOD
     /api/markers/delete     NOT WORKING
+    /api/markers/edit       NONEXISTENT
     /api/top_users          GOOD
-
-Documentation:
-    /api/register
-        POST
-        data: {
-            username: string,
-            password: string,
-            email: string
-        }
-        response: {
-            message: string
-            user_id: int
-        }
-    /api/login
-        POST
-        data: {
-            username: string,
-            password: string
-        }
-        response: {
-            success: boolean,
-            message: string,
-            user_id: int
-        }
-    /api/markers/get_id
-        POST
-        data: {
-            username: string
-        }
-        response: {
-            user_id: int
-        }

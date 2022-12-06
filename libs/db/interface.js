@@ -214,7 +214,7 @@ class Markers extends Interface {
      * @returns {Object} - {success: Bool, message: String, next_id: Int}
      */
     get_id(req) {
-        // Reserve an id by inserting a row into the database
+        // check if user_id is not set
         let user_id = req.cookies['user_id'];
         // check if user_id is not an int
         
@@ -225,6 +225,13 @@ class Markers extends Interface {
             };
         }
         user_id = parseInt(user_id);
+        let user = this.db.select_by_id('Users', user_id);
+        if (!user) {
+            return {
+                success: false,
+                message: "User does not exist"
+            }
+        }
         let next_id = this.db.insert_into('PlantMarkers', {
             user_id: user_id,
             name: '',
@@ -258,6 +265,13 @@ class Markers extends Interface {
             };
         }
         user_id = parseInt(user_id);
+        let user = this.db.select_by_id('Users', user_id);
+        if (!user) {
+            return {
+                success: false,
+                message: "User does not exist"
+            }
+        }
         let plant_marker_id = req.body.plant_marker_id;
         
         // check if plant_marker_id is reserved and belongs to the user
@@ -389,7 +403,6 @@ class Markers extends Interface {
             };
         }
         user_id = parseInt(user_id);
-        console.log(user_id);
         let user = this.db.select_by_id('Users', user_id);
         if (!user) {
             return {
@@ -463,7 +476,24 @@ class Markers extends Interface {
     }
 
     upvote(req) {
-        let user_id = req.body.user_id;
+        // check if user_id is not set
+        let user_id = req.cookies['user_id'];
+        // check if user_id is not an int
+        
+        if (user_id == undefined || isNaN(user_id)) {
+            return {
+                success: false,
+                message: "Not logged in"
+            };
+        }
+        user_id = parseInt(user_id);
+        let user = this.db.select_by_id('Users', user_id);
+        if (!user) {
+            return {
+                success: false,
+                message: "User does not exist"
+            }
+        }
         let plant_marker_id = req.body.plant_marker_id;
 
         // check if the user has already upvoted this marker
@@ -475,18 +505,34 @@ class Markers extends Interface {
         );
 
         if (upvotes.length > 0) {
-            // user has already upvoted this marker
-            return {
-                success: false,
-                message: 'User has already upvoted this marker'
-            };
+            console.log(JSON.stringify(upvotes));
+            // check the rating, if it's -1 then simply change it to 1
+            if (upvotes[0].user_marker_rating === -1) {
+                this.db.edit_by_id(
+                    'UserMarkerRatings',
+                    upvotes[0].user_marker_rating_id,
+                    {
+                        user_marker_rating: 1
+                    }
+                );
+                return {
+                    success: true,
+                    message: 'success'
+                };
+            } else {
+                // user has already upvoted this marker
+                return {
+                    success: false,
+                    message: 'User has already upvoted this marker'
+                };
+            }
         } else {
             // user has not upvoted this marker
-            this.db.insert('UserMarkerRatings', {
+            this.db.insert_into('UserMarkerRatings', {
                 user_id: user_id,
                 plant_marker_id: plant_marker_id,
-                rating: 1,
-                timestamp: new Date()
+                user_marker_rating: 1,
+                user_marker_rating_date: new Date().toLocaleDateString()
             });
             return {
                 success: true,
@@ -497,30 +543,63 @@ class Markers extends Interface {
     }
 
     downvote(req) {
-        let user_id = req.body.user_id;
+        // check if user_id is not set
+        let user_id = req.cookies['user_id'];
+        // check if user_id is not an int
+        
+        if (user_id == undefined || isNaN(user_id)) {
+            return {
+                success: false,
+                message: "Not logged in"
+            };
+        }
+        user_id = parseInt(user_id);
+        let user = this.db.select_by_id('Users', user_id);
+        if (!user) {
+            return {
+                success: false,
+                message: "User does not exist"
+            }
+        }
         let plant_marker_id = req.body.plant_marker_id;
 
         // check if the user has already upvoted this marker
-        let upvotes = this.db.select_where_predicate(
+        let downvotes = this.db.select_where_predicate(
             'UserMarkerRatings',
             (rating) => {
                 return rating.user_id == user_id && rating.plant_marker_id == plant_marker_id;
             }
         );
 
-        if (upvotes.length > 0) {
-            // user has already upvoted this marker
-            return {
-                success: false,
-                message: 'User has already upvoted this marker'
-            };
+        if (downvotes.length > 0) {
+            console.log(JSON.stringify(downvotes));
+            // check the rating, if it's -1 then simply change it to 1
+            if (downvotes[0].user_marker_rating === 1) {
+                this.db.edit_by_id(
+                    'UserMarkerRatings',
+                    downvotes[0].user_marker_rating_id,
+                    {
+                        user_marker_rating: -1
+                    }
+                );
+                return {
+                    success: true,
+                    message: 'success'
+                };
+            } else {
+                // user has already upvoted this marker
+                return {
+                    success: false,
+                    message: 'User has already upvoted this marker'
+                };
+            }
         } else {
             // user has not upvoted this marker
-            this.db.insert('UserMarkerRatings', {
+            this.db.insert_into('UserMarkerRatings', {
                 user_id: user_id,
                 plant_marker_id: plant_marker_id,
-                rating: -1,
-                timestamp: new Date()
+                user_marker_rating: -1,
+                user_marker_rating_date: new Date().toLocaleDateString()
             });
             return {
                 success: true,
@@ -538,7 +617,24 @@ class Markers extends Interface {
      */
     delete(req) {
         let plant_marker_id = req.body.plant_marker_id;
-        let user_id = req.body.user_id;
+        // check if user_id is not set
+        let user_id = req.cookies['user_id'];
+        // check if user_id is not an int
+        
+        if (user_id == undefined || isNaN(user_id)) {
+            return {
+                success: false,
+                message: "Not logged in"
+            };
+        }
+        user_id = parseInt(user_id);
+        let user = this.db.select_by_id('Users', user_id);
+        if (!user) {
+            return {
+                success: false,
+                message: "User does not exist"
+            }
+        }
 
         // check if the user owns the marker
         let markers = this.db.select_where_predicate(
