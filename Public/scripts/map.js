@@ -39,7 +39,7 @@ function addMarker(marker_name, imageURL, desc, long, lat)
 	  });
 	  
 	})
-	var marker = L.marker([parseFloat(lat), parseFloat(long)], {
+	var marker = L.marker([lat, long], {
 		alt:	markerIdentifier
 	}).addTo(map);
 	markerIdentifier++;
@@ -182,7 +182,7 @@ function checkInput()
 	
 	if (validInput)
 	{
-		addMarker(nameBox.value, imageBox.value, descBox.value, longBox.value, latBox.value);
+		addMarker(nameBox.value, imageBox.value, descBox.value, parseFloat(longBox.value), parseFloat(latBox.value));
 		
 		hideAddSomethingModal();
 	}
