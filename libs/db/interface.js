@@ -17,8 +17,8 @@ class Signup extends Interface {
     /**
      * Creates a new user on sign up
      * 
-     * @param {Object} req - request object
-     * @returns {Object} - {success: Bool, message: String, user_id: Int}
+     * @param {{ body: { username: string, password: string, email: string}}} req - request object
+     * @returns {{ success: boolean, message: string, user_id: int}} - {success: Bool, message: String, user_id: Int}
      */
     register(req) {
         // first check if username is between 3-20 characters
@@ -83,7 +83,7 @@ class Signup extends Interface {
      * Logs in a user
      * 
      * @param {Object} req - request object
-     * @returns Object} - {success: Bool, message: String, user_id: Int}
+     * @returns {{success: Bool, message: String, user_id: Int}} - 
      */
     login(req) {
         // req is a form submission
@@ -148,7 +148,7 @@ class Users extends Interface {
      * 
      * @param {String} username - the username
      * 
-     * @returns {Object} - the user's information, or null if the user doesn't exist
+     * @returns {{ username: int, dateJoined: string, profilePoints: int, pfpUrl: string, profileUrl: string }} - the user's information, or null if the user doesn't exist
      */
     get_user_profile(username) {
         /*

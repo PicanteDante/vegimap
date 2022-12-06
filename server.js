@@ -421,6 +421,30 @@ app.get('/api/top_users', (req, res) => {
 		}));
 	}
 });
+
+/**
+ * @api {post} /api/users/get Get user info
+ * 
+ * @apiParam {String} username The username
+ * 
+ * @apiSuccess {{ username: int, dateJoined: string, profilePoints: int, pfpUrl: string, profileUrl: string }} user The user object
+ * @apiSuccess {String} message Success message
+ * 
+ * @apiError {String} message Error message
+ */
+app.post('/api/users/get', (req, res) => {
+	let user = db_users.get_user_profile(req.body.username);
+	if (user) {
+		res.status(200).send(JSON.stringify({
+			user: user,
+			message: 'Successfully retrieved user.',
+		}));
+	} else {
+		res.status(400).send(JSON.stringify({
+			message: 'User not found.'
+		}));
+	}
+});
 //#endregion
 
 //#endregion

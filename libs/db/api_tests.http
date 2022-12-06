@@ -111,3 +111,13 @@ Cookie: user_id=0
 {
     "plant_marker_id": 2
 }
+
+###
+
+POST http://localhost:6969/api/users/get HTTP/1.1
+Content-Type: application/json
+Cookie: user_id=0
+
+{
+    "username": "test2"
+}
