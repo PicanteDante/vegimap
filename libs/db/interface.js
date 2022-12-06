@@ -380,6 +380,7 @@ class Markers extends Interface {
                 markers: []
             };
         }
+        let user_id = user[0].user_id;
         let raw_markers = this.db.select_where('PlantMarkers', 'user_id', user_id);
         let markers = raw_markers.map(raw_marker => {
             let marker = {...raw_marker};  // copy everything over
