@@ -8,13 +8,26 @@ var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 osm.addTo(map);
 
 
+var markerIdentifier = 0;
+var markerArray = [];
 /*
  *	THE THING
  */
 function addMarker(name, imageURL, desc, long, lat)
 {
-	var marker = L.marker([parseFloat(lat), parseFloat(long)]).addTo(map);
+	/*
+	 *	request new ID
+	 */
+	
+	
+	
+	var marker = L.marker([parseFloat(lat), parseFloat(long)], {
+		alt:	markerIdentifier
+	}).addTo(map);
+	markerIdentifier++;
+	markerArray.push(marker);
 	console.log(marker);
+	console.log(marker.alt);
 }
 
 /* ---------- add button ---------- */
@@ -140,9 +153,16 @@ submitDataButton.addEventListener('click', checkInput);
 console.log(parseFloat("balls"));
 
 /* ------ plant desc ----- */
+var markersArray =
+
 
 function openPlantMarker(){
 	
+	/*
+	 *	API call for
+	 */
 	
+	
+	//classList.remove('hidden');
 	//var markerID =
 }
