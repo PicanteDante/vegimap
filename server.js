@@ -61,13 +61,13 @@ app.get('/users/:username', function (req, res, next){
 					"dateJoined": "1/01/2002",
 					"profilePoints": "0"}]
 	}
-	if (userData){
-	  res.status(200).render('profile', {
+	if (userData != ""){
+		res.status(200).render('profile', {
 		profile: userData
 	  });
 	}
-	else{
-		next();
+	else {
+		res.status(404).render('noUser', {username: req.params.username});
 	}
 
 });
