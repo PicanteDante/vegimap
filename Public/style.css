@@ -706,9 +706,9 @@ form{
 }
 
 /* ------ marker popups ------ */
-.desc-container{
+#desc-container{
   position: absolute;
-  display: block;
+  display: none;
   top: 0px;
   width: 400px;
   background-color: white;

@@ -106,10 +106,7 @@ var modalHideButtons = document.getElementsByClassName('modal-hide-button');
 window.addEventListener('click', function(event) {
 	if (event.target == document.getElementById('modal-close')) { 
 	  document.getElementById('modal-close').style.display = "none";
-	  var elems = document.getElementsByClassName('desc-container');
-		for (var i = 0; i < elems.length; i++ ) {
-    		elems[i].style.display = "none";
-		}
+	  document.getElementById('desc-container').style.display = "none";
 	}
 });
 
@@ -225,5 +222,6 @@ console.log(parseFloat("balls"));
 /* ------ plant desc ----- */
 function openPlantMarker(evt, plant_marker_id){
 	console.log("open plant marker thing")
-	//classList.remove('hidden');
+	document.getElementById('desc-container').style.display = "block";
+	document.getElementById('modal-close').style.display = "block";
 }
