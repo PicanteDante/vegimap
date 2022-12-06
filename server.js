@@ -4,14 +4,13 @@ var exphbs = require('express-handlebars')
 var app  = express();
 var port = process.env.PORT || 6969;
 
-
 // Database
 var Database = require('./libs/db/db.js');
 var db = new Database();  // raw db access
 db.prepopulate();
 var db_interface = require('./libs/db/interface.js');  // abstracted access like db_interface.signup.signup(req, res)
 var db_signup = new db_interface.Signup(db);
-var db_profiles = new db_interface.Profiles(db);
+var db_users = new db_interface.Users(db);
 var db_markers = new db_interface.Markers(db);
 
 app.use(express.static(path.join(__dirname, 'Public', 'scripts')));
@@ -71,16 +70,16 @@ app.get('/about', function(req, res){
  * @apiParam {String} password Password
  *
  * @apiSuccess {String} message Success message
- * @apiSuccess {String} token User token
+ * @apiSuccess {String} user_id User token
  * 
  * @apiError {String} message Error message
  */
 app.post('/api/register', (req, res) => {
 	let result = db_signup.register(req);
 	if (result.success) {
-		res.status(200).send(JSON.stringify({
+		res.status(200).cookie('user_id', result.user_id, { maxAge: 900000, httpOnly: true }).send(JSON.stringify({
 			message: 'Successfully registered.',
-			token: result.user_id
+			user_id: result.user_id
 		}));
 	} else {
 		res.status(400).send(JSON.stringify({
@@ -97,7 +96,6 @@ app.post('/api/register', (req, res) => {
  * @apiParam {String} email Email
  * @apiParam {String} password Password
  * 
- * @apiSuccess {String} message Success message
  * @apiSuccess {String} token User token
  * 
  * @apiError {String} message Error message
@@ -105,7 +103,7 @@ app.post('/api/register', (req, res) => {
 app.post('/api/login', (req, res) => {
 	let result = db_signup.login(req);
 	if (result.success) {
-		res.status(200).send(JSON.stringify({
+		res.status(200).cookie('user_id', result.user_id, { maxAge: 900000, httpOnly: true }).send(JSON.stringify({
 			message: 'Successfully logged in.',
 			token: result.user_id
 		}));
@@ -119,9 +117,26 @@ app.post('/api/login', (req, res) => {
 //#region Markers
 
 /**
+ * TODO: test
+ * @api {get} /api/markers/get_id Get the next marker id and send it
+ * 
+ * @apiSuccess {int} inext_d Next marker id (has been reserved)
+ * 
+ * @apiError {String} message Error message
+ */
+app.get('/api/markers/get_id', (req, res) => {
+	// the user_id is the token from cookies
+	let next_id = db.tables['PlantMarkers'].auto_id;
+	db.tables['PlantMarkers'].auto_id++;
+
+	res.status(200).send(JSON.stringify({
+		next_id: next_id
+	}));
+});
+
+/**
+ * TODO: test
  * @api {post} /api/markers/add Add a marker
- * @apiName AddMarker
- * @apiGroup Markers
  * 
  * @apiParam {String} token User token
  * @apiParam {String} name Marker name
@@ -148,6 +163,7 @@ app.post('/api/markers/add', (req, res) => {
 });
 
 /**
+ * TODO: test
  * @api {get} /api/markers/list Retrieve a list of all markers
  * @apiName ListMarkers
  * @apiGroup Markers
@@ -170,7 +186,17 @@ app.get('/api/markers/list', (req, res) => {
 });
 
 /**
+ * TODO: test
  * @api {post} /api/markers/list_own List all markers owned by user
+ * 
+ * @apiName ListOwnMarkers
+ * @apiGroup Markers
+ * 
+ * @apiParam {String} token User token
+ * 
+ * @apiSuccess {Array[Marker]} markers List of markers
+ * 
+ * @apiError {String} message Error message
  */
 app.post('/api/markers/list_own', (req, res) => {
 	let result = db_markers.list_own(req);
@@ -186,10 +212,32 @@ app.post('/api/markers/list_own', (req, res) => {
 });
 
 /**
- * @api {post} /api/markers/get Get info on marker
+ * TODO: test
+ * @api {post} /api/markers/get Get info on a single marker
+ * @apiName GetMarker
+ * @apiGroup Markers
+ * 
+ * @apiParam {String} plant_marker_id Marker ID
+ * 
+ * @apiSuccess {Marker} marker Marker info
+ * 
+ * @apiError {String} message Error message
  */
+app.post('/api/markers/get', (req, res) => {
+	let result = db_markers.get(req);
+	if (result.success) {
+		res.status(200).send(JSON.stringify({
+			marker: result.marker
+		}));
+	} else {
+		res.status(400).send(JSON.stringify({
+			message: result.message
+		}));
+	}
+});
 
 /**
+ * TODO: test
  * @api {post} /api/markers/upvote Upvote a marker
  * @apiName UpvoteMarker
  * @apiGroup Markers
@@ -215,6 +263,7 @@ app.post('/api/markers/upvote', (req, res) => {
 });
 
 /**
+ * TODO: test
  * @api {post} /api/markers/downvote Downvote a marker
  * @apiName DownvoteMarker
  * @apiGroup Markers
@@ -240,6 +289,7 @@ app.post('/api/markers/downvote', (req, res) => {
 });
 
 /**
+ * TODO: test
  * @api {post} /api/markers/delete Delete marker
  * @apiName DeleteMarker
  * @apiGroup Markers
@@ -266,8 +316,22 @@ app.post('/api/markers/delete', (req, res) => {
 });
 
 //#endregion
-//#region Leaderboard
-
+//#region Users
+/**
+ * TODO: test
+ */
+app.get('/api/top_users', (req, res) => {
+	let result = db_users.get_top_users(req);
+	if (result.success) {
+		res.status(200).send(JSON.stringify({
+			users: result.users
+		}));
+	} else {
+		res.status(400).send(JSON.stringify({
+			message: result.message
+		}));
+	}
+});
 //#endregion
 
 //#endregion

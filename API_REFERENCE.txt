@@ -25,3 +25,41 @@ fetch("/api/endpoint", {
 }).catch(err => {
     // do something with the error
 });
+
+Documentation:
+    /api/register - registers a user, and returns the id of the user
+        args:
+            username - the username of the user
+            password - the password of the user
+            email - the email of the user
+        returns:
+            message - the message of the response
+            token - the token of the user
+
+    /api/login - logs in a user, and returns the id of the user
+        args:
+            email - the username of the user
+            password - the password of the user
+        returns:
+            message - the message of the response
+            token - the token of the user
+
+    /api/markers/add - adds a marker to the database
+        args:
+            token - the token of the user
+            lat - the latitude of the marker
+            lng - the longitude of the marker
+            title - the title of the marker
+            description - the description of the marker
+        returns:
+            message - the message of the response
+            id - the id of the marker
+
+    /api/markers/list - get a list of markers
+        args:
+            token - the token of the user
+        returns:
+            message - the message of the response
+            markers - the list of markers
+        
+    /api/markers/list_own - 

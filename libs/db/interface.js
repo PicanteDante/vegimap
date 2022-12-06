@@ -68,13 +68,13 @@ class Signup extends Interface {
 
         // insert into database
         this.db.insert_into('Users', {
-            name: req.body.username,
+            username: req.body.username,
             plant_points: 0,
             date_joined: new Date().toLocaleDateString(),
             email: req.body.email,
             password: password
         });
-        let user_id = this.db.select_where('Users', 'name', req.body.username)[0].user_id;
+        let user_id = this.db.select_where('Users', 'username', req.body.username)[0].user_id;
         return {
             success: true,
             message: "success",
@@ -130,7 +130,7 @@ class Signup extends Interface {
         if (req.body.username && req.body.email) {
             return {
                 email_in_use: this.db.select_where('Users', 'email', req.body.email).length > 0,
-                username_in_use: this.db.select_where('Users', 'name', req.body.username).length > 0
+                username_in_use: this.db.select_where('Users', 'username', req.body.username).length > 0
             };
         } else {
             return {
@@ -144,33 +144,60 @@ class Signup extends Interface {
 /**
  * Methods for getting user information from the database.
  */
-class Profiles extends Interface {
-    get_profile(req) {
-        // req.body could have either a username, email, or user_id
-        if (req.body.username) {
-            matches = this.db.select_where('users', 'username', req.body.username);
-        } else if (req.body.email) {
-            matches = this.db.select_where('users', 'email', req.body.email);
-        } else if (req.body.user_id) {
-            matches = this.db.select_by_id('users', req.body.user_id);
+class Users extends Interface {
+    /**
+     * Gets a user's profile information
+     * 
+     * @param {String} username - the username
+     * 
+     * @returns {Object} - the user's information, or null if the user doesn't exist
+     */
+    get_user_profile(username) {
+        let user = this.db.select_where('Users', 'username', username);
+        if (user.length < 1) {
+            return null;
         } else {
-            return {
-                success: false,
-                message: "Missing username, email, or user_id"
-            };
+            let pfp_url = this.db.select_where('Images', 'image_id', user[0].image_id);
+            let profile_page = `/users/${user[0].username}`;
+            let user_profile = {
+                username: user[0].username,
+                dateJoined: user[0].date_joined,
+                profilePoints: user[0].plant_points,
+                pfpUrl: pfp_url,
+                profileUrl: profile_page
+            }
+            return user_profile;
         }
-        if (matches.length > 0) {
-            return{
-                success: true,
-                message: 'Success',
-                user: matches[0]
-            };
-        } else {
-            return {
-                success: false,
-                message: 'No matches found.'
-            };
-        }
+    }
+
+    /**
+     * get all users sorted by their rating
+     * 
+     * @param {Object} req - request object
+     * 
+     * @returns {Object} - {success: Bool, message: String, users: Array[Object]}
+     * 
+     * @example
+     *     let response = get_sorted_users(req);
+     *     if (response.success) {
+     *        // do something with response.users
+     *     } else {
+     *        // do something with response.message
+     *     }
+     *
+     */
+     get_top_users(req) {
+        let users = this.db.all('Users');
+        users.sort((a, b) => {
+            return b.plant_points - a.plant_points;
+        });
+        // get the top 10 users
+        users = users.slice(0, 10);
+        return {
+            success: true,
+            message: 'Success',
+            users: users
+        };
     }
 }
 
@@ -187,14 +214,21 @@ class Markers extends Interface {
      * @returns {Object} - {success: Bool, message: String, plant_marker_id: Int}
      */
     add(req) {
-        if (!req.body.token || !req.body.lat || !req.body.lng || !req.body.name) {
+        // check if user_id is not set
+        if (req.cookies.user_id == undefined) {
+            return {
+                success: false,
+                message: "Not logged in"
+            };
+        }
+        if (!req.body.lat || !req.body.lng || !req.body.name) {
             return {
                 success: false,
                 message: "Missing required fields"
             };
         }
-        this.db.insert_into('Markers', {
-            user_id: req.body.token,
+        this.db.insert_into('PlantMarkers', {
+            user_id: req.cookies.user_id,
             latitude: req.body.lat,
             longitude: req.body.lng,
             name: req.body.name,
@@ -204,8 +238,45 @@ class Markers extends Interface {
         return {
             success: true,
             message: "success",
-            plant_marker_id: this.db.select_where('Markers', 'name', req.body.name)[0].plant_marker_id
+            plant_marker_id: this.db.select_where('PlantMarkers', 'name', req.body.name)[0].plant_marker_id
         };
+    }
+
+    get(req) {
+        // req.body.plant_marker_id
+
+        let raw_marker = this.db.select_by_id('PlantMarkers', req.body.plant_marker_id);
+        
+        // make sure it's not undefined
+        if (raw_marker) {
+            let marker = {...raw_marker};  // copy everything over
+            marker.plant_ratings = this.db.select_where(
+                'UserMarkerRatings',
+                'plant_marker_id',
+                marker.plant_marker_id
+            );
+            marker.tags = this.db.select_where(
+                'PlantMarkers_PlantTags',
+                'plant_marker_id',
+                marker.plant_marker_id
+            ).map(plant_marker_plant_tag => {
+                let tag = this.db.select_by_id(
+                    'PlantTags',
+                    plant_marker_plant_tag.plant_tag_id
+                )[0];
+                return tag;
+            });
+            return {
+                success: true,
+                message: "success",
+                marker: marker
+            };
+        } else {
+            return {
+                success: false,
+                message: "Marker does not exist"
+            };
+        }
     }
 
     /**
@@ -259,7 +330,7 @@ class Markers extends Interface {
      * 
      * @returns {Object} - {success: Bool, message: String, markers: Array[Object]}
      */
-    list_owned(req) {
+    list_own(req) {
         let raw_markers = this.db.select_where('PlantMarkers', 'user_id', req.body.user_id);
         let markers = raw_markers.map(raw_marker => {
             let marker = {...raw_marker};  // copy everything over
@@ -397,6 +468,6 @@ class Markers extends Interface {
 
 module.exports = {
     Signup: Signup,
-    Profiles: Profiles,
+    Users: Users,
     Markers: Markers
 }
