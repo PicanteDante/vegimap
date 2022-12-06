@@ -148,11 +148,12 @@ class Users extends Interface {
      * 
      * @param {String} username - the username
      * 
-     * @returns {{ username: int, dateJoined: string, profilePoints: int, pfpUrl: string, profileUrl: string }} - the user's information, or null if the user doesn't exist
+     * @returns {{ user_id: int, username: string, dateJoined: string, profilePoints: int, pfpUrl: string, profileUrl: string }} - the user's information, or null if the user doesn't exist
      */
     get_user_profile(username) {
         /*
         Returns {
+            user_id: (the user's id)
             profileUrl: (url to the user's page)
             pfpUrl: (url to the user's profile picture)
             username: (the user's username)
@@ -167,6 +168,7 @@ class Users extends Interface {
             let pfp_url = this.db.select_where('Images', 'image_id', user[0].image_id)[0].image_data;
             let profile_page = `/users/${user[0].username}`;
             let user_profile = [{
+                user_id: user[0].user_id,
                 username: user[0].username,
                 dateJoined: user[0].date_joined,
                 profilePoints: user[0].plant_points,
@@ -469,10 +471,6 @@ class Markers extends Interface {
             message: 'Success',
             markers: markers
         };
-    }
-
-    update(req) {
-
     }
 
     upvote(req) {

@@ -1,6 +1,7 @@
 var path = require('path');
 var express = require('express');
 var exphbs = require('express-handlebars')
+var handlebars = require('handlebars')
 var app  = express();
 var port = process.env.PORT || 6969;
 var cookieParser = require('cookie-parser');
@@ -425,9 +426,10 @@ app.get('/api/top_users', (req, res) => {
 /**
  * @api {post} /api/users/get Get user info
  * 
- * @apiParam {String} username The username
+ * @apiParam {String} username The username [optional]
+ * @apiParam {Int} user_id The user id [optional]
  * 
- * @apiSuccess {{ username: int, dateJoined: string, profilePoints: int, pfpUrl: string, profileUrl: string }} user The user object
+ * @apiSuccess {{ user_id: int, username: string, dateJoined: string, profilePoints: int, pfpUrl: string, profileUrl: string }} user The user object
  * @apiSuccess {String} message Success message
  * 
  * @apiError {String} message Error message

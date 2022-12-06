@@ -29,18 +29,25 @@ function addMarker(marker_name, imageURL, desc, long, lat)
 			"Content-Type": "application/json"
 			},
 			body: JSON.stringify({
-			plant_marker_id: plant_marker.next_id,
-			name: marker_name,
-			description: desc,
-			latitude: lat,
-			longitude: long,
-			image: imageURL
+				plant_marker_id: plant_marker.next_id,
+				name: marker_name,
+				description: desc,
+				latitude: lat,
+				longitude: long,
+				image: imageURL
 			})
+		});
+		let marker_popup = Handlebars.templates.marker_popup({
+			marker_name: marker_name,
+			marker_image: imageURL,
+			marker_description: desc,
+			marker_long: long,
+			marker_lat: lat
 		});
 		var marker = L.marker([lat, long], {
 			alt:	markerIdentifier
 		}).addTo(map).addEventListener("click", (evt) => {
-			openPlantMarker(evt, plant_marker.next_id);
+			openPlantMarker(evt, plant_marker.next_id, marker_popup);
 		});
 		markerIdentifier++;
 		markerArray.push(marker);
@@ -220,7 +227,12 @@ submitDataButton.addEventListener('click', checkInput);
 console.log(parseFloat("balls"));
 
 /* ------ plant desc ----- */
-function openPlantMarker(evt, plant_marker_id){
+function openPlantMarker(evt, plant_marker, marker_html){
+	let old_element = document.getElementById('desc-container');
+	if (old_element) {
+		old_element.remove();
+	}
+	document.getElementById('map').insertAdjacentHTML('afterend', marker_html);
 	console.log("open plant marker thing")
 	document.getElementById('desc-container').style.display = "block";
 	document.getElementById('modal-close').style.display = "block";
