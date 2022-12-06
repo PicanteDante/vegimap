@@ -16,7 +16,7 @@ var markerArray = [];
 function addMarker(marker_name, imageURL, desc, long, lat)
 {
 	/*
-	 *	request new IDs
+	 *	request new ID
 	 */
 	 fetch("/api/markers/get_id", {
 		method: "GET"
