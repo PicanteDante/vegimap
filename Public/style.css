@@ -698,4 +698,16 @@ form{
   border:2px solid red;
 }
 
+/* ------ marker popups ------ */
 
+.desc-container{
+  top: 0;
+  background-color: white;
+  width: 400px;
+  height: 100%;
+  z-index: 99;
+}
+
+.plant-title, .plant-desc {
+  font-family: "Roboto Slab", serif;
+}
