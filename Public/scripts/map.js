@@ -181,7 +181,7 @@ function checkInput()
 		}
 	}
 	
-	//	Make s
+	//	Make sure url is an image
 	if (checkURL())
 	{
 		inputBoxes[i].style.borderColor = "red";
