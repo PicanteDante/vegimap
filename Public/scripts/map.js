@@ -117,10 +117,11 @@ window.addEventListener('click', function(event) {
 */
 window.addEventListener('click', function(event) {
 if (event.target == document.getElementById('expert-button')) {
-	
-
-	/* -----  document.getElementById('expert-button').style.display = "none"; do the proper things instead of hide it, works for hiding --------*/
-
+	document.getElementById('expert-button').style.display = "none";
+	document.getElementById('plantDesc').style.border = "2px solid black";
+	document.getElementById('plantDesc').style.borderRadius = "5px";
+	document.getElementById('plantDesc').style.borderRadius = "5px";
+	document.getElementById('plantDesc').setAttribute("contenteditable", "true");
 }
 });
 
