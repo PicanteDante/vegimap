@@ -384,21 +384,16 @@ app.post('/api/markers/edit', (req, res) => {
  * @apiParam {Int} user_id The user id
  */
 app.post('/api/markers/check_owner', (req, res) => {
-	// honestly just access the db directly
-	let plant_marker_maybe = db.select_by_id('plant_markers', req.body.plant_marker_id);
-	if (plant_marker_maybe) {
-		if (plant_marker_maybe.user_id == req.body.user_id) {
-			res.status(200).send(JSON.stringify({
-				message: 'User is owner of marker.',
-			}));
-		} else {
-			res.status(400).send(JSON.stringify({
-				message: 'User is not owner of marker.',
-			}));
-		}
+	let result = db_markers.check_owner(req);
+	if (result.success) {
+		res.status(200).send(JSON.stringify({
+			is_owner: result.success,
+			message: 'User is the owner of the marker.',
+		}));
 	} else {
-		res.status(400).send(JSON.stringify({
-			message: 'Marker does not exist.',
+		res.status(200).send(JSON.stringify({
+			is_owner: result.success,
+			message: result.message
 		}));
 	}
 });
