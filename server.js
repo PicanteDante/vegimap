@@ -59,7 +59,7 @@ app.get('/users/:username', function (req, res, next){
 					"pfpUrl": "image01.png",
 					"username": "Rafaele",
 					"dateJoined": "1/01/2002",
-					"profilePoints": "0"}]
+					"profilePoints": "0",}]
 	}
 	if (userData != ""){
 		res.status(200).render('profile', {
@@ -101,6 +101,26 @@ app.get('/signin', function (req, res) {
 
 app.get('/about', function(req, res){
 	res.status(200).render('about');
+});
+
+app.get('/markers', function(req, res){
+	var markerData = []
+	markerData = [{"profileUrl": "/users/shrek",
+				"pfpUrl": "shrek1.png",
+				"username": "shrek",
+				"dateJoined": "1/01/2002",
+				"profilePoints": "69420"},
+			
+				{"profileUrl": "/users/raffaele",
+				"pfpUrl": "image01.png",
+				"username": "Raffaele",
+				"dateJoined": "1/01/2002",
+				"profilePoints": "0"}]
+	if (markerData){
+		res.status(200).render('yourMarkers', {
+			marker: markerData
+		});
+	}
 });
 
 //#region API
