@@ -19,6 +19,7 @@
     "homepage": "https://github.com/MEARE-oof/vegimap#readme",
     "dependencies": {
         "body": "^5.1.0",
+        "cookie-parser": "^1.4.6",
         "express": "^4.18.2",
         "express-handlebars": "^6.0.6",
         "handlebars": "^4.7.7",
