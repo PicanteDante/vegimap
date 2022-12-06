@@ -97,6 +97,31 @@ var modalHideButtons = document.getElementsByClassName('modal-hide-button');
 		modalHideButtons[i].addEventListener('click', hideAddSomethingModal);
 	}
 
+/*
+ * Hide Da box functionality through clicking the cross/close button
+ */
+window.addEventListener('click', function(event) {
+	if (event.target == document.getElementById('modal-close')) { /*---- this hides the button, example code for now -----*/
+	  document.getElementById('modal-close').style.display = "none";
+	}
+  
+	if (event.target == document.getElementsBy('modal-close')) {  /*---- this does nothing -----*/
+	  document.getElementsByClassName('desc-container').style.display = "none";
+	}
+});
+
+
+/*
+* Button handler for suggest edits button
+*/
+window.addEventListener('click', function(event) {
+if (event.target == document.getElementById('expert-button')) {
+	document.getElementById('expert-button').style.display = "none";
+	/* ----- do the proper things instead of hide it, works for hiding --------*/
+
+}
+});
+
 
 /*
  * Clear any text entered in the text inputs.
