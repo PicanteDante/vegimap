@@ -76,7 +76,7 @@ app.get('/leaderboard', function (req, res) {
 				"dateJoined": "1/01/2002",
 				"profilePoints": "0"}]
 	*/
-	console.log(userData)
+
 	if (userData){
 		res.status(200).render('leaderboard', {
 			leaderUser: userData
