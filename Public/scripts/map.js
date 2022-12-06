@@ -13,33 +13,15 @@ var markerArray = [];
 /*
  *	THE THING
  */
-function addMarker(marker_name, imageURL, desc, long, lat)
+function addMarker(name, imageURL, desc, long, lat)
 {
 	/*
 	 *	request new ID
 	 */
-	 fetch("/api/markers/get_id", {
-		method: "GET"
-	  }).then( response => {
-		return response.json();
-	  }).then( plant_marker => {
-		fetch("/api/markers/add", {
-		method: "POST",
-		headers: {
-		  "Content-Type": "application/json"
-		},
-		body: JSON.stringify({
-		  plant_marker_id: plant_marker.next_id,
-		  name: marker_name,
-		  description: desc,
-		  latitude: lat,
-		  longitude: long,
-		  image: imageURL
-		})
-	  });
-	  
-	})
-	var marker = L.marker([lat, long], {
+	
+	
+	
+	var marker = L.marker([parseFloat(lat), parseFloat(long)], {
 		alt:	markerIdentifier
 	}).addTo(map);
 	markerIdentifier++;
@@ -101,12 +83,12 @@ var modalHideButtons = document.getElementsByClassName('modal-hide-button');
  * Hide Da box functionality through clicking the cross/close button
  */
 window.addEventListener('click', function(event) {
-	if (event.target == document.getElementById('modal-close')) { /*---- this hides the button, example code for now -----*/
+	if (event.target == document.getElementById('modal-close')) { 
 	  document.getElementById('modal-close').style.display = "none";
-	}
-  
-	if (event.target == document.getElementsBy('modal-close')) {  /*---- this does nothing -----*/
-	  document.getElementsByClassName('desc-container').style.display = "none";
+	  var elems = document.getElementsByClassName('desc-container');
+		for (var i = 0; i < elems.length; i++ ) {
+    		elems[i].style.display = "none";
+		}
 	}
 });
 
@@ -116,8 +98,9 @@ window.addEventListener('click', function(event) {
 */
 window.addEventListener('click', function(event) {
 if (event.target == document.getElementById('expert-button')) {
-	document.getElementById('expert-button').style.display = "none";
-	/* ----- do the proper things instead of hide it, works for hiding --------*/
+	
+
+	/* -----  document.getElementById('expert-button').style.display = "none"; do the proper things instead of hide it, works for hiding --------*/
 
 }
 });
@@ -182,7 +165,7 @@ function checkInput()
 	
 	if (validInput)
 	{
-		addMarker(nameBox.value, imageBox.value, descBox.value, parseFloat(longBox.value), parseFloat(latBox.value));
+		addMarker(nameBox.value, imageBox.value, descBox.value, longBox.value, latBox.value);
 		
 		hideAddSomethingModal();
 	}
