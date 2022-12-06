@@ -138,3 +138,10 @@ var submitDataButton = document.getElementById("modal-accept");
 submitDataButton.addEventListener('click', checkInput);
 
 console.log(parseFloat("balls"));
+
+/* ------ plant desc ----- */
+
+function openPlantMaker(){
+
+	var markerID = 
+}
