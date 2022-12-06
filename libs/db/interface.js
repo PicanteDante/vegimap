@@ -665,6 +665,77 @@ class Markers extends Interface {
             };
         }
     }
+
+    /**
+     * Edits the description of the given marker
+     * 
+     * @param {Object} req - request object
+     * 
+     * @returns {Object} - {success: Bool, message: String}
+     */
+    edit (req) {
+        let plant_marker_id = req.body.plant_marker_id;
+        if (plant_marker_id == undefined || isNaN(plant_marker_id)) {
+            return {
+                success: false,
+                message: "Invalid plant_marker_id"
+            };
+        }
+        plant_marker_id = parseInt(plant_marker_id);
+        let marker = this.db.select_by_id('PlantMarkers', plant_marker_id);
+        if (!marker) {
+            return {
+                success: false,
+                message: "Marker does not exist"
+            };
+        }
+        // check if user_id is not set
+        let user_id = req.cookies['user_id'];
+        // check if user_id is not an int
+        if (user_id == undefined || isNaN(user_id)) {
+            return {
+                success: false,
+                message: "Not logged in"
+            };
+        }
+        user_id = parseInt(user_id);
+        let user = this.db.select_by_id('Users', user_id);
+        if (!user) {
+            return {
+                success: false,
+                message: "User does not exist"
+            }
+        }
+
+        if (marker.user_id === user_id) {
+            // user owns the marker
+            let description = req.body.description;
+            if (description == undefined) {
+                description = '';
+            }
+            this.db.edit_by_id(
+                'PlantMarkers',
+                plant_marker_id,
+                {
+                    marker_description: description
+                }
+            );
+            return {
+                success: true,
+                message: 'Success'
+            };
+        } else {
+            // user does not own the marker
+            return {
+                success: false,
+                message: 'User does not own the marker'
+            };
+        }
+    }
+
+    check_owner (req) {
+
+    }
 }
 
 module.exports = {
