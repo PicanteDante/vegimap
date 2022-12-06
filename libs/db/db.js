@@ -24,19 +24,21 @@ class Database {
         // TODO: REMOVE
         const crypto = require('crypto');
         this.create_user(
-            'test',
+            'Shrek',
             crypto.createHash('sha256').update('test').digest('hex'),
-            'test@test.com',
+            'shrek@test.com',
         );
         this.create_user(
-            'test2',
+            'Raffaele',
             crypto.createHash('sha256').update('test2').digest('hex'),
-            'test2@test.com'
+            'deamici@test.com',
+            'image01.png'
         );
         this.create_user(
-            'test3',
+            'Drake',
             crypto.createHash('sha256').update('test3').digest('hex'),
-            'test3@test.com'
+            'DrakeTheTypeOfDudeToHaveAReallyLongEmailAddress@test.com',
+            'image10.jpg'
         );
 
         this.insert_into('PlantMarkers', {

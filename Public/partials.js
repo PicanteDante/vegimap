@@ -85,13 +85,13 @@ templates['rankedUser'] = template({"compiler":[8,">= 4.3.0"],"main":function(co
   return "<div class=\"content\">\r\n    <a class=\"avatar\" href=\""
     + alias4(((helper = (helper = lookupProperty(helpers,"username") || (depth0 != null ? lookupProperty(depth0,"username") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"username","hash":{},"data":data,"loc":{"start":{"line":2,"column":28},"end":{"line":2,"column":40}}}) : helper)))
     + "\">\r\n        <img src=\""
-    + alias4(((helper = (helper = lookupProperty(helpers,"pfpUrl") || (depth0 != null ? lookupProperty(depth0,"pfpUrl") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"pfpUrl","hash":{},"data":data,"loc":{"start":{"line":3,"column":18},"end":{"line":3,"column":28}}}) : helper)))
-    + "\">\r\n    </a>        \r\n    <div class=\"rank-info\"> \r\n        <a class=\"name\" href=\""
-    + alias4(((helper = (helper = lookupProperty(helpers,"username") || (depth0 != null ? lookupProperty(depth0,"username") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"username","hash":{},"data":data,"loc":{"start":{"line":6,"column":30},"end":{"line":6,"column":42}}}) : helper)))
+    + alias4(((helper = (helper = lookupProperty(helpers,"image_url") || (depth0 != null ? lookupProperty(depth0,"image_url") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"image_url","hash":{},"data":data,"loc":{"start":{"line":3,"column":18},"end":{"line":3,"column":31}}}) : helper)))
+    + "\"/>\r\n    </a>        \r\n    <div class=\"rank-info\"> \r\n        <a class=\"name\" href=\"/users/"
+    + alias4(((helper = (helper = lookupProperty(helpers,"username") || (depth0 != null ? lookupProperty(depth0,"username") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"username","hash":{},"data":data,"loc":{"start":{"line":6,"column":37},"end":{"line":6,"column":49}}}) : helper)))
     + "\">"
-    + alias4(((helper = (helper = lookupProperty(helpers,"username") || (depth0 != null ? lookupProperty(depth0,"username") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"username","hash":{},"data":data,"loc":{"start":{"line":6,"column":44},"end":{"line":6,"column":56}}}) : helper)))
+    + alias4(((helper = (helper = lookupProperty(helpers,"username") || (depth0 != null ? lookupProperty(depth0,"username") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"username","hash":{},"data":data,"loc":{"start":{"line":6,"column":51},"end":{"line":6,"column":63}}}) : helper)))
     + "</a>\r\n    </div>\r\n    <div class=\"points\">"
-    + alias4(((helper = (helper = lookupProperty(helpers,"profilePoints") || (depth0 != null ? lookupProperty(depth0,"profilePoints") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"profilePoints","hash":{},"data":data,"loc":{"start":{"line":8,"column":24},"end":{"line":8,"column":41}}}) : helper)))
+    + alias4(((helper = (helper = lookupProperty(helpers,"plant_points") || (depth0 != null ? lookupProperty(depth0,"plant_points") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"plant_points","hash":{},"data":data,"loc":{"start":{"line":8,"column":24},"end":{"line":8,"column":40}}}) : helper)))
     + "</div>\r\n</div>";
 },"useData":true});
 templates['userProfile'] = template({"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
