@@ -47,13 +47,13 @@ class Table {
         this.table_name = table_name;  // Name of the table
         this.columns = columns;  // Columns of the table
         this.data = {};  // mapping of primary key to row
-        this.indexes = {};  // mapping of foreign key to array of primary keys
+        // this.indexes = {};  // mapping of foreign key to array of primary keys
 
         // Create indexes for foreign keys
         // assume no data yet
-        this.foreign_keys.forEach(foreign_key => {
-            this.indexes[foreign_key] = {};
-        });
+        // this.foreign_keys.forEach(foreign_key => {
+        //     this.indexes[foreign_key] = {};
+        // });
     }
 
     
@@ -75,14 +75,14 @@ class Table {
                 row[column] = null;
             }
         });
-        this.foreign_keys.forEach(foreign_key => {
-            if (row[foreign_key] !== null) {
-                if (!(row[foreign_key] in this.indexes[foreign_key])) {
-                    this.indexes[foreign_key][row[foreign_key]] = [];
-                }
-                this.indexes[foreign_key][row[foreign_key]].push(row[this.primary_key]);
-            }
-        });
+        // this.foreign_keys.forEach(foreign_key => {
+        //     if (row[foreign_key] !== null) {
+        //         if (!(row[foreign_key] in this.indexes[foreign_key])) {
+        //             this.indexes[foreign_key][row[foreign_key]] = [];
+        //         }
+        //         this.indexes[foreign_key][row[foreign_key]].push(row[this.primary_key]);
+        //     }
+        // });
         this.keys.push(row[this.primary_key]);
         this.data[row[this.primary_key]] = row;
         return key;
@@ -110,19 +110,19 @@ class Table {
     select_where (column, value) {
         let rows = [];
         console.log("select_where", column, value);
-        if (column in this.indexes) {
-            if (value in this.indexes[column]) {
-                this.indexes[column][value].forEach(key => {
-                    rows.push(this.data[key]);
-                });
+        // if (column in this.indexes) {
+        //     if (value in this.indexes[column]) {
+        //         this.indexes[column][value].forEach(key => {
+        //             rows.push(this.data[key]);
+        //         });
+        //     }
+        // } else {
+        this.keys.forEach(key => {
+            if (this.data[key][column] === value) {
+                rows.push(this.data[key]);
             }
-        } else {
-            this.keys.forEach(key => {
-                if (this.data[key][column] === value) {
-                    rows.push(this.data[key]);
-                }
-            });
-        }
+        });
+        // }
         return rows;
     }
 
@@ -263,11 +263,12 @@ class Table {
         // then remove the id from the keys array
         this.keys.splice(this.keys.indexOf(id), 1);
         // then remove from indexing
-        Object.keys(this.indexes).forEach(column => {
-            let index = this.indexes[column];
-            let value = this.data[id][column];
-            index[value].splice(index[value].indexOf(id), 1);
-        });
+        // Object.keys(this.foreign_keys).forEach(fk => {
+        //     let column = fk.key;
+        //     let index = this.indexes[column];
+        //     let value = this.data[id][column];
+        //     index[value].splice(index[value].indexOf(id), 1);
+        // });
     }
 
     /**

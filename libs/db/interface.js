@@ -102,7 +102,7 @@ class Signup extends Interface {
             };
         }
 
-        if (user[0].password == crypto.createHash('sha256').update(req.body.password).digest('hex')) {
+        if (user[0].password === crypto.createHash('sha256').update(req.body.password).digest('hex')) {
             return {
                 success: true,
                 message: "success",
@@ -411,7 +411,7 @@ class Markers extends Interface {
             }
         }
         let username = user.username;
-        if (username.length == 0) {
+        if (username.length === 0) {
             return {
                 success: false,
                 message: "Not logged in"
@@ -433,7 +433,7 @@ class Markers extends Interface {
      */
     list_user_markers(username) {
         let user = this.db.select_where('Users', 'username', username);
-        if (user.length == 0) {
+        if (user.length === 0) {
             return {
                 success: false,
                 message: "Invalid User",
@@ -500,7 +500,7 @@ class Markers extends Interface {
         let upvotes = this.db.select_where_predicate(
             'UserMarkerRatings',
             (rating) => {
-                return rating.user_id == user_id && rating.plant_marker_id == plant_marker_id;
+                return rating.user_id === user_id && rating.plant_marker_id === plant_marker_id;
             }
         );
 
@@ -567,7 +567,7 @@ class Markers extends Interface {
         let downvotes = this.db.select_where_predicate(
             'UserMarkerRatings',
             (rating) => {
-                return rating.user_id == user_id && rating.plant_marker_id == plant_marker_id;
+                return rating.user_id === user_id && rating.plant_marker_id === plant_marker_id;
             }
         );
 
@@ -617,6 +617,20 @@ class Markers extends Interface {
      */
     delete(req) {
         let plant_marker_id = req.body.plant_marker_id;
+        if (plant_marker_id == undefined || isNaN(plant_marker_id)) {
+            return {
+                success: false,
+                message: "Invalid plant_marker_id"
+            };
+        }
+        plant_marker_id = parseInt(plant_marker_id);
+        let marker = this.db.select_by_id('PlantMarkers', plant_marker_id);
+        if (!marker) {
+            return {
+                success: false,
+                message: "Marker does not exist"
+            };
+        }
         // check if user_id is not set
         let user_id = req.cookies['user_id'];
         // check if user_id is not an int
@@ -636,15 +650,7 @@ class Markers extends Interface {
             }
         }
 
-        // check if the user owns the marker
-        let markers = this.db.select_where_predicate(
-            'PlantMarkers',
-            (marker) => {
-                return marker.plant_marker_id == plant_marker_id && marker.user_id == user_id;
-            }
-        );
-
-        if (markers.length > 0) {
+        if (marker.user_id === user_id) {
             // user owns the marker
             this.db.delete_by_id('PlantMarkers', plant_marker_id);
             return {
