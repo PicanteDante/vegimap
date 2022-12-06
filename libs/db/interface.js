@@ -328,6 +328,32 @@ class Markers extends Interface {
         }
     }
 
+    /**
+     * Gets a marker by id
+     * 
+     * @param {Object} req - request object
+     * 
+     * @returns {
+     *    success: Bool,
+     *    message: String,
+     *    marker: {
+     *      plant_marker_id: Int,
+     *      user_id: Int,
+     *      marker_post_date,
+     *      marker_name: String,
+     *      marker_description: String,
+     *      marker_image: Int,
+     *      marker_lat: Float,
+     *      marker_long: Float,
+     *      plant_ratings: [{
+     *          user_marker_rating_id: Int,
+     *          user_id: Int,
+     *          plant_marker_id: Int,
+     *          user_marker_rating: Int,
+     *          user_marker_rating_date: Date
+     *      }]
+     *    } - response
+     */
     get(req) {
         // req.body.plant_marker_id
 
@@ -341,17 +367,17 @@ class Markers extends Interface {
                 'plant_marker_id',
                 marker.plant_marker_id
             );
-            marker.tags = this.db.select_where(
-                'PlantMarkers_PlantTags',
-                'plant_marker_id',
-                marker.plant_marker_id
-            ).map(plant_marker_plant_tag => {
-                let tag = this.db.select_by_id(
-                    'PlantTags',
-                    plant_marker_plant_tag.plant_tag_id
-                )[0];
-                return tag;
-            });
+            // marker.tags = this.db.select_where(
+            //     'PlantMarkers_PlantTags',
+            //     'plant_marker_id',
+            //     marker.plant_marker_id
+            // ).map(plant_marker_plant_tag => {
+            //     let tag = this.db.select_by_id(
+            //         'PlantTags',
+            //         plant_marker_plant_tag.plant_tag_id
+            //     )[0];
+            //     return tag;
+            // });
             return {
                 success: true,
                 message: "success",

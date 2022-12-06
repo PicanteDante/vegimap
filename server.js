@@ -262,7 +262,7 @@ app.get('/api/markers/list', (req, res) => {
  * 
  * @apiParam {String} plant_marker_id Marker ID
  * 
- * @apiSuccess {Marker} marker Marker info
+ * @apiSuccess {{ plant_marker_id: int, user_id: int, marker_post_date: string, marker_name: string, marker_description: string, marker_image: string, marker_lat: float, marker_long: float, plant_ratings: [{}], tags: [{}]}} marker Marker info
  * 
  * @apiError {String} message Error message
  */
@@ -284,7 +284,6 @@ app.post('/api/markers/get', (req, res) => {
  * @apiName UpvoteMarker
  * @apiGroup Markers
  * 
- * @apiParam {String} token User token
  * @apiParam {String} plant_marker_id Marker ID
  * 
  * @apiSuccess {String} message Success message
@@ -309,7 +308,6 @@ app.post('/api/markers/upvote', (req, res) => {
  * @apiName DownvoteMarker
  * @apiGroup Markers
  * 
- * @apiParam {String} token User token
  * @apiParam {String} plant_marker_id Marker ID
  * 
  * @apiSuccess {String} message Success message
