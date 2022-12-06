@@ -164,7 +164,7 @@ class Users extends Interface {
         if (user.length < 1) {
             return null;
         } else {
-            let pfp_url = this.db.select_where('Images', 'image_id', user[0].image_id);
+            let pfp_url = this.db.select_where('Images', 'image_id', user[0].image_id)[0].image_data;
             let profile_page = `/users/${user[0].username}`;
             let user_profile = [{
                 username: user[0].username,
@@ -245,7 +245,10 @@ class Markers extends Interface {
         }
         user_id = parseInt(user_id);
         let plant_marker_id = req.body.plant_marker_id;
-        i
+        
+        // check if plant_marker_id is reserved and belongs to the user
+        let marker = this.db.select_where('PlantMarkers', 'plant_marker_id', plant_marker_id);
+
 
         if (!req.body.lat || !req.body.lng || !req.body.name) {
             return {
@@ -380,6 +383,7 @@ class Markers extends Interface {
                 markers: []
             };
         }
+        let user_id = user[0].user_id;
         let raw_markers = this.db.select_where('PlantMarkers', 'user_id', user_id);
         let markers = raw_markers.map(raw_marker => {
             let marker = {...raw_marker};  // copy everything over
