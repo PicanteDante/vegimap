@@ -534,8 +534,8 @@ form{
 /*-------- Profile Page --------*/
 #profile-picture{
   float: right;
-  width: 35%;
-  height: 225%;
+  width: 130px;
+  height: 130px;
   border: 2px solid;
   border-radius: 2px;
   margin-right: 4px;
@@ -544,8 +544,8 @@ form{
 }
 
 #profile-picture img{
-  width: 100%;
-  height: 100%;
+  width: 128px;
+  height: 128px;
 }
 
 .profile-box{

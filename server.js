@@ -9,6 +9,7 @@ var Database = require('./libs/db/db.js');
 var db = new Database();  // raw db access
 db.prepopulate();
 var db_interface = require('./libs/db/interface.js');  // abstracted access like db_interface.signup.signup(req, res)
+const { get } = require('lodash');
 var db_signup = new db_interface.Signup(db);
 var db_users = new db_interface.Users(db);
 var db_markers = new db_interface.Markers(db);
@@ -39,23 +40,87 @@ app.get('/', function (req, res, next) {
 	}
 });
 
+
+app.get('/users/:username', function (req, res, next){
+	var username = req.params.username
+	var userData = []
+	//var userData = db_users.get_profile(username)
+	if (username == "shrek"){
+		
+		userData = [{"profileUrl": "/users/shrek",
+					"pfpUrl": "shrek1.png",
+					"username": "shrek",
+					"dateJoined": "1/01/2002",
+					"profilePoints": "69420"}]
+	}
+	else if (username == "raffaele"){
+		userData = [{"profileUrl": "/users/raffaele",
+					"pfpUrl": "image01.png",
+					"username": "Rafaele",
+					"dateJoined": "1/01/2002",
+					"profilePoints": "0",}]
+	}
+	if (userData != ""){
+		res.status(200).render('profile', {
+		profile: userData
+	  });
+	}
+	else {
+		res.status(404).render('noUser', {username: req.params.username});
+	}
+
+});
+
 app.get('/leaderboard', function (req, res) {
-	res.status(200).render('leaderboard');
+	
+	var userData = []
+	userData = [{"profileUrl": "/users/shrek",
+				"pfpUrl": "shrek1.png",
+				"username": "shrek",
+				"dateJoined": "1/01/2002",
+				"profilePoints": "69420"},
+			
+				{"profileUrl": "/users/raffaele",
+				"pfpUrl": "image01.png",
+				"username": "Raffaele",
+				"dateJoined": "1/01/2002",
+				"profilePoints": "0"}]
+	if (userData){
+		res.status(200).render('leaderboard', {
+			leaderUser: userData
+		});
+	}
 });
 
 app.get('/signin', function (req, res) {
 	res.status(200).render('signin');
 });
 
-// Currently redirects /shrek (only current profile) to /profile
-app.get('/shrek', function(req, res){
-	res.status(200).render('profile');
-});
+
 
 app.get('/about', function(req, res){
 	res.status(200).render('about');
 });
 
+app.get('/markers', function(req, res){
+	var markerData = []
+	markerData = [{"profileUrl": "/users/shrek",
+				"pfpUrl": "shrek1.png",
+				"username": "shrek",
+				"dateJoined": "1/01/2002",
+				"profilePoints": "69420"},
+			
+				{"profileUrl": "/users/raffaele",
+				"pfpUrl": "image01.png",
+				"username": "Raffaele",
+				"dateJoined": "1/01/2002",
+				"profilePoints": "0"}]
+	if (markerData){
+		res.status(200).render('yourMarkers', {
+			marker: markerData
+		});
+	}
+});
 
 //#region API
 //#region Signup
