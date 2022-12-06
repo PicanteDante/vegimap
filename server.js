@@ -171,9 +171,16 @@ app.post('/api/login', (req, res) => {
  * @apiError {String} message Error message
  */
 app.get('/api/markers/get_id', (req, res) => {
-	res.status(200).send(JSON.stringify({
-		next_id: db_markers.get_id(req)
-	}));
+	let result = db_markers.get_id(req);
+	if (result.success) {
+		res.status(200).send(JSON.stringify({
+			next_id: result.next_id
+		}));
+	} else {
+		res.status(400).send(JSON.stringify({
+			message: result.message
+		}));
+	}
 });
 
 /**
@@ -209,8 +216,6 @@ app.post('/api/markers/add', (req, res) => {
  * 
  * @apiName ListOwnMarkers
  * @apiGroup Markers
- * 
- * @apiParam {String} token User token
  * 
  * @apiSuccess {Array[Marker]} markers List of markers
  * 
