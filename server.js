@@ -92,7 +92,7 @@ app.get('/about', function(req, res){
 	res.status(200).render('about');
 });
 
-app.get('/markers', function(req, res){
+app.get('/users/:username/markers', function(req, res){
 	var markerData = []
 	markerData = [{"name": "Weed",
 				   "longitude": 100.50,
