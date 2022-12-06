@@ -106,7 +106,7 @@ app.get('/markers', function(req, res){
 				   "description": "Makes me want to cry",
 				   "plant-img": "shrek1.png"}]
 	if (markerData){
-		res.status(200).render('yourMarkers', {
+		res.status(200).render('myMarkers', {
 			marker: markerData
 		});
 	}
