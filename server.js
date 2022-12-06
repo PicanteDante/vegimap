@@ -382,6 +382,12 @@ app.post('/api/markers/edit', (req, res) => {
  * 
  * @apiParam {Int} plant_marker_id The plant marker id
  * @apiParam {Int} user_id The user id
+ * 
+ * @apiSuccess {Boolean} is_owner True if the user is the owner of the marker
+ * @apiSuccess {String} message Success message
+ * 
+ * @apiError {Boolean} is_owner False if the user is not the owner of the marker
+ * @apiError {String} message Error message
  */
 app.post('/api/markers/check_owner', (req, res) => {
 	let result = db_markers.check_owner(req);
