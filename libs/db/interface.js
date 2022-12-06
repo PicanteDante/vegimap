@@ -219,7 +219,7 @@ class Markers extends Interface {
         }
         user_id = parseInt(user_id);
         let next_id = this.db.insert_into('PlantMarkers', {
-            user_id: req.cookies.user_id,
+            user_id: user_id,
             name: '',
             description: '',
             image_id: 0,
