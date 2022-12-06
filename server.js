@@ -76,7 +76,7 @@ app.get('/leaderboard', function (req, res) {
 				"dateJoined": "1/01/2002",
 				"profilePoints": "0"}]
 	*/
-	console.log(userData)
+
 	if (userData){
 		res.status(200).render('leaderboard', {
 			leaderUser: userData
@@ -94,7 +94,7 @@ app.get('/about', function(req, res){
 	res.status(200).render('about');
 });
 
-app.get('/markers', function(req, res){
+app.get('/users/:username/markers', function(req, res){
 	var markerData = []
 	markerData = [{"name": "Weed",
 				   "longitude": 100.50,
