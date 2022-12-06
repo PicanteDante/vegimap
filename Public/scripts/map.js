@@ -97,16 +97,17 @@ var modalHideButtons = document.getElementsByClassName('modal-hide-button');
 		modalHideButtons[i].addEventListener('click', hideAddSomethingModal);
 	}
 
+
 /*
  * Hide Da box functionality through clicking the cross/close button
  */
 window.addEventListener('click', function(event) {
-	if (event.target == document.getElementById('modal-close')) { /*---- this hides the button, example code for now -----*/
+	if (event.target == document.getElementById('modal-close')) { 
 	  document.getElementById('modal-close').style.display = "none";
-	}
-  
-	if (event.target == document.getElementsBy('modal-close')) {  /*---- this does nothing -----*/
-	  document.getElementsByClassName('desc-container').style.display = "none";
+	  var elems = document.getElementsByClassName('desc-container');
+		for (var i = 0; i < elems.length; i++ ) {
+    		elems[i].style.display = "none";
+		}
 	}
 });
 
@@ -116,8 +117,9 @@ window.addEventListener('click', function(event) {
 */
 window.addEventListener('click', function(event) {
 if (event.target == document.getElementById('expert-button')) {
-	document.getElementById('expert-button').style.display = "none";
-	/* ----- do the proper things instead of hide it, works for hiding --------*/
+	
+
+	/* -----  document.getElementById('expert-button').style.display = "none"; do the proper things instead of hide it, works for hiding --------*/
 
 }
 });
