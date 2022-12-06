@@ -13,15 +13,33 @@ var markerArray = [];
 /*
  *	THE THING
  */
-function addMarker(name, imageURL, desc, long, lat)
+function addMarker(marker_name, imageURL, desc, long, lat)
 {
 	/*
 	 *	request new ID
 	 */
-	
-	
-	
-	var marker = L.marker([parseFloat(lat), parseFloat(long)], {
+	 fetch("/api/markers/get_id", {
+		method: "GET"
+	  }).then( response => {
+		return response.json();
+	  }).then( plant_marker => {
+		fetch("/api/markers/add", {
+		method: "POST",
+		headers: {
+		  "Content-Type": "application/json"
+		},
+		body: JSON.stringify({
+		  plant_marker_id: plant_marker.next_id,
+		  name: marker_name,
+		  description: desc,
+		  latitude: lat,
+		  longitude: long,
+		  image: imageURL
+		})
+	  });
+	  
+	})
+	var marker = L.marker([lat, long], {
 		alt:	markerIdentifier
 	}).addTo(map);
 	markerIdentifier++;
@@ -35,7 +53,7 @@ function addMarker(name, imageURL, desc, long, lat)
 function showAddSomethingModal() {
 
 	var showSomethingModal = document.getElementById('add-something-modal');
-    var modalBackdrop = document.getElementById('modal-backdrop');
+	var modalBackdrop = document.getElementById('modal-backdrop');
 	var inputBoxes = document.getElementsByClassName("marker-input-box");
 	
 	//	Get GPS location if possible
@@ -52,8 +70,8 @@ function showAddSomethingModal() {
 	}
 	navigator.geolocation.getCurrentPosition(successCallback, failureCallback);
   
-    showSomethingModal.classList.remove('hidden');
-    modalBackdrop.classList.remove('hidden');
+	showSomethingModal.classList.remove('hidden');
+	modalBackdrop.classList.remove('hidden');
 }
 
 window.addEventListener('DOMContentLoaded', function () {
@@ -83,12 +101,12 @@ var modalHideButtons = document.getElementsByClassName('modal-hide-button');
  * Hide Da box functionality through clicking the cross/close button
  */
 window.addEventListener('click', function(event) {
-	if (event.target == document.getElementById('modal-close')) { 
+	if (event.target == document.getElementById('modal-close')) { /*---- this hides the button, example code for now -----*/
 	  document.getElementById('modal-close').style.display = "none";
-	  var elems = document.getElementsByClassName('desc-container');
-		for (var i = 0; i < elems.length; i++ ) {
-    		elems[i].style.display = "none";
-		}
+	}
+  
+	if (event.target == document.getElementsBy('modal-close')) {  /*---- this does nothing -----*/
+	  document.getElementsByClassName('desc-container').style.display = "none";
 	}
 });
 
@@ -98,9 +116,8 @@ window.addEventListener('click', function(event) {
 */
 window.addEventListener('click', function(event) {
 if (event.target == document.getElementById('expert-button')) {
-	
-
-	/* -----  document.getElementById('expert-button').style.display = "none"; do the proper things instead of hide it, works for hiding --------*/
+	document.getElementById('expert-button').style.display = "none";
+	/* ----- do the proper things instead of hide it, works for hiding --------*/
 
 }
 });
@@ -165,7 +182,7 @@ function checkInput()
 	
 	if (validInput)
 	{
-		addMarker(nameBox.value, imageBox.value, descBox.value, longBox.value, latBox.value);
+		addMarker(nameBox.value, imageBox.value, descBox.value, parseFloat(longBox.value), parseFloat(latBox.value));
 		
 		hideAddSomethingModal();
 	}
