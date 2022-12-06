@@ -734,7 +734,52 @@ class Markers extends Interface {
     }
 
     check_owner (req) {
+        let plant_marker_id = req.body.plant_marker_id;
+        if (plant_marker_id == undefined || isNaN(plant_marker_id)) {
+            return {
+                success: false,
+                message: "Invalid plant_marker_id"
+            };
+        }
+        plant_marker_id = parseInt(plant_marker_id);
+        let marker = this.db.select_by_id('PlantMarkers', plant_marker_id);
+        if (!marker) {
+            return {
+                success: false,
+                message: "Marker does not exist"
+            };
+        }
+        // check if user_id is not set
+        let user_id = req.cookies['user_id'];
+        // check if user_id is not an int
+        if (user_id == undefined || isNaN(user_id)) {
+            return {
+                success: false,
+                message: "Not logged in"
+            };
+        }
+        user_id = parseInt(user_id);
+        let user = this.db.select_by_id('Users', user_id);
+        if (!user) {
+            return {
+                success: false,
+                message: "User does not exist"
+            }
+        }
 
+        if (marker.user_id === user_id) {
+            // user owns the marker
+            return {
+                success: true,
+                message: 'Success'
+            };
+        } else {
+            // user does not own the marker
+            return {
+                success: false,
+                message: 'User does not own the marker'
+            };
+        }
     }
 }
 
