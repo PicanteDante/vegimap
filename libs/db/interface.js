@@ -206,6 +206,13 @@ class Users extends Interface {
  */
 class Markers extends Interface {
 
+    /**
+     * Reserves a marker id for a user and returns the id
+     * 
+     * @param {Object} req - request object
+     * 
+     * @returns {Object} - {success: Bool, message: String, next_id: Int}
+     */
     get_id(req) {
         // Reserve an id by inserting a row into the database
         let user_id = req.cookies['user_id'];
@@ -226,10 +233,13 @@ class Markers extends Interface {
             latitude: 0,
             longitude: 0
         })
-        return next_id;
+        return {
+            success: true,
+            message: "Success",
+            next_id: next_id
+        }
     }
     /**
-     * TODO: test + use cookies
      * Adds a marker to the database
      * 
      * @param {Object} req - request object
@@ -279,20 +289,12 @@ class Markers extends Interface {
                     plant_marker_id: plant_marker_id
                 };
             }
-        }
-
-        if (!req.body.lat || !req.body.lng || !req.body.name) {
+        } else {
             return {
                 success: false,
-                message: "Missing required fields"
+                message: "id not reserved"
             };
         }
-        
-        return {
-            success: true,
-            message: "success",
-            plant_marker_id: plant_marker_id
-        };
     }
 
     get(req) {
@@ -376,22 +378,33 @@ class Markers extends Interface {
     }
 
     list_own(req) {
+        // check if user_id is not set
         let user_id = req.cookies['user_id'];
+        // check if user_id is not an int
+        
         if (user_id == undefined || isNaN(user_id)) {
             return {
                 success: false,
                 message: "Not logged in"
             };
-        } else {
-            let username = this.db.select_by_id('Users', user_id)
-            if (username.length == 0) {
-                return {
-                    success: false,
-                    message: "Not logged in"
-                };
-            } else {
-                return this.list_user_markers(username);
+        }
+        user_id = parseInt(user_id);
+        console.log(user_id);
+        let user = this.db.select_by_id('Users', user_id);
+        if (!user) {
+            return {
+                success: false,
+                message: "User does not exist"
             }
+        }
+        let username = user.username;
+        if (username.length == 0) {
+            return {
+                success: false,
+                message: "Not logged in"
+            };
+        } else {
+            return this.list_user_markers(username);
         }
     }
 

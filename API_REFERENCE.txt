@@ -32,7 +32,7 @@ Current endpoints and their status:
     /api/login              GOOD
     /api/markers/get_id     GOOD
     /api/markers/add        GOOD
-    /api/markers/list_own   NOT WORKING
+    /api/markers/list_own   GOOD
     /api/markers/list       GOOD
     /api/markers/get        NOT WORKING
     /api/markers/upvote     NOT WORKING
