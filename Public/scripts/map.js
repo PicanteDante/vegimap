@@ -142,12 +142,27 @@ if (event.target == document.getElementById('save-button')) {
 });
 
 
+function upvoteMarker(){
+	fetch("/api/markers/upvote", {
+		method: "POST",
+		headers:{
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify({
+			plant_marker_id: plant_marker_id
+		})
+	}).then( response => {
+		return response.json();
+	})
+
+}
 
 window.addEventListener('click', function(event){
 	if(event.target == this.document.getElementById('upvote-button')){
 		this.document.getElementById('upvote-button').style.color = "red";
 	}
 })
+
 
 
 /*
@@ -236,7 +251,7 @@ submitDataButton.addEventListener('click', checkInput);
 console.log(parseFloat("balls"));
 
 /* ------ plant desc ----- */
-function openPlantMarker(evt, plant_marker, marker_html){
+function openPlantMarker(evt, plant_marker_id, marker_html){
 	let old_element = document.getElementById('desc-container');
 	if (old_element) {
 		old_element.remove();
@@ -245,4 +260,8 @@ function openPlantMarker(evt, plant_marker, marker_html){
 	console.log("open plant marker thing")
 	document.getElementById('desc-container').style.display = "block";
 	document.getElementById('modal-close').style.display = "block";
+
+	
+	var upvoteButton = document.getElementById("upvote-button");
+	upvoteButton.addEventListener('click', upvoteMarker);
 }
