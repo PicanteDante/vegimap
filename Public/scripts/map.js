@@ -182,6 +182,17 @@ function checkInput()
 		}
 	}
 	
+	//	Make sure url is an image
+	if (checkURL())
+	{
+		inputBoxes[i].style.borderColor = "red";
+		validInput = false;
+	}
+	else
+	{
+		inputBoxes[i].style.borderColor = "";
+	}
+	
 	
 	if (validInput)
 	{
