@@ -94,6 +94,8 @@ templates['userProfile'] = template({"compiler":[8,">= 4.3.0"],"main":function(c
     + alias4(((helper = (helper = lookupProperty(helpers,"dateJoined") || (depth0 != null ? lookupProperty(depth0,"dateJoined") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"dateJoined","hash":{},"data":data,"loc":{"start":{"line":7,"column":41},"end":{"line":7,"column":55}}}) : helper)))
     + "</div></a>\r\n    </div>\r\n</div>\r\n<div class=\"bottom-half\">\r\n    <br><br><br><br>\r\n    <div class=\"points\" id=\"profile-points\">"
     + alias4(((helper = (helper = lookupProperty(helpers,"profilePoints") || (depth0 != null ? lookupProperty(depth0,"profilePoints") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"profilePoints","hash":{},"data":data,"loc":{"start":{"line":12,"column":44},"end":{"line":12,"column":61}}}) : helper)))
-    + "</div>\r\n    <br><br><br>\r\n    <a class=\"user-markers\" href=\"#\"> Your Markers</a>\r\n</div>";
+    + "</div>\r\n    <br><br><br>\r\n    <a class=\"user-markers\" href=\"/users/"
+    + alias4(((helper = (helper = lookupProperty(helpers,"username") || (depth0 != null ? lookupProperty(depth0,"username") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"username","hash":{},"data":data,"loc":{"start":{"line":14,"column":41},"end":{"line":14,"column":53}}}) : helper)))
+    + "/markers\"> Your Markers</a>\r\n</div>";
 },"useData":true});
 })();
