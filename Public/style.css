@@ -496,6 +496,12 @@ form{
   text-align: center;
 }
 
+.rank-info .name {
+  float: left;
+  margin-top: 20px;
+  color: #004225;
+}
+
 .avatar{
   float: left;
   width: 72px;
