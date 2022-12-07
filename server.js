@@ -23,6 +23,18 @@ app.set('view engine', 'handlebars')
 app.use(express.static('Public'))
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(function(req, res, next) {
+	res.locals.cookies = req.cookies;
+
+	let result = db_users.get_user_profile_by_id(req.cookies.user_id);
+	if (result.success) {
+		res.locals.profile_data = result.profile[0];
+	} else {
+		res.locals.profile_data = null;
+	}
+
+	next();
+});
 
 /*
  *	PAGES
@@ -42,7 +54,6 @@ app.get('/', function (req, res, next) {
 		next();
 	}
 });
-
 
 app.get('/users/:username', function (req, res, next){
 	var username = req.params.username

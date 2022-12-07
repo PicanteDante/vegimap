@@ -145,6 +145,22 @@ class Database {
             image_id: image_id
         });
     }
+
+    to_json() {
+        let json = {};
+        for (let table_name in this.tables) {
+            json[table_name] = this.tables[table_name].to_json();
+        }
+        return json;
+    }
+
+    static from_json(json) {
+        let db = new Database();
+        for (let table_name in json) {
+            db.tables[table_name] = table.from_json(table_name, json[table_name]);
+        }
+        return db;
+    }
 }
 
 module.exports = Database;

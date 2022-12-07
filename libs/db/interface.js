@@ -182,6 +182,28 @@ class Users extends Interface {
         }
     }
 
+    get_user_profile_by_id(user_id) {
+        if (user_id == undefined || isNaN(user_id)) {
+            return {
+                success: false,
+                message: "Not logged in"
+            };
+        }
+        user_id = parseInt(user_id);
+        let user = this.db.select_by_id('Users', user_id);
+        if (!user) {
+            return {
+                success: false,
+                message: "User does not exist"
+            }
+        }
+        let username = user.username;
+        return {
+            success: true,
+            profile: this.get_user_profile(username)
+        };
+    }
+
     /**
      * TODO: test + use cookies
      * get all users sorted by their rating
