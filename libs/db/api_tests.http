@@ -54,7 +54,7 @@ Content-Type: application/json
 Cookie: user_id=0
 
 {
-    "plant_marker_id": 0
+    "plant_marker_id": 1
 }
 
 ###

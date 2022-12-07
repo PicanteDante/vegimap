@@ -287,6 +287,7 @@ app.post('/api/markers/get', (req, res) => {
  * @apiParam {String} plant_marker_id Marker ID
  * 
  * @apiSuccess {String} message Success message
+ * @apiSuccess {int} plant_points New marker rating
  * 
  * @apiError {String} message Error message
  */
@@ -295,6 +296,7 @@ app.post('/api/markers/upvote', (req, res) => {
 	if (result.success) {
 		res.status(200).send(JSON.stringify({
 			message: 'Successfully upvoted marker.',
+			plant_points: result.plant_points
 		}));
 	} else {
 		res.status(400).send(JSON.stringify({
@@ -311,6 +313,7 @@ app.post('/api/markers/upvote', (req, res) => {
  * @apiParam {String} plant_marker_id Marker ID
  * 
  * @apiSuccess {String} message Success message
+ * @apiSuccess {int} plant_points New marker rating
  * 
  * @apiError {String} message Error message
  */
@@ -319,6 +322,7 @@ app.post('/api/markers/downvote', (req, res) => {
 	if (result.success) {
 		res.status(200).send(JSON.stringify({
 			message: 'Successfully downvoted marker.',
+			plant_points: result.plant_points
 		}));
 	} else {
 		res.status(400).send(JSON.stringify({

@@ -2,6 +2,9 @@
 // get hashing algorithm
 const crypto = require('crypto');
 
+const UPVOTE_SCORE = 1;
+const DOWNVOTE_SCORE = -1;
+
 class Interface {
     static interfaces = [];
     constructor (db) {
@@ -534,6 +537,15 @@ class Markers extends Interface {
             }
         }
         let plant_marker_id = req.body.plant_marker_id;
+        let plant_marker = this.db.select_by_id('PlantMarkers', plant_marker_id);
+        if (!plant_marker) {
+            return {
+                success: false,
+                message: "Plant marker does not exist"
+            }
+        }
+
+        let owner_id = plant_marker.user_id;
 
         // check if the user has already upvoted this marker
         let upvotes = this.db.select_where_predicate(
@@ -546,23 +558,34 @@ class Markers extends Interface {
         if (upvotes.length > 0) {
             console.log(JSON.stringify(upvotes));
             // check the rating, if it's -1 then simply change it to 1
-            if (upvotes[0].user_marker_rating === -1) {
+            if (upvotes[0].user_marker_rating === DOWNVOTE_SCORE) {
                 this.db.edit_by_id(
                     'UserMarkerRatings',
                     upvotes[0].user_marker_rating_id,
                     {
-                        user_marker_rating: 1
+                        user_marker_rating: UPVOTE_SCORE,
+                    }
+                );
+                this.db.edit_where_predicate_callback(
+                    'Users',
+                    (user) => (user.user_id === user_id),
+                    (user) => {
+                        return {
+                            plant_points: user.plant_points + 2 * UPVOTE_SCORE
+                        };
                     }
                 );
                 return {
                     success: true,
-                    message: 'success'
+                    message: 'success',
+                    plant_points: plant_marker.plant_points
                 };
             } else {
                 // user has already upvoted this marker
                 return {
                     success: false,
-                    message: 'User has already upvoted this marker'
+                    message: 'User has already upvoted this marker',
+                    plant_points: plant_marker.plant_points
                 };
             }
         } else {
@@ -570,12 +593,22 @@ class Markers extends Interface {
             this.db.insert_into('UserMarkerRatings', {
                 user_id: user_id,
                 plant_marker_id: plant_marker_id,
-                user_marker_rating: 1,
+                user_marker_rating: UPVOTE_SCORE,
                 user_marker_rating_date: new Date().toLocaleDateString()
             });
+            this.db.edit_where_predicate_callback(
+                'Users',
+                (user) => (user.user_id === user_id),
+                (user) => {
+                    return {
+                        plant_points: user.plant_points + UPVOTE_SCORE
+                    };
+                }
+            );
             return {
                 success: true,
-                message: 'Success'
+                message: 'Success',
+                plant_points: plant_marker.plant_points
             };
         }
         
@@ -601,6 +634,15 @@ class Markers extends Interface {
             }
         }
         let plant_marker_id = req.body.plant_marker_id;
+        let plant_marker = this.db.select_by_id('PlantMarkers', plant_marker_id);
+        if (!plant_marker) {
+            return {
+                success: false,
+                message: "Plant marker does not exist"
+            }
+        }
+
+        let owner_id = plant_marker[0].user_id;
 
         // check if the user has already upvoted this marker
         let downvotes = this.db.select_where_predicate(
@@ -618,7 +660,16 @@ class Markers extends Interface {
                     'UserMarkerRatings',
                     downvotes[0].user_marker_rating_id,
                     {
-                        user_marker_rating: -1
+                        user_marker_rating: DOWNVOTE_SCORE
+                    }
+                );
+                this.db.edit_where_predicate_callback(
+                    'Users',
+                    (user) => (user.user_id === user_id),
+                    (user) => {
+                        return {
+                            plant_points: user.plant_points + 2 * DOWNVOTE_SCORE
+                        };
                     }
                 );
                 return {
@@ -637,9 +688,18 @@ class Markers extends Interface {
             this.db.insert_into('UserMarkerRatings', {
                 user_id: user_id,
                 plant_marker_id: plant_marker_id,
-                user_marker_rating: -1,
+                user_marker_rating: DOWNVOTE_SCORE,
                 user_marker_rating_date: new Date().toLocaleDateString()
             });
+            this.db.edit_where_predicate_callback(
+                'Users',
+                (user) => (user.user_id === user_id),
+                (user) => {
+                    return {
+                        plant_points: user.plant_points + DOWNVOTE_SCORE
+                    };
+                }
+            );
             return {
                 success: true,
                 message: 'Success'
