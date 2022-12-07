@@ -21,10 +21,9 @@
 				<li class="item"><a class="nav-link" href="/about">About</a></li>
 				<li class="item"><a class="nav-link" href="/leaderboard">Leaderboard </a></li>
 
-				{{log profile_data}}
 				{{#if profile_data}}
 					<li class="item button secondary"><a class="nav-link" href="bye">Sign out</a></li>
-					<li class="item button"> <img id="pfpavatar" src="{{profile_data.pfpUrl}}"> </li>
+					<li class="item button"><a class="pfplink" href="users/{{profile_data.username}}/markers"><img id="pfpavatar" src="{{profile_data.pfpUrl}}"></a></li>
 				{{else}}
 					<li class="item button"><a class="nav-link" href="/signin">Sign In</a></li>
 				{{/if}}
