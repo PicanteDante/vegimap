@@ -348,7 +348,7 @@ class Table {
             'table_name': this.table_name,
             'columns': this.columns,
             'data': this.data,
-            'indexes': this.indexes
+            //'indexes': this.indexes
         }
         return ret;
     }
@@ -362,7 +362,7 @@ class Table {
         table.table_name = json.table_name;
         table.columns = json.columns;
         table.data = json.data;
-        table.indexes = json.indexes;
+        //table.indexes = json.indexes;
         return table;
     }
 }

@@ -904,6 +904,24 @@ class Markers extends Interface {
     }
 }
 
+/*
+convert the previously defined Markers class to entries as they would appear in a UML diagram
+
+Markers:
+    +get_id(req: Request): { success: Bool, message: String, next_id: Integer }
+    +add(req: Request): { success: Bool, message: String, plant_marker_id: Integer }
+    +get(req: Request): { success: Bool, message: String, marker: Marker }
+    +list(req: Request): { success: Bool, message: String, markers: [Marker] }
+    +list_own(req: Request): { success: Bool, message: String, markers: [Marker] }
+    +list_user_markers(req: Request): { success: Bool, message: String, markers: [Marker] }
+    +upvote(req: Request): { success: Bool, message: String, plant_marker_id: Integer }
+    +downvote(req: Request): { success: Bool, message: String, plant_marker_id: Integer }
+    +delete(req: Request): { success: Bool, message: String }
+    +edit(req: Request): { success: Bool, message: String }
+    +check_owner(req: Request): { success: Bool, message: String }
+
+*/
+
 module.exports = {
     Signup: Signup,
     Users: Users,
