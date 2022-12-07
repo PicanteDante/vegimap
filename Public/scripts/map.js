@@ -168,7 +168,6 @@ window.addEventListener('click', function(event){
 		this.document.getElementById('upvote-arrow').style.color = "black";
 	}
 
-	upvoteMarker()
 })
 
 
