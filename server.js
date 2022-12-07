@@ -293,6 +293,7 @@ app.post('/api/markers/get', (req, res) => {
  */
 app.post('/api/markers/upvote', (req, res) => {
 	let result = db_markers.upvote(req);
+	console.log(JSON.stringify(result));
 	if (result.success) {
 		res.status(200).send(JSON.stringify({
 			message: 'Successfully upvoted marker.',

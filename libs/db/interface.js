@@ -568,7 +568,7 @@ class Markers extends Interface {
                 );
                 this.db.edit_where_predicate_callback(
                     'Users',
-                    (user) => (user.user_id === user_id),
+                    (user) => (user.user_id === owner_id),
                     (user) => {
                         return {
                             plant_points: user.plant_points + 2 * UPVOTE_SCORE
@@ -598,7 +598,7 @@ class Markers extends Interface {
             });
             this.db.edit_where_predicate_callback(
                 'Users',
-                (user) => (user.user_id === user_id),
+                (user) => (user.user_id === owner_id),
                 (user) => {
                     return {
                         plant_points: user.plant_points + UPVOTE_SCORE
@@ -642,7 +642,7 @@ class Markers extends Interface {
             }
         }
 
-        let owner_id = plant_marker[0].user_id;
+        let owner_id = plant_marker.user_id;
 
         // check if the user has already upvoted this marker
         let downvotes = this.db.select_where_predicate(
@@ -665,7 +665,7 @@ class Markers extends Interface {
                 );
                 this.db.edit_where_predicate_callback(
                     'Users',
-                    (user) => (user.user_id === user_id),
+                    (user) => (user.user_id === owner_id),
                     (user) => {
                         return {
                             plant_points: user.plant_points + 2 * DOWNVOTE_SCORE
@@ -693,7 +693,7 @@ class Markers extends Interface {
             });
             this.db.edit_where_predicate_callback(
                 'Users',
-                (user) => (user.user_id === user_id),
+                (user) => (user.user_id === owner_id),
                 (user) => {
                     return {
                         plant_points: user.plant_points + DOWNVOTE_SCORE

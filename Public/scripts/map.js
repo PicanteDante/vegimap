@@ -158,7 +158,7 @@ function upvoteMarker(plant_marker_id){
 
 }
 
-function downMarker(plant_marker_id){
+function downvoteMarker(plant_marker_id){
 	console.log("We're in")
 	fetch("/api/markers/downvote", {
 		method: "POST",
