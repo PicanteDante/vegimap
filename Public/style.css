@@ -41,6 +41,11 @@
   color: #ccc;
 }
 
+#pfpavatar{
+  max-width: 50px;
+  max-height: 50px;
+}
+
 /* ----------------- Mobile menu ----------------- */
 .menu {
     display: flex;
