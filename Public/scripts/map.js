@@ -142,7 +142,8 @@ if (event.target == document.getElementById('save-button')) {
 });
 
 
-function upvoteMarker(){
+function upvoteMarker(plant_marker_id){
+	console.log("We're in")
 	fetch("/api/markers/upvote", {
 		method: "POST",
 		headers:{
@@ -158,9 +159,16 @@ function upvoteMarker(){
 }
 
 window.addEventListener('click', function(event){
-	if(event.target == this.document.getElementById('upvote-button')){
-		this.document.getElementById('upvote-button').style.color = "red";
+	if(event.target == this.document.getElementById('upvote-arrow')){
+		this.document.getElementById('upvote-arrow').style.color = "red";
+		this.document.getElementById('downvote-arrow').style.color = "black";
 	}
+	else if(event.target == this.document.getElementById('downvote-arrow')){
+		this.document.getElementById('downvote-arrow').style.color = "blue";
+		this.document.getElementById('upvote-arrow').style.color = "black";
+	}
+
+	upvoteMarker()
 })
 
 
@@ -261,7 +269,8 @@ function openPlantMarker(evt, plant_marker_id, marker_html){
 	document.getElementById('desc-container').style.display = "block";
 	document.getElementById('modal-close').style.display = "block";
 
-	
-	var upvoteButton = document.getElementById("upvote-button");
-	upvoteButton.addEventListener('click', upvoteMarker);
+	let upvoteButton = document.getElementsByClassName("fa-toggle-up");
+	upvoteButton.addEventListener('click', () => upvoteMarker(plant_marker_id));
+
 }
+
